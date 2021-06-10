@@ -25,6 +25,9 @@ hs_err_pid*
 # config #
 *.yml
 *.iml
+mvnw
+mvnw.cmd
 
 #.idea
 #.mvn
+
