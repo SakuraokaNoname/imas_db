@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/imas_db.iml" filepath="$PROJECT_DIR$/imas_db.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/imas_db.iml" filepath="$PROJECT_DIR$/.idea/imas_db.iml" />
     </modules>
   </component>
 </project>
