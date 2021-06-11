@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/imas_db.iml" filepath="$PROJECT_DIR$/.idea/imas_db.iml" />
       <module fileurl="file://$PROJECT_DIR$/imas_db_common/imas_db_common.iml" filepath="$PROJECT_DIR$/imas_db_common/imas_db_common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/imas_db_manga/imas_db_manga.iml" filepath="$PROJECT_DIR$/imas_db_manga/imas_db_manga.iml" />
     </modules>
   </component>
 </project>
