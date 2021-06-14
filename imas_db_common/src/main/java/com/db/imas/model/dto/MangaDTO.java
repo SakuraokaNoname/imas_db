@@ -1,5 +1,7 @@
 package com.db.imas.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 /**
@@ -12,6 +14,7 @@ public class MangaDTO {
     private int id;
     private String title;
     private String profile;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date updateTime;
 
     public int getId() {

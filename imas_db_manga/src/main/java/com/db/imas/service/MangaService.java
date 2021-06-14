@@ -1,6 +1,7 @@
 package com.db.imas.service;
 
 import com.db.imas.model.dto.MangaDTO;
+import com.db.imas.model.dto.MangaDetailDTO;
 import com.db.imas.model.dto.ResultDTO;
 
 import java.util.List;
@@ -14,4 +15,5 @@ public interface MangaService {
 
     ResultDTO<List<MangaDTO>> getMangaList();
 
+    ResultDTO<MangaDetailDTO> getMangaDetail(Integer id);
 }

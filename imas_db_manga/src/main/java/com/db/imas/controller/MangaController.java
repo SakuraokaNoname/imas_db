@@ -1,10 +1,13 @@
 package com.db.imas.controller;
 
 import com.db.imas.model.dto.MangaDTO;
+import com.db.imas.model.dto.MangaDetailDTO;
 import com.db.imas.model.dto.ResultDTO;
 import com.db.imas.service.MangaService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -20,9 +23,16 @@ public class MangaController {
     @Autowired
     private MangaService mangaService;
 
-    @RequestMapping("list")
+    @GetMapping("list")
+    @ResponseBody
     public ResultDTO<List<MangaDTO>> getMangaList(){
         return mangaService.getMangaList();
+    }
+
+    @GetMapping("detail/{id}")
+    @ResponseBody
+    public ResultDTO<MangaDetailDTO> getMangaDetail(@PathVariable Integer id){
+        return mangaService.getMangaDetail(id);
     }
 
 }

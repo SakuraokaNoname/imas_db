@@ -1,7 +1,9 @@
 package com.db.imas.dao;
 
 import com.db.imas.model.dto.MangaDTO;
+import com.db.imas.model.dto.MangaDetailDTO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -14,5 +16,7 @@ import java.util.List;
 public interface MangaDao {
 
     List<MangaDTO> getMangaList();
+
+    MangaDetailDTO getMangaDetail(@Param("id")Integer id);
 
 }

@@ -2,6 +2,7 @@ package com.db.imas.service.impl;
 
 import com.db.imas.dao.MangaDao;
 import com.db.imas.model.dto.MangaDTO;
+import com.db.imas.model.dto.MangaDetailDTO;
 import com.db.imas.model.dto.ResultDTO;
 import com.db.imas.service.MangaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,11 @@ public class MangaServiceImpl implements MangaService {
     public ResultDTO<List<MangaDTO>> getMangaList() {
         List<MangaDTO> result = mangaDao.getMangaList();
         return ResultDTO.success(result);
+    }
+
+    @Override
+    public ResultDTO<MangaDetailDTO> getMangaDetail(Integer id) {
+        return ResultDTO.success(mangaDao.getMangaDetail(id));
     }
 
 }

@@ -2,8 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.db.imas.dao.MangaDao">
 
+    <resultMap id="MangaDetailMap" type="MangaDetailDTO">
+        <id column="id" property="id"></id>
+        <result column="subTitle" property="subTitle"></result>
+        <collection property="pics" ofType="MangaPicture">
+            <id column="sid" property="id"></id>
+            <result column="url" property="url"></result>
+        </collection>
+    </resultMap>
+
     <select id="getMangaList" resultType="MangaDTO">
         SELECT id,title,profile,updateTime FROM manga
+    </select>
+
+    <select id="getMangaDetail" resultMap="MangaDetailMap">
+        SELECT tb1.id,tb1.subTitle,tb2.url FROM manga_detail tb1
+        LEFT JOIN manga_picture tb2 ON tb1.id = tb2.sid
+        WHERE tb1.id = #{id}
+        ORDER BY tb2.id
     </select>
 
 </mapper>
