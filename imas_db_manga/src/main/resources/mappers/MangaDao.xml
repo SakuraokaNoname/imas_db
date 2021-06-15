@@ -12,7 +12,7 @@
     </resultMap>
 
     <select id="getMangaList" resultType="MangaDTO">
-        SELECT id,title,profile,updateTime FROM manga
+        SELECT id,title,profile,url,updateTime FROM manga
     </select>
 
     <select id="getMangaSubList" resultType="MangaSubDTO">

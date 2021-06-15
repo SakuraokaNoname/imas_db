@@ -14,8 +14,17 @@ public class MangaDTO {
     private int id;
     private String title;
     private String profile;
+    private String url;
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date updateTime;
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
     public int getId() {
         return id;

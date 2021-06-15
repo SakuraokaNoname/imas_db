@@ -15,8 +15,17 @@ public class Manga {
     private int pid;
     private String title;
     private String profile;
+    private String url;
     private Date createTime;
     private Date updateTime;
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
     public int getId() {
         return id;
