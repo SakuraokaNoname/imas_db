@@ -2,6 +2,7 @@ package com.db.imas.controller;
 
 import com.db.imas.model.dto.MangaDTO;
 import com.db.imas.model.dto.MangaDetailDTO;
+import com.db.imas.model.dto.MangaSubDTO;
 import com.db.imas.model.dto.ResultDTO;
 import com.db.imas.service.MangaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,12 @@ public class MangaController {
     @ResponseBody
     public ResultDTO<List<MangaDTO>> getMangaList(){
         return mangaService.getMangaList();
+    }
+
+    @GetMapping("sublist/{id}")
+    @ResponseBody
+    public ResultDTO<List<MangaSubDTO>> getMangaSubList(@PathVariable Integer id){
+        return mangaService.getMangaSubList(id);
     }
 
     @GetMapping("detail/{id}")

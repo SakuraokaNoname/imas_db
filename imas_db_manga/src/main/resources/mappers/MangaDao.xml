@@ -15,6 +15,14 @@
         SELECT id,title,profile,updateTime FROM manga
     </select>
 
+    <select id="getMangaSubList" resultType="MangaSubDTO">
+        SELECT tb1.id,tb1.subTitle,
+            (SELECT url FROM manga_picture WHERE sid = tb1.id limit 1) as url
+        FROM manga_detail tb1
+        WHERE tb1.mid = #{id}
+        ORDER BY orderId DESC
+    </select>
+
     <select id="getMangaDetail" resultMap="MangaDetailMap">
         SELECT tb1.id,tb1.subTitle,tb2.url FROM manga_detail tb1
         LEFT JOIN manga_picture tb2 ON tb1.id = tb2.sid

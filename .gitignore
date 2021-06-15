@@ -19,11 +19,6 @@
 *.tar.gz
 *.rar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-<<<<<<< HEAD
-=======
-
 # config #
 *.yml
 *.iml
@@ -32,5 +27,3 @@ mvnw.cmd
 
 #.idea
 #.mvn
-
->>>>>>> f0c2cfe9724e802c6350968b2043500a834208d9
