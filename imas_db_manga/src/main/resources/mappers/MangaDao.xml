@@ -16,7 +16,7 @@
     </select>
 
     <select id="getMangaSubList" resultType="MangaSubDTO">
-        SELECT tb1.id,tb1.subTitle,
+        SELECT tb1.id,tb1.subTitle,localizationGroup,translators,dantalions,updateTime
             (SELECT url FROM manga_picture WHERE sid = tb1.id limit 1) as url
         FROM manga_detail tb1
         WHERE tb1.mid = #{id}

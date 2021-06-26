@@ -1,5 +1,7 @@
 package com.db.imas.model.dto;
 
+import java.util.Date;
+
 /**
  * @Author noname
  * @Date 2021/6/15 15:32
@@ -9,7 +11,43 @@ public class MangaSubDTO {
 
     private int id;
     private String subTitle;
+    private String localizationGroup;
+    private String translators;
+    private String dantalions;
+    private Date updateTime;
     private String url;
+
+    public String getLocalizationGroup() {
+        return localizationGroup;
+    }
+
+    public void setLocalizationGroup(String localizationGroup) {
+        this.localizationGroup = localizationGroup;
+    }
+
+    public String getTranslators() {
+        return translators;
+    }
+
+    public void setTranslators(String translators) {
+        this.translators = translators;
+    }
+
+    public String getDantalions() {
+        return dantalions;
+    }
+
+    public void setDantalions(String dantalions) {
+        this.dantalions = dantalions;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
 
     public int getId() {
         return id;
