@@ -39,10 +39,7 @@ public class MangaServiceImpl implements MangaService {
 
     @Override
     public ResultDTO changeChapter(Integer mid, Integer chapter) {
-        if(mangaDao.changeChapter(mid,chapter) > 0){
-            return ResultDTO.success();
-        }
-        return ResultDTO.fail();
+        return ResultDTO.success(mangaDao.changeChapter(mid,chapter));
     }
 
 }

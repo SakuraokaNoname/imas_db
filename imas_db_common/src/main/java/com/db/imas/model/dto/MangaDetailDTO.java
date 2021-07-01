@@ -11,8 +11,26 @@ import java.util.List;
 public class MangaDetailDTO {
 
     private int id;
+    private int mid;
     private String subTitle;
+    private int orderId;
     private List<MangaPicture> pics;
+
+    public int getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
+
+    public int getMid() {
+        return mid;
+    }
+
+    public void setMid(int mid) {
+        this.mid = mid;
+    }
 
     public int getId() {
         return id;

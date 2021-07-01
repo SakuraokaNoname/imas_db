@@ -4,7 +4,9 @@
 
     <resultMap id="MangaDetailMap" type="MangaDetailDTO">
         <id column="id" property="id"></id>
+        <result column="mid" property="mid"></result>
         <result column="subTitle" property="subTitle"></result>
+        <result column="orderId" property="orderId"></result>
         <collection property="pics" ofType="MangaPicture">
             <id column="sid" property="id"></id>
             <result column="url" property="url"></result>
@@ -24,13 +26,16 @@
     </select>
 
     <select id="getMangaDetail" resultMap="MangaDetailMap">
-        SELECT tb1.id,tb1.subTitle,tb2.url FROM manga_detail tb1
+        SELECT tb1.id,tb1.mid,tb1.subTitle,tb1.orderId,tb2.url FROM manga_detail tb1
         LEFT JOIN manga_picture tb2 ON tb1.id = tb2.sid
         WHERE tb1.id = #{id}
         ORDER BY tb2.id
     </select>
 
     <select id="changeChapter" resultType="Integer">
-
+        SELECT tb1.id FROM manga_detail tb1
+        LEFT JOIN manga_picture tb2 ON tb1.`id` = tb2.`sid`
+        WHERE tb1.mid = #{mid} AND tb1.orderId = #{chapter}
+        GROUP BY tb1.id
     </select>
 </mapper>
