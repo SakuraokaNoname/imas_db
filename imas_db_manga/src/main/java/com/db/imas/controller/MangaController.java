@@ -42,4 +42,9 @@ public class MangaController {
         return mangaService.getMangaDetail(id);
     }
 
+    @GetMapping("chapter/{mid}/{chapter}")
+    public ResultDTO changeChapter(@PathVariable Integer mid,@PathVariable Integer chapter){
+        return mangaService.changeChapter(mid,chapter);
+    }
+
 }
