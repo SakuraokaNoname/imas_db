@@ -37,4 +37,12 @@ public class MangaServiceImpl implements MangaService {
         return ResultDTO.success(mangaDao.getMangaDetail(id));
     }
 
+    @Override
+    public ResultDTO changeChapter(Integer mid, Integer chapter) {
+        if(mangaDao.changeChapter(mid,chapter) > 0){
+            return ResultDTO.success();
+        }
+        return ResultDTO.fail();
+    }
+
 }

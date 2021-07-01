@@ -22,4 +22,5 @@ public interface MangaDao {
 
     MangaDetailDTO getMangaDetail(@Param("id")Integer id);
 
+    Integer changeChapter(@Param("mid") Integer mid,@Param("chapter") Integer chapter);
 }

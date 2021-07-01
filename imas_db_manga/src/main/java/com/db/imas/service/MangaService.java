@@ -19,4 +19,6 @@ public interface MangaService {
     ResultDTO<List<MangaSubDTO>> getMangaSubList(Integer id);
 
     ResultDTO<MangaDetailDTO> getMangaDetail(Integer id);
+
+    ResultDTO changeChapter(Integer mid,Integer chapter);
 }
