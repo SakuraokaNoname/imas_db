@@ -27,3 +27,5 @@ mvnw.cmd
 
 #.idea
 #.mvn
+
+workspace.xml
