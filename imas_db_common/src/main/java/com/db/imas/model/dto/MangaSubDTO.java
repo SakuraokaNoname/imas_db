@@ -1,5 +1,7 @@
 package com.db.imas.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 /**
@@ -14,6 +16,7 @@ public class MangaSubDTO {
     private String localizationGroup;
     private String translators;
     private String dantalions;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date updateTime;
     private String url;
 
