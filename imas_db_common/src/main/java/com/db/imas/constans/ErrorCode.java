@@ -7,6 +7,8 @@ package com.db.imas.constans;
  */
 public enum ErrorCode {
     SUCCESS("200", "调用成功"),
+    REGISTER_ERROR("9997", "注册失败"),
+    LOGIN_ERROR("9998", "账号或密码有误"),
     ERROR("9999", "系统异常"),;
 
     private String code;

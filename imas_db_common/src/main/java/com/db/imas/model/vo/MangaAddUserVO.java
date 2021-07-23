@@ -14,6 +14,7 @@ public class MangaAddUserVO {
     private String password;
     private String icon;
     private Date createTime;
+    private int permission;
 
     public String getName() {
         return name;
@@ -53,5 +54,13 @@ public class MangaAddUserVO {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public int getPermission() {
+        return permission;
+    }
+
+    public void setPermission(int permission) {
+        this.permission = permission;
     }
 }

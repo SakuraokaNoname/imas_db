@@ -33,6 +33,10 @@ public class ResultDTO<T> {
         return new ResultDTO(ErrorCode.ERROR.getCode(),ErrorCode.ERROR.getMessage());
     }
 
+    public static <T> ResultDTO fail(String code,String message) {
+        return new ResultDTO(code,message);
+    }
+
     public static <T> ResultDTO success(T data) {
         return new ResultDTO(ErrorCode.SUCCESS.getCode(), ErrorCode.SUCCESS.getMessage(), data);
     }
