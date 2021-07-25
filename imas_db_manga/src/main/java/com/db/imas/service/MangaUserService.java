@@ -1,8 +1,11 @@
 package com.db.imas.service;
 
+import com.db.imas.model.dto.MangaUserDTO;
 import com.db.imas.model.dto.ResultDTO;
 import com.db.imas.model.vo.MangaAddUserVO;
 import com.db.imas.model.vo.MangaLoginVO;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @Author noname
@@ -11,7 +14,13 @@ import com.db.imas.model.vo.MangaLoginVO;
  */
 public interface MangaUserService {
 
-    ResultDTO<String> userLogin(MangaLoginVO vo);
+    ResultDTO<MangaUserDTO> userLogin(MangaLoginVO vo);
 
     ResultDTO<String> userRegister(MangaAddUserVO vo);
+
+    ResultDTO checkUserToken(HttpServletRequest request);
+
+    MangaUserDTO getUserByToken(HttpServletRequest request);
+
+    boolean checkUserByOne(String username);
 }

@@ -7,15 +7,15 @@ package com.db.imas.model.vo;
  */
 public class MangaLoginVO {
 
-    private String username;
+    private String loginId;
     private String password;
 
-    public String getUsername() {
-        return username;
+    public String getLoginId() {
+        return loginId;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setLoginId(String username) {
+        this.loginId = username;
     }
 
     public String getPassword() {
