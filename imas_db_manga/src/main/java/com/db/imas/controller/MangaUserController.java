@@ -1,15 +1,14 @@
 package com.db.imas.controller;
 
 import com.db.imas.model.dto.MangaUserDTO;
+import com.db.imas.model.dto.MangaUserIconDTO;
 import com.db.imas.model.dto.ResultDTO;
 import com.db.imas.model.vo.MangaAddUserVO;
 import com.db.imas.model.vo.MangaLoginVO;
+import com.db.imas.model.vo.MangaUpdateUserVO;
 import com.db.imas.service.MangaUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -36,9 +35,27 @@ public class MangaUserController {
         return mangaUserService.userRegister(vo);
     }
 
+    @PostMapping("update")
+    @ResponseBody
+    public ResultDTO<MangaUserDTO> userUpdate(HttpServletRequest request,@RequestBody MangaUpdateUserVO vo){
+        return mangaUserService.userUpdate(request,vo);
+    }
+
     @PostMapping("token")
     @ResponseBody
     public ResultDTO checkUserToken(HttpServletRequest request){
         return mangaUserService.checkUserToken(request);
+    }
+
+    @PostMapping("logout")
+    @ResponseBody
+    public ResultDTO userLogout(HttpServletRequest request){
+        return mangaUserService.userLogout(request);
+    }
+
+    @GetMapping("icon")
+    @ResponseBody
+    public ResultDTO<MangaUserIconDTO> userIconList(){
+        return mangaUserService.userIconList();
     }
 }

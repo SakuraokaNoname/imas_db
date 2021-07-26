@@ -1,9 +1,13 @@
 package com.db.imas.dao;
 
 import com.db.imas.model.dto.MangaUserDTO;
+import com.db.imas.model.dto.MangaUserIconDTO;
 import com.db.imas.model.vo.MangaAddUserVO;
 import com.db.imas.model.vo.MangaLoginVO;
+import com.db.imas.model.vo.MangaUpdateUserVO;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
  * @Author noname
@@ -17,5 +21,9 @@ public interface MangaUserDao {
 
     Integer userRegister(MangaAddUserVO vo);
 
+    Integer userUpdate(MangaUpdateUserVO vo);
+
     Integer checkUserByOne(String loginId);
+
+    List<MangaUserIconDTO> userIconList();
 }

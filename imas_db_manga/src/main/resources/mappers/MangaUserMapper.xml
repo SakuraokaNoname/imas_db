@@ -13,9 +13,33 @@
         VALUES (#{name},#{loginId},#{password},#{icon},#{permission},#{createTime})
     </insert>
 
+    <update id="userUpdate" parameterType="MangaUpdateUserVO">
+        UPDATE manga_user
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="password != null and password != ''">
+                password = #{password},
+            </if>
+            <if test="icon != null and icon != ''">
+                icon = #{icon},
+            </if>
+            <if test="permission != null">
+                permission = #{permission},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
     <select id="checkUserByOne" parameterType="String" resultType="Integer">
         SELECT count(1)
         FROM manga_user
         WHERE loginId = #{loginId}
+    </select>
+
+    <select id="userIconList" resultType="MangaUserIconDTO">
+        SELECT *
+        FROM manga_user_icon
     </select>
 </mapper>

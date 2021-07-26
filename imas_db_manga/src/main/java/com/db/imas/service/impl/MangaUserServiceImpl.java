@@ -4,9 +4,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.db.imas.constans.ErrorCode;
 import com.db.imas.dao.MangaUserDao;
 import com.db.imas.model.dto.MangaUserDTO;
+import com.db.imas.model.dto.MangaUserIconDTO;
 import com.db.imas.model.dto.ResultDTO;
 import com.db.imas.model.vo.MangaAddUserVO;
 import com.db.imas.model.vo.MangaLoginVO;
+import com.db.imas.model.vo.MangaUpdateUserVO;
 import com.db.imas.service.MangaUserService;
 import com.db.imas.utils.Contants;
 import com.db.imas.utils.MD5Util;
@@ -65,6 +67,26 @@ public class MangaUserServiceImpl implements MangaUserService {
     }
 
     @Override
+    public ResultDTO<MangaUserDTO> userUpdate(HttpServletRequest request,MangaUpdateUserVO vo) {
+        String token = request.getHeader("token");
+        if(StringUtils.isEmpty(token)){
+            return ResultDTO.fail(ErrorCode.TOKEN_EXPIRE.getCode(),ErrorCode.TOKEN_EXPIRE.getMessage());
+        }
+        if(!redisUtil.hasKey(token)){
+            return ResultDTO.fail(ErrorCode.TOKEN_EXPIRE.getCode(),ErrorCode.TOKEN_EXPIRE.getMessage());
+        }
+        if(!(mangaUserDao.userUpdate(vo) > 0)){
+            return ResultDTO.fail(ErrorCode.USER_UPDATE_FAIL.getCode(),ErrorCode.USER_UPDATE_FAIL.getMessage());
+        }
+        MangaUserDTO dto = new MangaUserDTO();
+        dto.setId(vo.getId());
+        dto.setName(vo.getName());
+        dto.setIcon(vo.getIcon());
+        dto.setToken(token);
+        return ResultDTO.success(dto);
+    }
+
+    @Override
     public ResultDTO checkUserToken(HttpServletRequest request) {
         String token = request.getHeader("token");
         if(StringUtils.isEmpty(token)){
@@ -81,6 +103,21 @@ public class MangaUserServiceImpl implements MangaUserService {
     @Override
     public boolean checkUserByOne(String loginId) {
         return mangaUserDao.checkUserByOne(loginId) > 0;
+    }
+
+    @Override
+    public ResultDTO userLogout(HttpServletRequest request) {
+        String token = request.getHeader("token");
+        if(StringUtils.isEmpty(token)){
+            return ResultDTO.fail(ErrorCode.TOKEN_EXPIRE.getCode(),ErrorCode.TOKEN_EXPIRE.getMessage());
+        }
+        redisUtil.del(token);
+        return ResultDTO.success();
+    }
+
+    @Override
+    public ResultDTO<MangaUserIconDTO> userIconList() {
+        return ResultDTO.success(mangaUserDao.userIconList());
     }
 
 }
