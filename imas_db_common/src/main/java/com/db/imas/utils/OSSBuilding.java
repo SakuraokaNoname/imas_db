@@ -1,4 +1,3 @@
-/*
 package com.db.imas.utils;
 
 import com.aliyun.oss.OSS;
@@ -7,12 +6,12 @@ import com.aliyun.oss.OSSClientBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
-*/
 /**
  * @Author noname
  * @Date 2021/7/1 16:25
  * @Version 1.0
- *//*
+ * */
+
 
 @Configuration
 public class OSSBuilding {
@@ -50,4 +49,3 @@ public class OSSBuilding {
         return oss;
     }
 }
-*/

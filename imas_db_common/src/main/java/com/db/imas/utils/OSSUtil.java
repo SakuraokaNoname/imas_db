@@ -1,4 +1,3 @@
-/*
 package com.db.imas.utils;
 
 import com.aliyun.oss.OSS;
@@ -12,12 +11,12 @@ import org.springframework.util.ObjectUtils;
 
 import java.io.*;
 
-*/
 /**
  * @Author noname
  * @Date 2021/7/1 15:14
  * @Version 1.0
- *//*
+ * */
+
 
 @Component
 public class OSSUtil {
@@ -75,4 +74,3 @@ public class OSSUtil {
         return false;
     }
 }
-*/
