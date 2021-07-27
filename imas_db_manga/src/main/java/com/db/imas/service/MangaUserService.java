@@ -22,7 +22,9 @@ public interface MangaUserService {
 
     ResultDTO<MangaUserDTO> userUpdate(HttpServletRequest request,MangaUpdateUserVO vo);
 
-    ResultDTO checkUserToken(HttpServletRequest request);
+    boolean checkUserToken(HttpServletRequest request);
+
+    ResultDTO checkUserTokenDTO(HttpServletRequest request);
 
     MangaUserDTO getUserByToken(HttpServletRequest request);
 
@@ -31,4 +33,5 @@ public interface MangaUserService {
     ResultDTO userLogout(HttpServletRequest request);
 
     ResultDTO<MangaUserIconDTO> userIconList();
+
 }

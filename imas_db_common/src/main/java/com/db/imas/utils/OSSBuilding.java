@@ -5,6 +5,7 @@ import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.OSSClientBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 /**
  * @Author noname
@@ -13,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
  * */
 
 
-@Configuration
+@Component
 public class OSSBuilding {
 
     private static String endpoint;
@@ -40,7 +41,7 @@ public class OSSBuilding {
         if (oss == null) {
             synchronized (OSSClient.class) {
                 if (oss == null) {
-                    System.out.println("================="+endpoint);
+                    System.out.println(oss);
                     oss = new OSSClientBuilder().build(endpoint,accessKeyId,accessKeySecret);
                     Runtime.getRuntime().addShutdownHook(new Thread(() -> oss.shutdown()));
                 }

@@ -4,13 +4,13 @@ import com.db.imas.model.dto.MangaDTO;
 import com.db.imas.model.dto.MangaDetailDTO;
 import com.db.imas.model.dto.MangaSubDTO;
 import com.db.imas.model.dto.ResultDTO;
+import com.db.imas.model.vo.MangaAddMangaDetailVO;
 import com.db.imas.service.MangaService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -25,19 +25,16 @@ public class MangaController {
     private MangaService mangaService;
 
     @GetMapping("list")
-    @ResponseBody
     public ResultDTO<List<MangaDTO>> getMangaList(){
         return mangaService.getMangaList();
     }
 
     @GetMapping("sublist/{id}")
-    @ResponseBody
     public ResultDTO<List<MangaSubDTO>> getMangaSubList(@PathVariable Integer id){
         return mangaService.getMangaSubList(id);
     }
 
     @GetMapping("detail/{id}")
-    @ResponseBody
     public ResultDTO<MangaDetailDTO> getMangaDetail(@PathVariable Integer id){
         return mangaService.getMangaDetail(id);
     }
@@ -45,6 +42,11 @@ public class MangaController {
     @GetMapping("chapter/{mid}/{chapter}")
     public ResultDTO changeChapter(@PathVariable Integer mid,@PathVariable Integer chapter){
         return mangaService.changeChapter(mid,chapter);
+    }
+
+    @PostMapping("uploadPics")
+    public ResultDTO<List<String>> uploadPics(HttpServletRequest request, @RequestParam(value = "mangaDetail")MangaAddMangaDetailVO mangaDetail, @RequestParam(value = "file") MultipartFile pics[]){
+        return mangaService.uploadPics(request,mangaDetail,pics);
     }
 
 }

@@ -29,22 +29,10 @@ public class OSSUtil {
 
     private static OSS ossClient = ossBuilding.getOSS();
 
-    public static void main(String[] args) throws Exception {
-        OSSUtil ossUtil = new OSSUtil();
-        //demo.upload();
-        //demo.download();
-        ossUtil.getFileList();
+    public String upload(String path,InputStream inputStream){
+        ossClient.putObject(bucketName,path,inputStream);
         ossClient.shutdown();
-    }
-
-    public String upload(){
-        String path = "D:/small/";
-        String imgName = "timg.jpg";
-        String fileName = "" + imgName;
-        ossClient.putObject(bucketName,fileName,new ByteArrayInputStream(FileUtil.fileConvertToByteArray(new File(path + imgName))));
-
-        System.out.println(fileName);
-        return fileName;
+        return null;
     }
 
     public void download() throws IOException {

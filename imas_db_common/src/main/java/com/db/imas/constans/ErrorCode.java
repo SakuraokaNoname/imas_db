@@ -7,6 +7,8 @@ package com.db.imas.constans;
  */
 public enum ErrorCode {
     SUCCESS("200", "调用成功"),
+    UPLOAD_ERROR("9992","上传失败"),
+    PERMISSION_FAIL("9993","权限不足"),
     USER_UPDATE_FAIL("9994", "更新失败"),
     USER_NO_ONE("9995", "用户名已被占用"),
     TOKEN_EXPIRE("9996", "请重新登录"),

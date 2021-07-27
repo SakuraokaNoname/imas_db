@@ -10,7 +10,7 @@ import com.db.imas.model.vo.MangaAddUserVO;
 import com.db.imas.model.vo.MangaLoginVO;
 import com.db.imas.model.vo.MangaUpdateUserVO;
 import com.db.imas.service.MangaUserService;
-import com.db.imas.utils.Contants;
+import com.db.imas.utils.Constants;
 import com.db.imas.utils.MD5Util;
 import com.db.imas.utils.RedisUtil;
 import com.db.imas.utils.TokenUtil;
@@ -44,8 +44,8 @@ public class MangaUserServiceImpl implements MangaUserService {
             return ResultDTO.fail(ErrorCode.LOGIN_ERROR.getCode(),ErrorCode.LOGIN_ERROR.getMessage());
         }
         //TODO 创建token并返回
-        String token = TokenUtil.createToken(Contants.USER_TOKEN,dto.getId());
-        redisUtil.putRaw(token, JSONObject.toJSONString(dto),Contants.TOKEN_EXPIRE);
+        String token = TokenUtil.createToken(Constants.USER_TOKEN,dto.getId());
+        redisUtil.putRaw(token, JSONObject.toJSONString(dto), Constants.TOKEN_EXPIRE);
         dto.setToken(token);
         return ResultDTO.success(dto);
     }
@@ -68,13 +68,8 @@ public class MangaUserServiceImpl implements MangaUserService {
 
     @Override
     public ResultDTO<MangaUserDTO> userUpdate(HttpServletRequest request,MangaUpdateUserVO vo) {
+        checkUserTokenDTO(request);
         String token = request.getHeader("token");
-        if(StringUtils.isEmpty(token)){
-            return ResultDTO.fail(ErrorCode.TOKEN_EXPIRE.getCode(),ErrorCode.TOKEN_EXPIRE.getMessage());
-        }
-        if(!redisUtil.hasKey(token)){
-            return ResultDTO.fail(ErrorCode.TOKEN_EXPIRE.getCode(),ErrorCode.TOKEN_EXPIRE.getMessage());
-        }
         if(!(mangaUserDao.userUpdate(vo) > 0)){
             return ResultDTO.fail(ErrorCode.USER_UPDATE_FAIL.getCode(),ErrorCode.USER_UPDATE_FAIL.getMessage());
         }
@@ -87,12 +82,17 @@ public class MangaUserServiceImpl implements MangaUserService {
     }
 
     @Override
-    public ResultDTO checkUserToken(HttpServletRequest request) {
+    public boolean checkUserToken(HttpServletRequest request) {
         String token = request.getHeader("token");
-        if(StringUtils.isEmpty(token)){
+        return !StringUtils.isEmpty(token) && redisUtil.hasKey(token);
+    }
+
+    @Override
+    public ResultDTO checkUserTokenDTO(HttpServletRequest request) {
+        if(!checkUserToken(request)){
             return ResultDTO.fail(ErrorCode.TOKEN_EXPIRE.getCode(),ErrorCode.TOKEN_EXPIRE.getMessage());
         }
-        return ResultDTO.success(redisUtil.hasKey(token));
+        return ResultDTO.success(true);
     }
 
     @Override
@@ -107,10 +107,8 @@ public class MangaUserServiceImpl implements MangaUserService {
 
     @Override
     public ResultDTO userLogout(HttpServletRequest request) {
+        checkUserTokenDTO(request);
         String token = request.getHeader("token");
-        if(StringUtils.isEmpty(token)){
-            return ResultDTO.fail(ErrorCode.TOKEN_EXPIRE.getCode(),ErrorCode.TOKEN_EXPIRE.getMessage());
-        }
         redisUtil.del(token);
         return ResultDTO.success();
     }

@@ -44,7 +44,7 @@ public class MangaUserController {
     @PostMapping("token")
     @ResponseBody
     public ResultDTO checkUserToken(HttpServletRequest request){
-        return mangaUserService.checkUserToken(request);
+        return mangaUserService.checkUserTokenDTO(request);
     }
 
     @PostMapping("logout")
