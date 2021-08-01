@@ -25,5 +25,5 @@ public interface MangaService {
 
     ResultDTO changeChapter(Integer mid,Integer chapter);
 
-    ResultDTO<List<String>> uploadPics(HttpServletRequest request, MangaAddMangaDetailVO mangaDetail, MultipartFile pics[]);
+    ResultDTO<List<String>> uploadPics(HttpServletRequest request, MangaAddMangaDetailVO mangaDetail, MultipartFile[] pics);
 }
