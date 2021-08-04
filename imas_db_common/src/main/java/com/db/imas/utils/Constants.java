@@ -6,7 +6,13 @@ package com.db.imas.utils;
  */
 public class Constants {
 
-    public final static String UPLOAD_BASIC_URL = "/manga/";
+    public final static String OSS_MANGA_URL = "http://sakuraoka.oss-cn-shenzhen.aliyuncs.com/manga/";
+
+    public final static String UPLOAD_BASIC_URL = "manga/";
+
+    public final static String UPLOAD_MANGAID_TOKEN = "MID:";
+
+    public final static String UPLOAD_SUBID_TOKEN = "SID:";
 
     public final static String USER_TOKEN = "TOKEN:";
 

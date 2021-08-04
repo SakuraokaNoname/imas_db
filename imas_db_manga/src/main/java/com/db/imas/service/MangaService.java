@@ -1,9 +1,6 @@
 package com.db.imas.service;
 
-import com.db.imas.model.dto.MangaDTO;
-import com.db.imas.model.dto.MangaDetailDTO;
-import com.db.imas.model.dto.MangaSubDTO;
-import com.db.imas.model.dto.ResultDTO;
+import com.db.imas.model.dto.*;
 import com.db.imas.model.vo.MangaAddMangaDetailVO;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,4 +23,10 @@ public interface MangaService {
     ResultDTO changeChapter(Integer mid,Integer chapter);
 
     ResultDTO<List<String>> uploadPics(HttpServletRequest request, MangaAddMangaDetailVO mangaDetail, MultipartFile pics[]);
+
+    UploadDTO upload(String fileName, MultipartFile[] pics);
+
+    ResultDTO<UploadParamsDTO> getUploadParams(UploadParamsDTO dto);
+
+    ResultDTO setUploadParams(HttpServletRequest request, UploadParamsDTO dto);
 }

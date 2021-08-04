@@ -1,9 +1,6 @@
 package com.db.imas.controller;
 
-import com.db.imas.model.dto.MangaDTO;
-import com.db.imas.model.dto.MangaDetailDTO;
-import com.db.imas.model.dto.MangaSubDTO;
-import com.db.imas.model.dto.ResultDTO;
+import com.db.imas.model.dto.*;
 import com.db.imas.model.vo.MangaAddMangaDetailVO;
 import com.db.imas.service.MangaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,4 +46,8 @@ public class MangaController {
         return mangaService.uploadPics(request,mangaDetail,pics);
     }
 
+    @PostMapping("upload")
+    public UploadDTO upload(HttpServletRequest request,@RequestParam("qqfilename")String fileName, @RequestParam(value = "pics") MultipartFile[] pics){
+        return mangaService.upload(request,fileName,pics);
+    }
 }

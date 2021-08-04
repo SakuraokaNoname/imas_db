@@ -93,4 +93,61 @@ public class MangaServiceImpl implements MangaService {
         return ResultDTO.success(picsName);
     }
 
+    @Override
+    public UploadDTO upload(String fileName, MultipartFile[] pics) {
+//        mangaUserService.checkUserTokenDTO(request);
+//        String token = request.getHeader("token");
+//        MangaUserDTO user = redisUtil.getObj(token, MangaUserDTO.class);
+//        if(user.getId() != 1){
+//            ResultDTO.fail(ErrorCode.PERMISSION_FAIL.getCode(), ErrorCode.PERMISSION_FAIL.getMessage());
+//        }
+        //TODO 根据mid查询detail的最大id+1作为插入的id
+        //TODO OSS会自动根据路径创建不存在的文件夹
+        //String uploadPath = Constants.UPLOAD_BASIC_URL + MangaType.getMangaType(mangaDetail.getMid()) + "/";
+        String uploadTestPath = Constants.UPLOAD_BASIC_URL + "u149/999/";
+        String ossPath = Constants.OSS_MANGA_URL + "u149/999/" + fileName;
+//        if(ObjectUtils.isEmpty(pics) || pics.length < 1){
+//            return ResultDTO.fail(ErrorCode.UPLOAD_ERROR.getCode(),ErrorCode.UPLOAD_ERROR.getMessage());
+//        }
+
+        List<String> picsName = new ArrayList<String>();
+        for (MultipartFile pic : pics) {
+            String picName = pic.getOriginalFilename();
+            //判断是否有文件且是否为图片文件
+            if(!StringUtils.isEmpty(fileName) && !"".equalsIgnoreCase(fileName.trim())) {
+                try{
+                    System.out.println("===" + pic.getName());
+                    ossUtil.upload(uploadTestPath + fileName,pic.getInputStream());
+                    picsName.add(picName);
+                }catch (Exception e){
+                    System.out.println(e.getMessage());
+                    return UploadDTO.error();
+                }
+            }
+        }
+        return UploadDTO.success(ossPath);
+    }
+
+    @Override
+    public ResultDTO<UploadParamsDTO> getUploadParams(UploadParamsDTO dto) {
+
+        return null;
+    }
+
+    @Override
+    public ResultDTO setUploadParams(HttpServletRequest request , UploadParamsDTO dto) {
+        mangaUserService.checkUserTokenDTO(request);
+        String token = request.getHeader("token");
+        MangaUserDTO user = redisUtil.getObj(token, MangaUserDTO.class);
+        if(user.getId() != 1){
+            ResultDTO.fail(ErrorCode.PERMISSION_FAIL.getCode(), ErrorCode.PERMISSION_FAIL.getMessage());
+        }
+        if(dto.getMid() == null && dto.getSid() == null){
+            return ResultDTO.fail();
+        }
+        redisUtil.putRaw(Constants.UPLOAD_MANGAID_TOKEN,dto.getMid().toString(),3600);
+        redisUtil.putRaw(Constants.UPLOAD_SUBID_TOKEN,dto.getSid().toString(),3600);
+        return ResultDTO.success();
+    }
+
 }
