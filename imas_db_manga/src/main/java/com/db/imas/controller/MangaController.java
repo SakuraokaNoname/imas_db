@@ -42,7 +42,7 @@ public class MangaController {
     }
 
     @PostMapping("uploadPics")
-    public ResultDTO<List<String>> uploadPics(HttpServletRequest request, @RequestParam(value = "mangaDetail")MangaAddMangaDetailVO mangaDetail, @RequestParam(value = "file") MultipartFile pics[]){
+    public ResultDTO<List<String>> uploadPics(HttpServletRequest request, @RequestParam(value = "mangaDetail")MangaAddMangaDetailVO mangaDetail, @RequestParam(value = "pics") MultipartFile[] pics){
         return mangaService.uploadPics(request,mangaDetail,pics);
     }
 
