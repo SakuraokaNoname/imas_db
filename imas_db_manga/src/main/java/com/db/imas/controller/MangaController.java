@@ -2,6 +2,7 @@ package com.db.imas.controller;
 
 import com.db.imas.model.dto.*;
 import com.db.imas.model.vo.MangaAddMangaDetailVO;
+import com.db.imas.model.vo.UploadParamsVO;
 import com.db.imas.service.MangaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -41,13 +42,23 @@ public class MangaController {
         return mangaService.changeChapter(mid,chapter);
     }
 
-    @PostMapping("uploadPics")
-    public ResultDTO<List<String>> uploadPics(HttpServletRequest request, @RequestParam(value = "mangaDetail")MangaAddMangaDetailVO mangaDetail, @RequestParam(value = "pics") MultipartFile[] pics){
-        return mangaService.uploadPics(request,mangaDetail,pics);
+    @PostMapping("addManga")
+    public ResultDTO addManga(HttpServletRequest request, @RequestBody MangaAddMangaDetailVO mangaDetail){
+        return mangaService.addManga(request,mangaDetail);
     }
 
     @PostMapping("upload")
-    public UploadDTO upload(HttpServletRequest request,@RequestParam("qqfilename")String fileName, @RequestParam(value = "pics") MultipartFile[] pics){
-        return mangaService.upload(request,fileName,pics);
+    public UploadDTO upload(@RequestParam("qqfilename")String fileName, @RequestParam(value = "pics") MultipartFile[] pics){
+        return mangaService.upload(fileName,pics);
+    }
+
+    @PostMapping("uploadList")
+    public ResultDTO<List<UploadParamsDTO>> getMidAndSidList(HttpServletRequest request){
+        return mangaService.getMidAndSidList(request);
+    }
+
+    @PostMapping("setUploadParams")
+    public ResultDTO setUploadParams(HttpServletRequest request ,@RequestBody UploadParamsVO vo){
+        return mangaService.setUploadParams(request,vo);
     }
 }

@@ -3,6 +3,8 @@ package com.db.imas.dao;
 import com.db.imas.model.dto.MangaDTO;
 import com.db.imas.model.dto.MangaDetailDTO;
 import com.db.imas.model.dto.MangaSubDTO;
+import com.db.imas.model.dto.UploadParamsDTO;
+import com.db.imas.model.vo.MangaAddMangaDetailVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -24,4 +26,9 @@ public interface MangaDao {
 
     Integer changeChapter(@Param("mid") Integer mid,@Param("chapter") Integer chapter);
 
+    List<UploadParamsDTO> getMidAndSidList();
+
+    Integer addMangaDetail(MangaAddMangaDetailVO vo);
+
+    Integer addMangaPicture(MangaAddMangaDetailVO vo);
 }

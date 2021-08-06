@@ -38,4 +38,25 @@
         WHERE tb1.mid = #{mid} AND tb1.orderId = #{chapter}
         GROUP BY tb1.id
     </select>
+
+    <select id="getMidAndSidList" resultType="UploadParamsDTO">
+        SELECT m.title AS title,md.mid,MAX(md.id) + 1 AS sid,MAX(md.orderid) + 1 AS orderId FROM manga_detail md
+        LEFT JOIN manga m ON m.id = md.mid
+        GROUP BY md.mid
+    </select>
+
+    <insert id="addMangaDetail" parameterType="MangaAddMangaDetailVO">
+        INSERT INTO manga_detail (id,mid,subTitle,localizationGroup,translators,dantalions,updateTime,orderId)
+        VALUES (#{sid},#{mid},#{subTitle},#{localizationGroup},#{translators},#{dantalions},#{updateTime},#{orderId})
+    </insert>
+
+    <insert id="addMangaPicture" parameterType="MangaAddMangaDetailVO">
+        INSERT INTO manga_picture (sid,url)
+        VALUES
+        <foreach collection ="pics" item="pic" index= "index" separator =",">
+            (
+                #{sid}, #{pic}
+            )
+        </foreach>
+    </insert>
 </mapper>

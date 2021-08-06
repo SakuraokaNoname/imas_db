@@ -1,5 +1,6 @@
 package com.db.imas.model.vo;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -9,21 +10,30 @@ import java.util.List;
  */
 public class MangaAddMangaDetailVO {
 
-    private int id;
+    private int sid;
     private int mid;
     private String subTitle;
     private String localizationGroup;
     private String translators;
     private String dantalions;
-    private String updateTime;
-    private List<MangaAddMangaPictureVO> pics;
+    private Date updateTime;
+    private int orderId;
+    private List<String> pics;
 
-    public int getId() {
-        return id;
+    public int getOrderId() {
+        return orderId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
+
+    public int getSid() {
+        return sid;
+    }
+
+    public void setSid(int sid) {
+        this.sid = sid;
     }
 
     public int getMid() {
@@ -66,19 +76,19 @@ public class MangaAddMangaDetailVO {
         this.dantalions = dantalions;
     }
 
-    public String getUpdateTime() {
+    public Date getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(String updateTime) {
+    public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
 
-    public List<MangaAddMangaPictureVO> getPics() {
+    public List<String> getPics() {
         return pics;
     }
 
-    public void setPics(List<MangaAddMangaPictureVO> pics) {
+    public void setPics(List<String> pics) {
         this.pics = pics;
     }
 }

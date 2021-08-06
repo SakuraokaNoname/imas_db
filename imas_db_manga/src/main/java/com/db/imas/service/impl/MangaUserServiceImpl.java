@@ -96,6 +96,17 @@ public class MangaUserServiceImpl implements MangaUserService {
     }
 
     @Override
+    public ResultDTO checkUserTokenIsAdmin(HttpServletRequest request) {
+        checkUserTokenDTO(request);
+        String token = request.getHeader("token");
+        MangaUserDTO user = redisUtil.getObj(token, MangaUserDTO.class);
+        if(user.getPermission() == 0){
+            ResultDTO.fail(ErrorCode.PERMISSION_FAIL.getCode(), ErrorCode.PERMISSION_FAIL.getMessage());
+        }
+        return ResultDTO.success(true);
+    }
+
+    @Override
     public MangaUserDTO getUserByToken(HttpServletRequest request) {
         return redisUtil.getObj(request.getHeader("token"),MangaUserDTO.class);
     }

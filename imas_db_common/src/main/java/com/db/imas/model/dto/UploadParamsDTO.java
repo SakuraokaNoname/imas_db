@@ -7,8 +7,26 @@ package com.db.imas.model.dto;
  */
 public class UploadParamsDTO {
 
+    private String title;
     private Integer mid;
     private Integer sid;
+    private Integer orderId;
+
+    public Integer getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public Integer getMid() {
         return mid;

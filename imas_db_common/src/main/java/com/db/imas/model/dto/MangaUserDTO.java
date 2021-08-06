@@ -14,6 +14,15 @@ public class MangaUserDTO {
     private String name;
     private String icon;
     private String token;
+    private int permission;
+
+    public int getPermission() {
+        return permission;
+    }
+
+    public void setPermission(int permission) {
+        this.permission = permission;
+    }
 
     public String getToken() {
         return token;

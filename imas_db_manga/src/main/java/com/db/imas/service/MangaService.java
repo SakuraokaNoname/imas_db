@@ -2,6 +2,7 @@ package com.db.imas.service;
 
 import com.db.imas.model.dto.*;
 import com.db.imas.model.vo.MangaAddMangaDetailVO;
+import com.db.imas.model.vo.UploadParamsVO;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,15 +23,11 @@ public interface MangaService {
 
     ResultDTO changeChapter(Integer mid,Integer chapter);
 
-<<<<<<< HEAD
-    ResultDTO<List<String>> uploadPics(HttpServletRequest request, MangaAddMangaDetailVO mangaDetail, MultipartFile pics[]);
-
     UploadDTO upload(String fileName, MultipartFile[] pics);
 
-    ResultDTO<UploadParamsDTO> getUploadParams(UploadParamsDTO dto);
+    ResultDTO<List<UploadParamsDTO>> getMidAndSidList(HttpServletRequest request);
 
-    ResultDTO setUploadParams(HttpServletRequest request, UploadParamsDTO dto);
-=======
-    ResultDTO<List<String>> uploadPics(HttpServletRequest request, MangaAddMangaDetailVO mangaDetail, MultipartFile[] pics);
->>>>>>> fd2be1fdd8180d62d0de7b2dc952a8132a86100d
+    ResultDTO setUploadParams(HttpServletRequest request, UploadParamsVO dto);
+
+    ResultDTO addManga(HttpServletRequest request, MangaAddMangaDetailVO mangaDetail) throws NullPointerException;
 }
