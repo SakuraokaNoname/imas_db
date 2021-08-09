@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -77,11 +78,13 @@ public class MangaServiceImpl implements MangaService {
         }
         mangaDetail.setUpdateTime(new Date());
         Integer result1 = mangaDao.addMangaDetail(mangaDetail);
+        Collections.sort(mangaDetail.getPics());
         Integer result2 = mangaDao.addMangaPicture(mangaDetail);
-        System.out.println(mangaDetail.getPics().toString());
         if(result1 < 1 || result2 < 1){
             throw new NullPointerException();
         }
+        redisUtil.del(Constants.UPLOAD_MANGAID_TOKEN);
+        redisUtil.del(Constants.UPLOAD_SUBID_TOKEN);
         return ResultDTO.success();
     }
 
