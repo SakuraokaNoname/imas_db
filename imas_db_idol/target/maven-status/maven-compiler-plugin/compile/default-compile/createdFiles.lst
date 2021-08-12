@@ -1,7 +1,0 @@
-com\db\imas\dao\ImasIdolDao.class
-com\db\imas\controller\ImasIdolController.class
-com\db\imas\ImasDbIdolApplication.class
-com\db\imas\service\ImasIdolService.class
-com\db\imas\job\changeBirthdayIdolJob.class
-com\db\imas\service\impl\ImasIdolServiceImpl.class
-com\db\imas\config\WebMvcConfig.class
