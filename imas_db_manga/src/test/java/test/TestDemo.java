@@ -45,5 +45,10 @@ public class TestDemo {
         System.out.println("程序运行时间：" + (endTime - startTime) + "ms");    //输出程序运行时间
     }
 
+    @Test
+    public void Test2(){
+        String string = "2021-08-12";
+        System.out.println();
+    }
 }
 

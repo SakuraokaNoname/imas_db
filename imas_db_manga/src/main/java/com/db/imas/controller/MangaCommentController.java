@@ -22,19 +22,16 @@ public class MangaCommentController {
     private MangaCommentService mangaCommentService;
 
     @PostMapping("add")
-    @ResponseBody
     public ResultDTO addComment(HttpServletRequest request, @RequestBody MangaAddCommentVO vo){
         return mangaCommentService.addComment(request,vo);
     }
 
     @GetMapping("list/{mid}")
-    @ResponseBody
     public ResultDTO<List<MangaCommentListDTO>> getCommentList(@PathVariable Integer mid){
         return mangaCommentService.getCommentList(mid);
     }
 
     @GetMapping("del/{id}")
-    @ResponseBody
     public ResultDTO deleteComment(HttpServletRequest request,@PathVariable int id){
         return mangaCommentService.deleteComment(request,id);
     }
