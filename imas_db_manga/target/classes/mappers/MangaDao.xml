@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.db.imas.dao.MangaDao">
+
+    <resultMap id="MangaDetailMap" type="MangaDetailDTO">
+        <id column="id" property="id"></id>
+        <result column="mid" property="mid"></result>
+        <result column="subTitle" property="subTitle"></result>
+        <result column="orderId" property="orderId"></result>
+        <collection property="pics" ofType="MangaPicture">
+            <id column="sid" property="id"></id>
+            <result column="url" property="url"></result>
+        </collection>
+    </resultMap>
+
+    <select id="getMangaList" resultType="MangaDTO">
+        SELECT id,title,profile,url,updateTime FROM manga
+    </select>
+
+    <select id="getMangaSubList" resultType="MangaSubDTO">
+        SELECT tb1.id,tb1.subTitle,localizationGroup,translators,dantalions,updateTime,
+            (SELECT url FROM manga_picture WHERE sid = tb1.id limit 1) as url
+        FROM manga_detail tb1
+        WHERE tb1.mid = #{id}
+        ORDER BY orderId DESC
+    </select>
+
+    <select id="getMangaDetail" resultMap="MangaDetailMap">
+        SELECT tb1.id,tb1.mid,tb1.subTitle,tb1.orderId,tb2.url FROM manga_detail tb1
+        LEFT JOIN manga_picture tb2 ON tb1.id = tb2.sid
+        WHERE tb1.id = #{id}
+        ORDER BY tb2.id
+    </select>
+
+    <select id="changeChapter" resultType="Integer">
+        SELECT tb1.id FROM manga_detail tb1
+        LEFT JOIN manga_picture tb2 ON tb1.`id` = tb2.`sid`
+        WHERE tb1.mid = #{mid} AND tb1.orderId = #{chapter}
+        GROUP BY tb1.id
+    </select>
+
+    <select id="getMidAndSidList" resultType="UploadParamsDTO">
+        SELECT m.title AS title,md.mid,MAX(md.id) + 1 AS sid,MAX(md.orderid) + 1 AS orderId FROM manga_detail md
+        LEFT JOIN manga m ON m.id = md.mid
+        GROUP BY md.mid
+    </select>
+
+    <insert id="addMangaDetail" parameterType="MangaAddMangaDetailVO">
+        INSERT INTO manga_detail (id,mid,subTitle,localizationGroup,translators,dantalions,updateTime,orderId)
+        VALUES (#{sid},#{mid},#{subTitle},#{localizationGroup},#{translators},#{dantalions},#{updateTime},#{orderId})
+    </insert>
+
+    <insert id="addMangaPicture" parameterType="MangaAddMangaDetailVO">
+        INSERT INTO manga_picture (sid,url)
+        VALUES
+        <foreach collection ="pics" item="pic" index= "index" separator =",">
+            (
+                #{sid}, #{pic}
+            )
+        </foreach>
+    </insert>
+</mapper>
