@@ -28,9 +28,7 @@ public class HeartBeatHandler extends ChannelInboundHandlerAdapter {
 
     private void scheduleSendHeartBeat(ChannelHandlerContext ctx) {
         ctx.executor().schedule(() -> {
-            System.out.println("===");
             if (ctx.channel().isActive()) {
-                System.out.println("+++");
                 HeartBeatMessage message = new HeartBeatMessage();
                 message.setCommand(KEEPALIVE);
                 message.setFlag(false);

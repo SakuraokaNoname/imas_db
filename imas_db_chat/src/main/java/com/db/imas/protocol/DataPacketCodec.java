@@ -29,12 +29,10 @@ public class DataPacketCodec {
     }
 
     public DataPacket decode(String text) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
-        System.out.println("decode");
         Map<String,Object> map = JSON.parseObject(text,Map.class);
         Integer commandMap = (Integer)map.get("command");
         Byte command = (byte) commandMap.intValue();
         Class clazz = packetTypeMap.get(command);
-//        Class<?> clazz = Class.forName(.getName());
         DataPacket packet = (DataPacket)clazz.newInstance();
         packet.setOriginalText(text);
         return packet;

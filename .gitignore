@@ -31,4 +31,4 @@ mvnw.cmd
 workspace.xml
 .idea.rar
 .idea/*
-.target
+**/target

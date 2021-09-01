@@ -18,6 +18,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author noname
@@ -38,31 +39,43 @@ public class ConnectionHandler extends SimpleChannelInboundHandler<DataPacket> {
         SessionUtil.bindSession(new Session(connectionMessage.getId(),connectionMessage.getName(),connectionMessage.getIcon(),connectionMessage.getChatId()), ctx.channel());
 
         ChannelGroup channelGroup = new DefaultChannelGroup(ctx.executor());
-        List<ImasGroupChat> imasGroupChats = GroupUtil.getGroupList();
-        List<GroupListMessage> groupListMessageList = new ArrayList<>();
-        List<String> producerList = new ArrayList<>();
-        for(ImasGroupChat imasGroupChat : imasGroupChats){
-            GroupListMessage groupListMessage = new GroupListMessage(imasGroupChat.getId(),imasGroupChat.getTitle(),imasGroupChat.getInfo(),imasGroupChat.getIcon(),imasGroupChat.getChatId());
-            for(String member : imasGroupChat.getMember().split(",")){
-                if(!StringUtils.isEmpty(member)){
-                    producerList.add(member);
-                    if(connectionMessage.getId().equals(member)){
-                        Channel channel = SessionUtil.getChannel(connectionMessage.getChatId());
-                        if(channel != null){
-                            channelGroup.add(ctx.channel());
-                            SessionUtil.bindChannelGroup(imasGroupChat.getChatId(), channelGroup);
-                        }
-                    }
-                }
-            }
-            groupListMessage.setProducers(producerList);
-            groupListMessageList.add(groupListMessage);
-        }
+        List<GroupListMessage> groupListMessageList = bindGroupChannel(channelGroup);
+
+        System.out.println("size:" + SessionUtil.getChannelGroup("test:99999999").size());
+        Map<String, Channel> userChannelMap = SessionUtil.getUserChannelMap();
+        System.out.println(userChannelMap.size());
+        userChannelMap.forEach((key,value) -> {
+            System.out.println(key + "---" + value);
+        });
         ctx.writeAndFlush(new TextWebSocketFrame(JSON.toJSONString(groupListMessageList)));
     }
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) {
         SessionUtil.unBindSession(ctx.channel());
+    }
+
+    public List<GroupListMessage> bindGroupChannel(ChannelGroup channelGroup){
+        List<GroupListMessage> groupListMessageList = new ArrayList<>();
+        List<ImasGroupChat> imasGroupChats = GroupUtil.getGroupList();
+        for(ImasGroupChat groupChat : imasGroupChats){
+            String groupChatId = groupChat.getChatId();
+            List<String> members = new ArrayList<>();
+            for(String member : groupChat.getMember().split(",")){
+                if(!StringUtils.isEmpty(member)){
+                    members.add(member);
+                    Channel channel = SessionUtil.getChannel(member);
+                    if(channel != null){
+                        channelGroup.add(channel);
+                    }
+                    System.out.println("add:" + member);
+                }
+            }
+            GroupListMessage groupListMessage = new GroupListMessage(groupChat.getId(),groupChat.getTitle(),groupChat.getInfo(),groupChat.getIcon(),groupChat.getChatId());
+            groupListMessage.setProducers(members);
+            groupListMessageList.add(groupListMessage);
+            SessionUtil.bindChannelGroup(groupChatId,channelGroup);
+        }
+        return groupListMessageList;
     }
 }

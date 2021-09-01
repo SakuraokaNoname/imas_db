@@ -21,8 +21,14 @@ public class SessionUtil {
     static {
     }
 
+    public static Map<String, Channel> getUserChannelMap(){
+        return userChannelMap;
+    }
+
+    public static Map<String, ChannelGroup> getGroupChannelGroupMap(){return groupChannelGroupMap;}
+
     public static void bindSession(Session session, Channel channel) {
-        userChannelMap.put(session.getChatId(), channel);
+        userChannelMap.put(session.getId(), channel);
         channel.attr(Attributes.SESSION).set(session);
     }
 
@@ -43,9 +49,9 @@ public class SessionUtil {
         return channel.attr(Attributes.SESSION).get();
     }
 
-    public static Channel getChannel(String chatId) {
+    public static Channel getChannel(String id) {
 
-        return userChannelMap.get(chatId);
+        return userChannelMap.get(id);
     }
 
     public static void bindChannelGroup(String groupId, ChannelGroup channelGroup) {

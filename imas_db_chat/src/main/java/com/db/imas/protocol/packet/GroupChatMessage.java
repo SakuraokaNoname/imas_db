@@ -14,11 +14,20 @@ import static com.db.imas.protocol.command.Command.GROUP_CHAT;
  */
 public class GroupChatMessage extends DataPacket {
 
+    private int id;
     private String toGroupId;
     private String message;
     @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date createTime;
     private String senderId;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public Date getCreateTime() {
         return createTime;

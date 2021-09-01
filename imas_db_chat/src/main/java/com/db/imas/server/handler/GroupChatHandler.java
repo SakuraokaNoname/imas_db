@@ -38,7 +38,7 @@ public class GroupChatHandler extends SimpleChannelInboundHandler<DataPacket> {
         response.setCreateTime(DateUtil.getNowTime());
         response.setMessage(message.getMessage());
         response.setToGroupId(message.getToGroupId());
-        response.setSender(SessionUtil.getSession(SessionUtil.getChannel(message.getSenderId())));
+        response.setSender(SessionUtil.getSession(SessionUtil.getChannel(message.getId() + "")));
         System.out.println(channelGroup.size());
         channelGroup.writeAndFlush(new TextWebSocketFrame(JSON.toJSONString(response)));
     }
