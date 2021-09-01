@@ -1,10 +1,14 @@
 package com.db.imas.server.handler;
 
-import io.netty.channel.Channel;
+import com.alibaba.fastjson.JSON;
+import com.db.imas.protocol.packet.HeartBeatMessage;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.handler.timeout.IdleState;
-import io.netty.handler.timeout.IdleStateEvent;
+import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
+
+import java.util.concurrent.TimeUnit;
+
+import static com.db.imas.protocol.command.Command.KEEPALIVE;
 
 /**
  * @Author noname
@@ -13,28 +17,27 @@ import io.netty.handler.timeout.IdleStateEvent;
  */
 public class HeartBeatHandler extends ChannelInboundHandlerAdapter {
 
+    private static final int HEARTBEAT_INTERVAL = 10;
+
     @Override
-    public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
+    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        scheduleSendHeartBeat(ctx);
 
-        // 判断evt是否是IdleStateEvent（用于触发用户事件，包含 读空闲/写空闲/读写空闲 ）
-        if (evt instanceof IdleStateEvent) {
-            IdleStateEvent event = (IdleStateEvent)evt;     // 强制类型转换
+        super.channelActive(ctx);
+    }
 
-            if (event.state() == IdleState.READER_IDLE) {
-//                System.out.println("进入读空闲...");
-            } else if (event.state() == IdleState.WRITER_IDLE) {
-//                System.out.println("进入写空闲...");
-            } else if (event.state() == IdleState.ALL_IDLE) {
-                //System.out.println("channel关闭前，users的数量为：" + ImasChatHandler.users.size());
-
-                Channel channel = ctx.channel();
-                // 关闭无用的channel，以防资源浪费
-                channel.close();
-
-                //System.out.println("channel关闭后，users的数量为：" + ChatHandler.users.size());
+    private void scheduleSendHeartBeat(ChannelHandlerContext ctx) {
+        ctx.executor().schedule(() -> {
+            System.out.println("===");
+            if (ctx.channel().isActive()) {
+                System.out.println("+++");
+                HeartBeatMessage message = new HeartBeatMessage();
+                message.setCommand(KEEPALIVE);
+                message.setFlag(false);
+                ctx.writeAndFlush(new TextWebSocketFrame(JSON.toJSONString(message)));
+                scheduleSendHeartBeat(ctx);
             }
-        }
-
+        }, HEARTBEAT_INTERVAL, TimeUnit.SECONDS);
     }
 
 }

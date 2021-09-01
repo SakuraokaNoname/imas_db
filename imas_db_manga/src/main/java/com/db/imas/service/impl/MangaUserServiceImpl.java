@@ -60,6 +60,7 @@ public class MangaUserServiceImpl implements MangaUserService {
         vo.setName("制作人" + MD5Util.getRandomCode());
         vo.setPassword(MD5Util.getMd5(vo.getPassword(),16));
         vo.setPermission(0);
+        vo.setChatId("chat:" + MD5Util.getRandomCode() + MD5Util.getRandomCode());
         if(!(mangaUserDao.userRegister(vo) > 0)){
             return ResultDTO.fail(ErrorCode.REGISTER_ERROR.getCode(),ErrorCode.REGISTER_ERROR.getMessage());
         }

@@ -15,6 +15,15 @@ public class MangaUserDTO {
     private String icon;
     private String token;
     private int permission;
+    private String chatId;
+
+    public String getChatId() {
+        return chatId;
+    }
+
+    public void setChatId(String chatId) {
+        this.chatId = chatId;
+    }
 
     public int getPermission() {
         return permission;

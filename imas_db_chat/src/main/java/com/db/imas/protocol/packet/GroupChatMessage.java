@@ -1,10 +1,11 @@
 package com.db.imas.protocol.packet;
 
 import com.db.imas.protocol.DataPacket;
-import com.db.imas.protocol.command.Command;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
+
+import static com.db.imas.protocol.command.Command.GROUP_CHAT;
 
 /**
  * @Author noname
@@ -53,7 +54,7 @@ public class GroupChatMessage extends DataPacket {
 
     @Override
     public Byte getCommand() {
-        return Command.GROUP_CHAT;
+        return GROUP_CHAT;
     }
 
     @Override

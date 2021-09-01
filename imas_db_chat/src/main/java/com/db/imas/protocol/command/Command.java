@@ -9,9 +9,11 @@ public interface Command {
 
     Byte CONNECTION = 1;
 
-    Byte ONE_CHAT = 2;
+    Byte JOIN_GROUP_CHAT = 2;
 
     Byte GROUP_CHAT = 3;
+
+    Byte GROUP_LIST = 4;
 
     Byte KEEPALIVE = 99;
 }

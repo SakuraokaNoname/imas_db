@@ -13,29 +13,29 @@ import java.util.concurrent.ConcurrentHashMap;
  * @Version 1.0
  */
 public class SessionUtil {
-    private static final Map<String, Channel> userIdChannelMap = new ConcurrentHashMap<>();
 
-    private static final Map<String, ChannelGroup> groupIdChannelGroupMap = new ConcurrentHashMap<>();
+    private static final Map<String, Channel> userChannelMap = new ConcurrentHashMap<>();
+
+    private static final Map<String, ChannelGroup> groupChannelGroupMap = new ConcurrentHashMap<>();
 
     static {
     }
 
     public static void bindSession(Session session, Channel channel) {
-        userIdChannelMap.put(session.getUserId(), channel);
+        userChannelMap.put(session.getChatId(), channel);
         channel.attr(Attributes.SESSION).set(session);
     }
 
     public static void unBindSession(Channel channel) {
         if (hasLogin(channel)) {
             Session session = getSession(channel);
-            userIdChannelMap.remove(session.getUserId());
+            userChannelMap.remove(session.getId());
             channel.attr(Attributes.SESSION).set(null);
             System.out.println(session + " 退出登录!");
         }
     }
 
     public static boolean hasLogin(Channel channel) {
-
         return getSession(channel) != null;
     }
 
@@ -43,16 +43,16 @@ public class SessionUtil {
         return channel.attr(Attributes.SESSION).get();
     }
 
-    public static Channel getChannel(String userId) {
+    public static Channel getChannel(String chatId) {
 
-        return userIdChannelMap.get(userId);
+        return userChannelMap.get(chatId);
     }
 
     public static void bindChannelGroup(String groupId, ChannelGroup channelGroup) {
-        groupIdChannelGroupMap.put(groupId, channelGroup);
+        groupChannelGroupMap.put(groupId, channelGroup);
     }
 
     public static ChannelGroup getChannelGroup(String groupId) {
-        return groupIdChannelGroupMap.get(groupId);
+        return groupChannelGroupMap.get(groupId);
     }
 }

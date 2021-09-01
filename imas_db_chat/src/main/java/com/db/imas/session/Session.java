@@ -7,32 +7,47 @@ package com.db.imas.session;
  */
 public class Session {
     // 用户唯一性标识
-    private String userId;
-    private String userName;
+    private String id;
+    private String name;
+    private String icon;
+    private String chatId;
 
-    public Session(String userId, String userName) {
-        this.userId = userId;
-        this.userName = userName;
+    public Session(String id, String name, String icon, String chatId) {
+        this.id = id;
+        this.name = name;
+        this.icon = icon;
+        this.chatId = chatId;
     }
 
-    @Override
-    public String toString() {
-        return userId + ":" + userName;
+    public String getChatId() {
+        return chatId;
     }
 
-    public String getUserId() {
-        return userId;
+    public void setChatId(String chatId) {
+        this.chatId = chatId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public String getId() {
+        return id;
     }
 
-    public String getUserName() {
-        return userName;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 }

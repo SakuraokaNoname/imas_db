@@ -1,13 +1,14 @@
 package com.db.imas.protocol;
 
 import com.alibaba.fastjson.JSON;
-import com.db.imas.protocol.command.Command;
+import com.db.imas.protocol.packet.ConnectionMessage;
 import com.db.imas.protocol.packet.GroupChatMessage;
+import com.db.imas.protocol.packet.KeepAliveMessage;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.db.imas.protocol.command.Command.GROUP_CHAT;
+import static com.db.imas.protocol.command.Command.*;
 
 /**
  * @Author noname
@@ -22,7 +23,9 @@ public class DataPacketCodec {
 
     private DataPacketCodec() {
         packetTypeMap = new HashMap<>();
+        packetTypeMap.put(CONNECTION, ConnectionMessage.class);
         packetTypeMap.put(GROUP_CHAT, GroupChatMessage.class);
+        packetTypeMap.put(KEEPALIVE, KeepAliveMessage.class);
     }
 
     public DataPacket decode(String text) throws IllegalAccessException, InstantiationException, ClassNotFoundException {

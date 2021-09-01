@@ -15,6 +15,15 @@ public class MangaAddUserVO {
     private String icon;
     private Date createTime;
     private int permission;
+    private String chatId;
+
+    public String getChatId() {
+        return chatId;
+    }
+
+    public void setChatId(String chatId) {
+        this.chatId = chatId;
+    }
 
     public String getName() {
         return name;

@@ -12,7 +12,7 @@ import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.db.imas.protocol.command.Command.GROUP_CHAT;
+import static com.db.imas.protocol.command.Command.*;
 
 /**
  * @Author noname
@@ -31,20 +31,16 @@ public class MainHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
 
     private MainHandler() {
         handlerMap = new HashMap<>();
+        handlerMap.put(CONNECTION, ConnectionHandler.INSTANCE);
         handlerMap.put(GROUP_CHAT, GroupChatHandler.INSTANCE);
+        handlerMap.put(KEEPALIVE, KeepAliveHandler.INSTANCE);
     }
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame msg) throws Exception {
-        System.out.println("进入");
         String text = msg.text();
         DataPacket packet = DataPacketCodec.INSTANCE.decode(text);
         handlerMap.get(packet.getCommand()).channelRead(ctx, packet);
     }
-
-//    @Override
-//    protected void channelRead0(ChannelHandlerContext channelHandlerContext, TextWebSocketFrame text) throws Exception {
-//
-//    }
 
 }

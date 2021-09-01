@@ -1,21 +1,26 @@
 package com.db.imas.protocol.packet;
 
+import com.db.imas.protocol.DataPacket;
+
+import static com.db.imas.protocol.command.Command.CONNECTION;
+
 /**
  * @Author noname
- * @Date 2021/8/23 11:21
+ * @Date 2021/8/31 15:41
  * @Version 1.0
  */
-public class ProducerSessionMessage {
+public class ConnectionMessage extends DataPacket {
 
     private String id;
     private String name;
     private String icon;
     private String chatId;
 
-    public ProducerSessionMessage(String id, String name, String icon, String chatId) {
-        this.id = id;
-        this.name = name;
-        this.icon = icon;
+    public String getChatId() {
+        return chatId;
+    }
+
+    public void setChatId(String chatId) {
         this.chatId = chatId;
     }
 
@@ -43,11 +48,8 @@ public class ProducerSessionMessage {
         this.icon = icon;
     }
 
-    public String getChatId() {
-        return chatId;
-    }
-
-    public void setChatId(String chatId) {
-        this.chatId = chatId;
+    @Override
+    public Byte getCommand() {
+        return CONNECTION;
     }
 }

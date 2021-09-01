@@ -25,8 +25,8 @@ import java.util.List;
 @SpringBootTest(classes = ImasDbCommonApplication.class)
 public class TestDemo {
 
-    @Autowired
-    private OSSUtil ossUtil;
+//    @Autowired
+//    private OSSUtil ossUtil;
 
     @Test
     public void test1(){

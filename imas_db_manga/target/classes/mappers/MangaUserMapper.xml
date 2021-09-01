@@ -3,14 +3,14 @@
 <mapper namespace="com.db.imas.dao.MangaUserDao">
 
     <select id="userLogin" parameterType="MangaLoginVO" resultType="MangaUserDTO">
-        SELECT id,name,icon
+        SELECT id,name,icon,chatId
         FROM manga_user
         WHERE loginId = #{loginId} AND password = #{password}
     </select>
 
     <insert id="userRegister" parameterType="MangaAddUserVO">
-        INSERT INTO manga_user (name,loginId,password,icon,permission,createTime)
-        VALUES (#{name},#{loginId},#{password},#{icon},#{permission},#{createTime})
+        INSERT INTO manga_user (name,loginId,password,icon,permission,createTime,chatId)
+        VALUES (#{name},#{loginId},#{password},#{icon},#{permission},#{createTime},#{chatId})
     </insert>
 
     <update id="userUpdate" parameterType="MangaUpdateUserVO">
