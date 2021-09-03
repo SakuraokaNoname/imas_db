@@ -1,6 +1,8 @@
 package com.db.imas.service;
 
 import com.db.imas.model.entity.ImasGroupChat;
+import com.db.imas.protocol.packet.GroupChatMessage;
+import com.db.imas.session.Session;
 
 import java.util.List;
 
@@ -12,5 +14,9 @@ import java.util.List;
 public interface GroupChatService {
 
     List<ImasGroupChat> getGroupChatList();
+
+    List<Session> getProducerList();
+
+    void addCacheMessage(GroupChatMessage message);
 
 }

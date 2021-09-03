@@ -7,12 +7,12 @@ package com.db.imas.session;
  */
 public class Session {
     // 用户唯一性标识
-    private String id;
+    private int id;
     private String name;
     private String icon;
     private String chatId;
 
-    public Session(String id, String name, String icon, String chatId) {
+    public Session(int id, String name, String icon, String chatId) {
         this.id = id;
         this.name = name;
         this.icon = icon;
@@ -27,11 +27,11 @@ public class Session {
         this.chatId = chatId;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

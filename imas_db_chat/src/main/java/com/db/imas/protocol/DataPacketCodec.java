@@ -1,9 +1,7 @@
 package com.db.imas.protocol;
 
 import com.alibaba.fastjson.JSON;
-import com.db.imas.protocol.packet.ConnectionMessage;
-import com.db.imas.protocol.packet.GroupChatMessage;
-import com.db.imas.protocol.packet.KeepAliveMessage;
+import com.db.imas.protocol.packet.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +22,10 @@ public class DataPacketCodec {
     private DataPacketCodec() {
         packetTypeMap = new HashMap<>();
         packetTypeMap.put(CONNECTION, ConnectionMessage.class);
+        packetTypeMap.put(PRODUCER_LIST, BasicMessage.class);
         packetTypeMap.put(GROUP_CHAT, GroupChatMessage.class);
+        packetTypeMap.put(BE_ONLINE, BeOnlineMessage.class);
+        packetTypeMap.put(CLOSE_CONNECTION, CloseConnectionMessage.class);
         packetTypeMap.put(KEEPALIVE, KeepAliveMessage.class);
     }
 

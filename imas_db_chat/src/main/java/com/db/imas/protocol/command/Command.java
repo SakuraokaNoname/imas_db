@@ -13,7 +13,13 @@ public interface Command {
 
     Byte GROUP_CHAT = 3;
 
-    Byte GROUP_LIST = 4;
+    Byte PRODUCER_LIST = 40;
+
+    Byte GROUP_LIST = 50;
+
+    Byte BE_ONLINE = 90;
+
+    Byte CLOSE_CONNECTION = 50;
 
     Byte KEEPALIVE = 99;
 }

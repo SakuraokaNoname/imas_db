@@ -1,6 +1,7 @@
 package com.db.imas.dao;
 
 import com.db.imas.model.entity.ImasGroupChat;
+import com.db.imas.session.Session;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -14,5 +15,7 @@ import java.util.List;
 public interface ImasGroupChatMapper {
 
     List<ImasGroupChat> getGroupChatList();
+
+    List<Session> getProducerList();
 
 }

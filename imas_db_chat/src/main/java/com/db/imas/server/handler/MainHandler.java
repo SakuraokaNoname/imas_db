@@ -1,9 +1,7 @@
 package com.db.imas.server.handler;
 
-import com.alibaba.fastjson.JSON;
 import com.db.imas.protocol.DataPacket;
 import com.db.imas.protocol.DataPacketCodec;
-import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -32,7 +30,10 @@ public class MainHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
     private MainHandler() {
         handlerMap = new HashMap<>();
         handlerMap.put(CONNECTION, ConnectionHandler.INSTANCE);
+        handlerMap.put(PRODUCER_LIST, ProducerListHandler.INSTANCE);
         handlerMap.put(GROUP_CHAT, GroupChatHandler.INSTANCE);
+        handlerMap.put(BE_ONLINE, BeOnlineHandler.INSTANCE);
+        handlerMap.put(CLOSE_CONNECTION, CloseConnectionHandler.INSTANCE);
         handlerMap.put(KEEPALIVE, KeepAliveHandler.INSTANCE);
     }
 

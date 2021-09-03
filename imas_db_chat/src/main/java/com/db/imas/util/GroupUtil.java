@@ -1,8 +1,8 @@
 package com.db.imas.util;
 
 import com.db.imas.model.entity.ImasGroupChat;
+import com.db.imas.session.Session;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +15,8 @@ import java.util.Map;
  */
 public class GroupUtil {
 
+    private static final Map<String, Session> producerMap = new HashMap<>();
+
     private static final Map<String, ImasGroupChat> groupListMap = new HashMap<>();
 
     public static void initGroupList(ImasGroupChat imasGroupChat){
@@ -25,8 +27,16 @@ public class GroupUtil {
         return groupListMap.get(chatId);
     }
 
-    public static List<ImasGroupChat> getGroupList(){
-        return new ArrayList<>(groupListMap.values());
+    public static Map<String, ImasGroupChat> getGroupListMap() {
+        return groupListMap;
+    }
+
+    public static void initProducerMap(Session session){
+        producerMap.put(session.getId() + "",session);
+    }
+
+    public static List<Session> getProducerList(){
+        return new ArrayList<>(producerMap.values());
     }
 
 }

@@ -28,7 +28,7 @@ public class SessionUtil {
     public static Map<String, ChannelGroup> getGroupChannelGroupMap(){return groupChannelGroupMap;}
 
     public static void bindSession(Session session, Channel channel) {
-        userChannelMap.put(session.getId(), channel);
+        userChannelMap.put(session.getId() + "", channel);
         channel.attr(Attributes.SESSION).set(session);
     }
 
@@ -37,7 +37,6 @@ public class SessionUtil {
             Session session = getSession(channel);
             userChannelMap.remove(session.getId());
             channel.attr(Attributes.SESSION).set(null);
-            System.out.println(session + " 退出登录!");
         }
     }
 

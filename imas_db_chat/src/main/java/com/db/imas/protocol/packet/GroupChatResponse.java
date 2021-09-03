@@ -3,6 +3,7 @@ package com.db.imas.protocol.packet;
 import com.db.imas.session.Session;
 
 import static com.db.imas.protocol.command.Command.GROUP_CHAT;
+import static com.db.imas.util.Constans.RECEIVE;
 
 /**
  * @Author noname
@@ -16,6 +17,15 @@ public class GroupChatResponse {
     private String message;
     private String createTime;
     private Session sender;
+    private Byte isReceive = RECEIVE;
+
+    public Byte getIsReceive() {
+        return isReceive;
+    }
+
+    public void setIsReceive(Byte isReceive) {
+        this.isReceive = isReceive;
+    }
 
     public Byte getCommand() {
         return command;

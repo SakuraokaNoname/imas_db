@@ -1,7 +1,6 @@
 package com.db.imas.protocol.packet;
 
-import com.db.imas.protocol.DataPacket;
-import com.db.imas.session.Session;
+import com.db.imas.session.Producer;
 
 import java.util.List;
 
@@ -12,16 +11,16 @@ import static com.db.imas.protocol.command.Command.GROUP_LIST;
  * @Date 2021/9/1 15:37
  * @Version 1.0
  */
-public class GroupListMessage extends DataPacket {
+public class GroupListResponse{
 
     private int id;
     private String title;
     private String info;
     private String icon;
     private String chatId;
-    private List<String> producers;
+    private List<Producer> producers;
 
-    public GroupListMessage(int id, String title, String info, String icon, String chatId) {
+    public GroupListResponse(int id, String title, String info, String icon, String chatId) {
         this.id = id;
         this.title = title;
         this.info = info;
@@ -69,16 +68,11 @@ public class GroupListMessage extends DataPacket {
         this.chatId = chatId;
     }
 
-    public List<String> getProducers() {
+    public List<Producer> getProducers() {
         return producers;
     }
 
-    public void setProducers(List<String> producers) {
+    public void setProducers(List<Producer> producers) {
         this.producers = producers;
-    }
-
-    @Override
-    public Byte getCommand() {
-        return GROUP_LIST;
     }
 }

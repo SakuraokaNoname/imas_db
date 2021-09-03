@@ -2,6 +2,7 @@ package com.db.imas.runner;
 
 import com.db.imas.model.entity.ImasGroupChat;
 import com.db.imas.service.GroupChatService;
+import com.db.imas.session.Session;
 import com.db.imas.util.GroupUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -23,10 +24,15 @@ public class InitDataApplicaitonRunner implements ApplicationRunner {
     private GroupChatService groupChatService;
 
     @Override
-    public void run(ApplicationArguments var1) throws Exception{
+    public void run(ApplicationArguments var1) throws Exception {
         List<ImasGroupChat> imasGroupChats = groupChatService.getGroupChatList();
-        for (ImasGroupChat imasGroupChat:imasGroupChats){
+        for (ImasGroupChat imasGroupChat : imasGroupChats) {
             GroupUtil.initGroupList(imasGroupChat);
+        }
+
+        List<Session> producerList = groupChatService.getProducerList();
+        for (Session producer : producerList){
+            GroupUtil.initProducerMap(producer);
         }
     }
 }

@@ -6,4 +6,7 @@
         SELECT * FROM imas_group_chat
     </select>
 
+    <select id="getProducerList" resultType="com.db.imas.session.Session">
+        SELECT id,name,icon,chatId FROM manga_user WHERE permission > -1
+    </select>
 </mapper>
