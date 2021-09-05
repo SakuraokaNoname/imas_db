@@ -1,6 +1,7 @@
 package com.db.imas.server.handler;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.db.imas.model.entity.ImasGroupChat;
 import com.db.imas.protocol.DataPacket;
 import com.db.imas.protocol.packet.ConnectionMessage;
@@ -57,11 +58,13 @@ public class ConnectionHandler extends SimpleChannelInboundHandler<DataPacket> {
         Map<String,List<GroupListResponse>> groupListResponseMap = new HashMap<>();
         Map<String, ImasGroupChat> groupListMap = GroupUtil.getGroupListMap();
         List<GroupListResponse> groupListResponseList = new ArrayList<>();
+        Map<String, List<String>> groupOfflineMap = new HashMap<>();
         for(String key : groupListMap.keySet()){
             ChannelGroup channelGroup = new DefaultChannelGroup(key,ctx.executor());
             ImasGroupChat imasGroupChat = groupListMap.get(key);
             GroupListResponse groupListResponse = new GroupListResponse(imasGroupChat.getId(),imasGroupChat.getTitle(),imasGroupChat.getInfo(),imasGroupChat.getIcon(),imasGroupChat.getChatId());
             List<Producer> producers = new ArrayList<>();
+            List<String> offlineList = new ArrayList<>();
             for(String member : imasGroupChat.getMember().split(",")){
                 if(!StringUtils.isEmpty(member)){
                     Producer producer = new Producer();
@@ -71,6 +74,8 @@ public class ConnectionHandler extends SimpleChannelInboundHandler<DataPacket> {
                         producer.setIsOnline(PRODUCER_ONLINE);
                         // TODO 添加进channelGroup
                         channelGroup.add(channel);
+                    }else{
+                        offlineList.add(member);
                     }
                     producers.add(producer);
                 }
@@ -78,7 +83,10 @@ public class ConnectionHandler extends SimpleChannelInboundHandler<DataPacket> {
             groupListResponse.setProducers(producers);
             groupListResponseList.add(groupListResponse);
             SessionUtil.bindChannelGroup(key,channelGroup);
+            GroupUtil.initgroupOfflineMap(key,offlineList);
+            System.out.println("离线人数:" + GroupUtil.getGroupOfflineList(key).size() + "---" + JSONObject.toJSONString(GroupUtil.getGroupOfflineList(key)));
         }
+
         groupListResponseMap.put("groupChat",groupListResponseList);
         return groupListResponseMap;
     }

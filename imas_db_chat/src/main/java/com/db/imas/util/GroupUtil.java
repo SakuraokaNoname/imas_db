@@ -19,8 +19,18 @@ public class GroupUtil {
 
     private static final Map<String, ImasGroupChat> groupListMap = new HashMap<>();
 
+    private static final Map<String, List<String>> groupOfflineMap = new HashMap<>();
+
     public static void initGroupList(ImasGroupChat imasGroupChat){
         groupListMap.put(imasGroupChat.getChatId(),imasGroupChat);
+    }
+
+    public static void initgroupOfflineMap(String chatId,List<String> ids){
+        groupOfflineMap.put(chatId, ids);
+    }
+
+    public static List<String> getGroupOfflineList(String chatId){
+        return groupOfflineMap.get(chatId);
     }
 
     public static ImasGroupChat getGroup(String chatId){
@@ -33,6 +43,10 @@ public class GroupUtil {
 
     public static void initProducerMap(Session session){
         producerMap.put(session.getId() + "",session);
+    }
+
+    public static Session getProducer(String id){
+        return producerMap.get(id);
     }
 
     public static List<Session> getProducerList(){
