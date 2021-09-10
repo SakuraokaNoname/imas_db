@@ -15,7 +15,9 @@ public class Constans {
 
     public static final Byte NO_RECEIVE = 0;
 
-    public static final String OFF_CHAT_PREFIX = "OFF:";
+    public static final String OFF_CHAT_PREFIX = "OFF_CHAT:";
+
+    public static final String INC_PREFIX = "INC:GROUP_CHAT";
 
     public static final int MESSAGE_EXPIRE = 60*60*24*7;
 

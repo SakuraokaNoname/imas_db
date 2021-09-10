@@ -42,8 +42,15 @@ public class ConnectionHandler extends SimpleChannelInboundHandler<DataPacket> {
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, DataPacket packet) {
         ConnectionMessage connectionMessage = JSON.parseObject(packet.getOriginalText(), ConnectionMessage.class);
-        SessionUtil.bindSession(new Session(Integer.parseInt(connectionMessage.getId()),connectionMessage.getName(),connectionMessage.getIcon(),connectionMessage.getChatId()), ctx.channel());
+        Channel channel = ctx.channel();
+        if(SessionUtil.getChannel(connectionMessage.getId()) != null){
+            Channel oldChannel = SessionUtil.getChannel(connectionMessage.getId());
+            SessionUtil.unBindSession(oldChannel);
+            oldChannel.close();
+        }
+        SessionUtil.bindSession(new Session(connectionMessage.getId(),connectionMessage.getName(),connectionMessage.getIcon(),connectionMessage.getChatId()), ctx.channel());
 
+        SessionUtil.initOverTime(channel);
         Map<String,List<GroupListResponse>> groupListResponseMap = bindGroupChannel(ctx);
         GroupListPacketResponse response = new GroupListPacketResponse(groupListResponseMap);
         ctx.writeAndFlush(new TextWebSocketFrame(JSON.toJSONString(response)));
@@ -58,7 +65,6 @@ public class ConnectionHandler extends SimpleChannelInboundHandler<DataPacket> {
         Map<String,List<GroupListResponse>> groupListResponseMap = new HashMap<>();
         Map<String, ImasGroupChat> groupListMap = GroupUtil.getGroupListMap();
         List<GroupListResponse> groupListResponseList = new ArrayList<>();
-        Map<String, List<String>> groupOfflineMap = new HashMap<>();
         for(String key : groupListMap.keySet()){
             ChannelGroup channelGroup = new DefaultChannelGroup(key,ctx.executor());
             ImasGroupChat imasGroupChat = groupListMap.get(key);

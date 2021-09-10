@@ -1,8 +1,8 @@
 package com.db.imas.service;
 
 import com.db.imas.model.entity.ImasGroupChat;
-import com.db.imas.protocol.packet.GroupChatMessage;
 import com.db.imas.protocol.packet.GroupChatResponse;
+import com.db.imas.protocol.packet.OffGroupChatMessage;
 import com.db.imas.session.Session;
 
 import java.util.List;
@@ -18,6 +18,11 @@ public interface GroupChatService {
 
     List<Session> getProducerList();
 
-    void addCacheMessage(String offId,GroupChatResponse response);
+    void addCacheMessage(String offId, OffGroupChatMessage message);
+
+    Long getGroupChatIncId();
+
+    List<GroupChatResponse> getOffGroupChatMessageList(String id,String chatId);
+
 
 }

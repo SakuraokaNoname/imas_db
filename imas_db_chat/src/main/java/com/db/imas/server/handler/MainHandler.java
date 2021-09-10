@@ -33,7 +33,7 @@ public class MainHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
         handlerMap.put(PRODUCER_LIST, ProducerListHandler.INSTANCE);
         handlerMap.put(GROUP_CHAT, GroupChatHandler.INSTANCE);
         handlerMap.put(BE_ONLINE, BeOnlineHandler.INSTANCE);
-        handlerMap.put(CLOSE_CONNECTION, CloseConnectionHandler.INSTANCE);
+        handlerMap.put(OFF_LINE_CHAT_MESSAGE, OffLineChatMessageHandler.INSTANCE);
         handlerMap.put(KEEPALIVE, KeepAliveHandler.INSTANCE);
     }
 

@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -23,9 +24,15 @@ public class TestApplication {
 
     @Test
     public void test(){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDateTime localDateTime = LocalDateTime.now();
-        System.out.println(new Date(DateUtil.getNowTime()));
+        int[] arr = {400,31,55,12,71,9,3};
+        Arrays.sort(arr);
+        for (int i : arr){
+            System.out.println(i);
+        }
+
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+//        LocalDateTime localDateTime = LocalDateTime.now();
+//        System.out.println(new Date(DateUtil.getNowTime()));
     }
 }
 

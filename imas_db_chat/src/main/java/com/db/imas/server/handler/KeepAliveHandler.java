@@ -3,6 +3,7 @@ package com.db.imas.server.handler;
 import com.alibaba.fastjson.JSON;
 import com.db.imas.protocol.DataPacket;
 import com.db.imas.protocol.packet.KeepAliveMessage;
+import com.db.imas.util.SessionUtil;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -24,6 +25,7 @@ public class KeepAliveHandler extends SimpleChannelInboundHandler<DataPacket> {
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, DataPacket packet){
         KeepAliveMessage message = JSON.parseObject(packet.getOriginalText(), KeepAliveMessage.class);
+        SessionUtil.initOverTime(ctx.channel());
         ctx.writeAndFlush(new TextWebSocketFrame(JSON.toJSONString(message)));
     }
 

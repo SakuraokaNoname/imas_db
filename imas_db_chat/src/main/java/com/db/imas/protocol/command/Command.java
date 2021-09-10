@@ -19,7 +19,7 @@ public interface Command {
 
     Byte BE_ONLINE = 90;
 
-    Byte CLOSE_CONNECTION = 50;
+    Byte OFF_LINE_CHAT_MESSAGE = 91;
 
     Byte KEEPALIVE = 99;
 }

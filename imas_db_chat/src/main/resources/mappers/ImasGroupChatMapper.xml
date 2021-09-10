@@ -7,6 +7,6 @@
     </select>
 
     <select id="getProducerList" resultType="com.db.imas.session.Session">
-        SELECT id,name,icon,chatId FROM manga_user WHERE permission > -1
+        SELECT CONCAT(id) AS id,name,icon,chatId FROM manga_user WHERE permission > -1
     </select>
 </mapper>

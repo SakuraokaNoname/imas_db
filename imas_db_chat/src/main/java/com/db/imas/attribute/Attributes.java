@@ -13,5 +13,6 @@ public interface Attributes {
 
     AttributeKey<Session> SESSION = AttributeKey.newInstance("session");
 
+    AttributeKey<Integer> OVERTIME = AttributeKey.newInstance("overtime");
 }
 

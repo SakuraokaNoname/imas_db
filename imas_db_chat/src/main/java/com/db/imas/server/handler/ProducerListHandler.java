@@ -17,6 +17,7 @@ import static com.db.imas.protocol.command.Command.PRODUCER_LIST;
  * @Author noname
  * @Date 2021/9/3 9:55
  * @Version 1.0
+ * 返回所有用户的缓存
  */
 public class ProducerListHandler extends SimpleChannelInboundHandler<DataPacket> {
 
