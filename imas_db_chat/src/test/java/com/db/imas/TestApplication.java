@@ -1,7 +1,10 @@
 package com.db.imas;
 
+import com.db.imas.protocol.packet.GroupChatResponse;
+import com.db.imas.protocol.packet.OffGroupChatMessage;
 import com.db.imas.service.GroupChatService;
 import com.db.imas.util.DateUtil;
+import com.db.imas.utils.RedisUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,16 +22,21 @@ import java.util.Date;
 @SpringBootTest(classes = ImasDbChatApplication.class)
 public class TestApplication {
 
-//    @Autowired
-//    private GroupChatService groupChatService;
+    @Autowired
+    private GroupChatService groupChatService;
+
+    @Autowired
+    private RedisUtil redisUtil;
 
     @Test
     public void test(){
-        int[] arr = {400,31,55,12,71,9,3};
-        Arrays.sort(arr);
-        for (int i : arr){
-            System.out.println(i);
-        }
+//        GroupChatResponse response = redisUtil.getObj("OFF_CHAT:group:99999998:1", OffGroupChatMessage.class).getResponse();
+//        groupChatService.insertGroupChatMessage(response);
+//        int[] arr = {400,31,55,12,71,9,3};
+//        Arrays.sort(arr);
+//        for (int i : arr){
+//            System.out.println(i);
+//        }
 
 //        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 //        LocalDateTime localDateTime = LocalDateTime.now();

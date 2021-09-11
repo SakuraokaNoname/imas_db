@@ -38,7 +38,7 @@ public class OffLineChatMessageHandler extends SimpleChannelInboundHandler<DataP
         OffLineChatMessage message = JSON.parseObject(packet.getOriginalText(),OffLineChatMessage.class);
         System.out.println(packet.getOriginalText());
         Channel channel = SessionUtil.getChannel(message.getId());
-        if(channel.isActive()){
+        if(channel != null && channel.isActive()){
             List<String> groupList = SessionUtil.hasGroupMember(channel);
             if(!CollectionUtils.isEmpty(groupList)){
                 for(String str : groupList){

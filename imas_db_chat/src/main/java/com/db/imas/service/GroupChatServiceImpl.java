@@ -2,6 +2,7 @@ package com.db.imas.service;
 
 import com.alibaba.fastjson.JSON;
 import com.db.imas.dao.ImasGroupChatMapper;
+import com.db.imas.model.entity.ImasChatMessage;
 import com.db.imas.model.entity.ImasGroupChat;
 import com.db.imas.protocol.packet.GroupChatResponse;
 import com.db.imas.protocol.packet.OffGroupChatMessage;
@@ -13,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -74,5 +74,40 @@ public class GroupChatServiceImpl implements GroupChatService{
             }
         }
         return responseList;
+    }
+
+    @Override
+    public void insertChatMessageJob() {
+        Set<String> prefixKeySet = redisUtil.getPrefixKeySet(OFF_CHAT_PREFIX);
+        if(CollectionUtils.isEmpty(prefixKeySet)){
+            return;
+        }
+        for(String str : prefixKeySet){
+            GroupChatResponse response = redisUtil.getObj(str,OffGroupChatMessage.class).getResponse();
+            ImasChatMessage message = new ImasChatMessage();
+            if(str.indexOf(OFF_CHAT_PREFIX + "chat:") > -1){
+                message.setType("1");
+            }else if(str.indexOf(OFF_CHAT_PREFIX + "group:") > -1){
+                message.setType("2");
+                message.setToChatId(response.getToGroupId());
+            }
+            message.setCreateTime(response.getCreateTime());
+            message.setId(response.getId());
+            message.setMessage(response.getMessage());
+            message.setSender(response.getSender());
+
+        }
+    }
+
+    @Override
+    public void insertGroupChatMessage(GroupChatResponse response) {
+        ImasChatMessage message = new ImasChatMessage();
+        message.setType("2");
+        message.setToChatId(response.getToGroupId());
+        message.setCreateTime(response.getCreateTime());
+        message.setId(response.getId());
+        message.setMessage(response.getMessage());
+        message.setSender(response.getSender());
+        imasGroupChatMapper.insertChatMessage(message);
     }
 }

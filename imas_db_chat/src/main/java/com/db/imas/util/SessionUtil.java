@@ -4,6 +4,7 @@ import com.db.imas.attribute.Attributes;
 import com.db.imas.session.Session;
 import io.netty.channel.Channel;
 import io.netty.channel.group.ChannelGroup;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +62,10 @@ public class SessionUtil {
     }
 
     public static Channel getChannel(String id) {
+        if(CollectionUtils.isEmpty(userChannelMap)){
+            return null;
+        }
+
         if(userChannelMap.containsKey(id)){
             return userChannelMap.get(id);
         }

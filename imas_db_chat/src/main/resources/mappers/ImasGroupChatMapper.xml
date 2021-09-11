@@ -9,4 +9,10 @@
     <select id="getProducerList" resultType="com.db.imas.session.Session">
         SELECT CONCAT(id) AS id,name,icon,chatId FROM manga_user WHERE permission > -1
     </select>
+
+    <insert id="insertChatMessage" parameterType="ImasChatMessage">
+        INSERT INTO imas_chat_message (`id`,`type`,`message`,`toChatId`,`createTime`,`sender`)
+        VALUES
+        (#{id},#{type},#{message},#{toChatId},#{createTime},#{sender})
+    </insert>
 </mapper>

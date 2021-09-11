@@ -2,14 +2,20 @@ package com.db.imas.protocol.packet;
 
 import com.db.imas.protocol.DataPacket;
 
+import static com.db.imas.protocol.command.Command.GROUP_JOIN;
+
 /**
  * @Author noname
  * @Date 2021/8/31 17:44
  * @Version 1.0
  */
-public class JoinGroupChatMessage extends DataPacket {
+public class JoinGroupMessage extends DataPacket {
+
+    private String id;
+    private String chatId;
+
     @Override
     public Byte getCommand() {
-        return null;
+        return GROUP_JOIN;
     }
 }

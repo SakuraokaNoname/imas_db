@@ -1,6 +1,7 @@
 package com.db.imas.server.handler;
 
 import com.alibaba.fastjson.JSON;
+import com.db.imas.job.InsertMessagePool;
 import com.db.imas.protocol.DataPacket;
 import com.db.imas.protocol.packet.GroupChatMessage;
 import com.db.imas.protocol.packet.GroupChatResponse;
@@ -19,6 +20,8 @@ import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import static com.db.imas.util.Constans.NO_RECEIVE;
 
@@ -29,6 +32,8 @@ import static com.db.imas.util.Constans.NO_RECEIVE;
  */
 @ChannelHandler.Sharable
 public class GroupChatHandler extends SimpleChannelInboundHandler<DataPacket> {
+
+    private static ExecutorService executors = Executors.newSingleThreadExecutor();
 
     private GroupChatService groupChatService;
 
@@ -73,6 +78,9 @@ public class GroupChatHandler extends SimpleChannelInboundHandler<DataPacket> {
         offGroupChatMessage.setResponse(response);
         System.out.println(message.getToGroupId() + ":" + id);
         groupChatService.addCacheMessage(message.getToGroupId() + ":" + id,offGroupChatMessage);
+
+        executors.execute(new InsertMessagePool(response));
+
         System.out.println("信息存入缓存:" + JSON.toJSONString(response));
     }
 

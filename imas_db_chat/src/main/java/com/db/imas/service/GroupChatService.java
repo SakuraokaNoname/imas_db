@@ -1,5 +1,6 @@
 package com.db.imas.service;
 
+import com.db.imas.model.entity.ImasChatMessage;
 import com.db.imas.model.entity.ImasGroupChat;
 import com.db.imas.protocol.packet.GroupChatResponse;
 import com.db.imas.protocol.packet.OffGroupChatMessage;
@@ -24,5 +25,7 @@ public interface GroupChatService {
 
     List<GroupChatResponse> getOffGroupChatMessageList(String id,String chatId);
 
+    void insertChatMessageJob();
 
+    void insertGroupChatMessage(GroupChatResponse response);
 }

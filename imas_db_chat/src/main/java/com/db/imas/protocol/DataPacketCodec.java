@@ -24,6 +24,7 @@ public class DataPacketCodec {
         packetTypeMap.put(CONNECTION, ConnectionMessage.class);
         packetTypeMap.put(PRODUCER_LIST, BasicMessage.class);
         packetTypeMap.put(GROUP_CHAT, GroupChatMessage.class);
+        packetTypeMap.put(GROUP_JOIN, JoinGroupMessage.class);
         packetTypeMap.put(BE_ONLINE, BeOnlineMessage.class);
         packetTypeMap.put(OFF_LINE_CHAT_MESSAGE, OffLineChatMessage.class);
         packetTypeMap.put(KEEPALIVE, KeepAliveMessage.class);

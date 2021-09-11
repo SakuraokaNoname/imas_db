@@ -9,18 +9,18 @@ import java.util.Date;
  */
 public class ImasChatMessage {
 
-    private int id;
+    private Long id;
     private String type;
     private String message;
     private String toChatId;
-    private Date createTime;
+    private String createTime;
     private String sender;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -48,11 +48,11 @@ public class ImasChatMessage {
         this.toChatId = toChatId;
     }
 
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 
