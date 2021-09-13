@@ -59,6 +59,19 @@ public class GroupUtil {
         return new ArrayList<>(producerMap.values());
     }
 
+    public static String getGroupMember(String chatId){
+        return getGroup(chatId).getMember();
+    }
+
+    public static void addGroupMember(String id,String chatId){
+        ImasGroupChat groupChat = getGroup(chatId);
+        if(groupChat != null){
+            String member = groupChat.getMember();
+            groupChat.setMember(member + id + ",");
+        }
+        initGroupList(groupChat);
+    }
+
     public static void removeGroupMember(String id){
         for(String key : groupListMap.keySet()){
             //更新离线列表

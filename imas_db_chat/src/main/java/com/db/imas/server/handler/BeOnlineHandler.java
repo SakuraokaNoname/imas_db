@@ -12,6 +12,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -29,20 +30,18 @@ public class BeOnlineHandler extends SimpleChannelInboundHandler<DataPacket> {
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, DataPacket packet){
-        System.out.println("用户上线");
         Map<String, ChannelGroup> groupChannelGroupMap = SessionUtil.getGroupChannelGroupMap();
         Map<String, List<GroupListResponse>> groupListResponseMap = GroupUtil.refreshGroupMap();
         GroupListPacketResponse response = new GroupListPacketResponse(groupListResponseMap);
-        boolean flag = false;
+        List<Channel> channelList = new ArrayList<>();
         for(String key : groupChannelGroupMap.keySet()){
-            if(!flag){
-                ChannelGroup channelGroup = groupChannelGroupMap.get(key);
-                Channel channel = channelGroup.find(ctx.channel().id());
-                if(channel != null && channel != ctx.channel()){
-                    channelGroup.writeAndFlush(new TextWebSocketFrame(JSON.toJSONString(response)));
-                    flag = true;
-                }
+            ChannelGroup channelGroup = groupChannelGroupMap.get(key);
+            for(Channel channel : channelGroup){
+                channelList.add(channel);
             }
+        }
+        for(Channel channel : channelList){
+            channel.writeAndFlush(new TextWebSocketFrame(JSON.toJSONString(response)));
         }
     }
 }

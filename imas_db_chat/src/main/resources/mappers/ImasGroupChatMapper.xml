@@ -15,4 +15,9 @@
         VALUES
         (#{id},#{type},#{message},#{toChatId},#{createTime},#{sender})
     </insert>
+
+    <update id="updateGroupMember" parameterType="com.db.imas.protocol.packet.JoinGroupMessage">
+        UPDATE imas_group_chat SET member = #{id}
+        WHERE chatId = #{chatId}
+    </update>
 </mapper>

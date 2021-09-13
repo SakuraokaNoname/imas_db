@@ -3,9 +3,13 @@ package com.db.imas.server.handler;
 import com.alibaba.fastjson.JSON;
 import com.db.imas.protocol.DataPacket;
 import com.db.imas.protocol.packet.JoinGroupMessage;
+import com.db.imas.service.GroupChatService;
+import com.db.imas.util.GroupUtil;
+import com.db.imas.util.ServiceUtil;
+import com.db.imas.util.SessionUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
+import io.netty.channel.group.ChannelGroup;
 
 /**
  * @Author noname
@@ -16,15 +20,23 @@ public class JoinGroupHandler extends SimpleChannelInboundHandler<DataPacket> {
 
     public static final JoinGroupHandler INSTANCE = new JoinGroupHandler();
 
+    private GroupChatService groupChatService;
+
     private JoinGroupHandler() {
+        groupChatService = ServiceUtil.getBean(GroupChatService.class);
     }
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, DataPacket packet){
         JoinGroupMessage message = JSON.parseObject(packet.getOriginalText(),JoinGroupMessage.class);
-
-
-        ctx.writeAndFlush(new TextWebSocketFrame());
+        String id = message.getId();
+        String chatId = message.getChatId();
+        GroupUtil.addGroupMember(id,chatId);
+        ChannelGroup channelGroup = SessionUtil.getChannelGroup(chatId);
+        channelGroup.add(ctx.channel());
+        SessionUtil.bindChannelGroup(chatId,channelGroup);
+        groupChatService.insertGroupMember(message);
+        BeOnlineHandler.INSTANCE.channelRead0(ctx,packet);
     }
 
 }

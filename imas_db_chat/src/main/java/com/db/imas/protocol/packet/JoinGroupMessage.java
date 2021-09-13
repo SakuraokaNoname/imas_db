@@ -18,4 +18,20 @@ public class JoinGroupMessage extends DataPacket {
     public Byte getCommand() {
         return GROUP_JOIN;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getChatId() {
+        return chatId;
+    }
+
+    public void setChatId(String chatId) {
+        this.chatId = chatId;
+    }
 }

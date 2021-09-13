@@ -90,7 +90,6 @@ public class ConnectionHandler extends SimpleChannelInboundHandler<DataPacket> {
             groupListResponseList.add(groupListResponse);
             SessionUtil.bindChannelGroup(key,channelGroup);
             GroupUtil.initgroupOfflineMap(key,offlineList);
-            System.out.println("离线人数:" + GroupUtil.getGroupOfflineList(key).size() + "---" + JSONObject.toJSONString(GroupUtil.getGroupOfflineList(key)));
         }
 
         groupListResponseMap.put("groupChat",groupListResponseList);

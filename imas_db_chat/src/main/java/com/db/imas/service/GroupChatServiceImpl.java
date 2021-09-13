@@ -5,9 +5,11 @@ import com.db.imas.dao.ImasGroupChatMapper;
 import com.db.imas.model.entity.ImasChatMessage;
 import com.db.imas.model.entity.ImasGroupChat;
 import com.db.imas.protocol.packet.GroupChatResponse;
+import com.db.imas.protocol.packet.JoinGroupMessage;
 import com.db.imas.protocol.packet.OffGroupChatMessage;
 import com.db.imas.session.Session;
 import com.db.imas.util.CollectionsUtil;
+import com.db.imas.util.GroupUtil;
 import com.db.imas.utils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -109,5 +111,15 @@ public class GroupChatServiceImpl implements GroupChatService{
         message.setMessage(response.getMessage());
         message.setSender(response.getSender());
         imasGroupChatMapper.insertChatMessage(message);
+    }
+
+    @Override
+    public void insertGroupMember(JoinGroupMessage message) {
+        String id = message.getId();
+        System.out.println(id + "===");
+        String member = GroupUtil.getGroupMember(message.getChatId());
+        message.setId(member);
+        System.out.println(message.getId() + "===");
+        imasGroupChatMapper.updateGroupMember(message);
     }
 }

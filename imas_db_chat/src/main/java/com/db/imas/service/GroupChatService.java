@@ -3,6 +3,7 @@ package com.db.imas.service;
 import com.db.imas.model.entity.ImasChatMessage;
 import com.db.imas.model.entity.ImasGroupChat;
 import com.db.imas.protocol.packet.GroupChatResponse;
+import com.db.imas.protocol.packet.JoinGroupMessage;
 import com.db.imas.protocol.packet.OffGroupChatMessage;
 import com.db.imas.session.Session;
 
@@ -28,4 +29,6 @@ public interface GroupChatService {
     void insertChatMessageJob();
 
     void insertGroupChatMessage(GroupChatResponse response);
+
+    void insertGroupMember(JoinGroupMessage message);
 }

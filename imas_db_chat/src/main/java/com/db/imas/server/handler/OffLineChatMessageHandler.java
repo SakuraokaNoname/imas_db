@@ -34,7 +34,6 @@ public class OffLineChatMessageHandler extends SimpleChannelInboundHandler<DataP
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, DataPacket packet){
-        System.out.println("推送离线信息");
         OffLineChatMessage message = JSON.parseObject(packet.getOriginalText(),OffLineChatMessage.class);
         System.out.println(packet.getOriginalText());
         Channel channel = SessionUtil.getChannel(message.getId());

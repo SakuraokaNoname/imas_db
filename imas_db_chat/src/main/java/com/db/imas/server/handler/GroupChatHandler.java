@@ -80,8 +80,6 @@ public class GroupChatHandler extends SimpleChannelInboundHandler<DataPacket> {
         groupChatService.addCacheMessage(message.getToGroupId() + ":" + id,offGroupChatMessage);
 
         executors.execute(new InsertMessagePool(response));
-
-        System.out.println("信息存入缓存:" + JSON.toJSONString(response));
     }
 
 }

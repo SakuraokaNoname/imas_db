@@ -47,7 +47,6 @@ public class HeartBeatHandler extends ChannelInboundHandlerAdapter {
                     scheduleSendHeartBeat(ctx);
                 }else{
                     // TODO 下线更新列表
-                    System.out.println("用户:" + SessionUtil.getSession(ctx.channel()).getName() + " 下线");
                     Session session = SessionUtil.getSession(ctx.channel());
                     GroupUtil.removeGroupMember(session.getId() + "");
                     SessionUtil.unBindSession(ctx.channel());
