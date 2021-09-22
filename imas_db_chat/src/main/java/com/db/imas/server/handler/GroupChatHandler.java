@@ -77,9 +77,9 @@ public class GroupChatHandler extends SimpleChannelInboundHandler<DataPacket> {
         offGroupChatMessage.setOffList(offIdStr);
         offGroupChatMessage.setResponse(response);
         System.out.println(message.getToGroupId() + ":" + id);
-        groupChatService.addCacheMessage(message.getToGroupId() + ":" + id,offGroupChatMessage);
+//        groupChatService.addCacheMessage(message.getToGroupId() + ":" + id,offGroupChatMessage);
 
-        executors.execute(new InsertMessagePool(response));
+//        executors.execute(new InsertMessagePool(response));
     }
 
 }

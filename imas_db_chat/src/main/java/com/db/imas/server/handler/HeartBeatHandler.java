@@ -22,6 +22,8 @@ import static com.db.imas.protocol.command.Command.KEEPALIVE;
  * @Author noname
  * @Date 2021/8/28 15:17
  * @Version 1.0
+ *
+ * 心跳检测处理器
  */
 public class HeartBeatHandler extends ChannelInboundHandlerAdapter {
 
@@ -30,15 +32,14 @@ public class HeartBeatHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         scheduleSendHeartBeat(ctx);
-
         super.channelActive(ctx);
     }
 
     private void scheduleSendHeartBeat(ChannelHandlerContext ctx) {
         ctx.executor().schedule(() -> {
             if (SessionUtil.hasLogin(ctx.channel())) {
-                //重连2次,则解除session绑定
                 if(SessionUtil.getOverTime(ctx.channel()) <= 1){
+                    // 发送心跳包
                     HeartBeatMessage message = new HeartBeatMessage();
                     message.setCommand(KEEPALIVE);
                     message.setFlag(false);
@@ -46,7 +47,7 @@ public class HeartBeatHandler extends ChannelInboundHandlerAdapter {
                     SessionUtil.countOverTime(ctx.channel());
                     scheduleSendHeartBeat(ctx);
                 }else{
-                    // TODO 下线更新列表
+                    // 超过两次没有获取客户端响应,则进行下线处理
                     Session session = SessionUtil.getSession(ctx.channel());
                     GroupUtil.removeGroupMember(session.getId() + "");
                     SessionUtil.unBindSession(ctx.channel());

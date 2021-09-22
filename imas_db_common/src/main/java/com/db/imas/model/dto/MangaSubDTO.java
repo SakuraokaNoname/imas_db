@@ -19,6 +19,15 @@ public class MangaSubDTO {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date updateTime;
     private String url;
+    private int commentCount;
+
+    public int getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(int commentCount) {
+        this.commentCount = commentCount;
+    }
 
     public String getLocalizationGroup() {
         return localizationGroup;
