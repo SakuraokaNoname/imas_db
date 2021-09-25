@@ -18,6 +18,15 @@ public class MangaDetail {
     private Date updateTime;
     private int orderId;
     private String debutIdol;
+    private String isShow;
+
+    public String getIsShow() {
+        return isShow;
+    }
+
+    public void setIsShow(String isShow) {
+        this.isShow = isShow;
+    }
 
     public String getDebutIdol() {
         return debutIdol;

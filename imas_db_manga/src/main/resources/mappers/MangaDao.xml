@@ -20,7 +20,8 @@
     <select id="getMangaSubList" resultType="MangaSubDTO">
         SELECT tb1.id,tb1.subTitle,localizationGroup,translators,dantalions,updateTime,
             (SELECT url FROM manga_picture WHERE sid = tb1.id limit 1) AS url,
-            (SELECT COUNT(1) commentCount FROM manga_comment WHERE mid = tb1.id AND isDelete = 0) AS commentCount
+            (SELECT COUNT(1) commentCount FROM manga_comment WHERE mid = tb1.id AND isDelete = 0) AS commentCount,
+            isShow
         FROM manga_detail tb1
         WHERE tb1.mid = #{id}
         ORDER BY orderId DESC
