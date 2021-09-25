@@ -8,7 +8,7 @@
     </insert>
 
     <select id="getCommentList" resultType="MangaCommentListDTO">
-        SELECT tb1.id,tb1.content,tb1.createTime,tb2.name,tb2.icon
+        SELECT tb1.id,tb1.content,tb1.createTime,tb1.likeCount,tb2.name,tb2.icon
         FROM manga_comment tb1
         LEFT JOIN manga_user tb2 ON tb1.uid = tb2.id
         WHERE tb1.mid = #{mid} AND tb1.isDelete = #{isDelete}

@@ -1,6 +1,7 @@
 package com.db.imas.dao;
 
 import com.db.imas.model.dto.ImasIdolDTO;
+import com.db.imas.model.dto.MangaIdolListDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -17,4 +18,11 @@ public interface ImasIdolDao {
 
     List<ImasIdolDTO> setBirthdayIdol(@Param("birthday")Date birthday);
 
+    List<MangaIdolListDTO> getMangaIdolList(@Param("production")int production);
+
+    void addMangaIdol(@Param("mid")Integer mid,@Param("debutIdol")String debugIdol);
+
+    String selectDebutIdol(@Param("mid")Integer mid);
+
+    List<MangaIdolListDTO> getMangaDebutIdolList(@Param("debutIdols")List<String> debutIdols);
 }

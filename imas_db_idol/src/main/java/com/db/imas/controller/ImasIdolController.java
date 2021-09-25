@@ -1,11 +1,13 @@
 package com.db.imas.controller;
 
 import com.db.imas.model.dto.ImasIdolDTO;
+import com.db.imas.model.dto.MangaIdolListDTO;
 import com.db.imas.model.dto.ResultDTO;
 import com.db.imas.service.ImasIdolService;
 import com.db.imas.utils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -43,6 +45,21 @@ public class ImasIdolController {
         }
         imasIdolService.changeBirthdayIdol();
         return ResultDTO.success();
+    }
+
+    @RequestMapping("idolList")
+    public ResultDTO<List<MangaIdolListDTO>> getCinderellaIdolList(){
+        return imasIdolService.getCinderellaIdolList();
+    }
+
+    @RequestMapping("addIdol/{mid}/{idolId}")
+    public void addMangaIdol(HttpServletRequest request,@PathVariable Integer mid,@PathVariable Integer idolId){
+        imasIdolService.addMangaIdol(request,mid,idolId);
+    }
+
+    @RequestMapping("debutIdolList/{mid}")
+    public ResultDTO<List<MangaIdolListDTO>> getMangaDebutIdolList(@PathVariable Integer mid){
+        return imasIdolService.getMangaDebutIdolList(mid);
     }
 
 }

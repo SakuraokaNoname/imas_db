@@ -12,4 +12,28 @@
         </trim>
     </select>
 
+    <select id="getMangaIdolList" resultType="MangaIdolListDTO" parameterType="int">
+        SELECT `id`,`cn`,`icon`,`type`
+        FROM imas_idol i
+        WHERE i.production = #{production}
+    </select>
+
+    <update id="addMangaIdol">
+        UPDATE manga_detail
+        SET debutIdol = #{debutIdol}
+        WHERE id = #{mid}
+    </update>
+
+    <select id="selectDebutIdol" resultType="String" parameterType="Integer">
+        SELECT debutIdol FROM manga_detail WHERE id = #{mid} LIMIT 1
+    </select>
+
+    <select id="getMangaDebutIdolList" resultType="MangaIdolListDTO">
+        SELECT i.id,i.cn,i.icon,i.type
+        FROM imas_idol i
+        WHERE i.id IN
+        <foreach collection="debutIdols" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
 </mapper>

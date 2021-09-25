@@ -17,6 +17,15 @@ public class MangaDetail {
     private String dantalions;
     private Date updateTime;
     private int orderId;
+    private String debutIdol;
+
+    public String getDebutIdol() {
+        return debutIdol;
+    }
+
+    public void setDebutIdol(String debutIdol) {
+        this.debutIdol = debutIdol;
+    }
 
     public String getLocalizationGroup() {
         return localizationGroup;
