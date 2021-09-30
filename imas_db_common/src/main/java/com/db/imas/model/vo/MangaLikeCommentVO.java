@@ -7,16 +7,7 @@ package com.db.imas.model.vo;
  */
 public class MangaLikeCommentVO {
 
-    private int uid;
     private int commentId;
-
-    public int getUid() {
-        return uid;
-    }
-
-    public void setUid(int uid) {
-        this.uid = uid;
-    }
 
     public int getCommentId() {
         return commentId;

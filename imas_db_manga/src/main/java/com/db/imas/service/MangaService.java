@@ -2,6 +2,7 @@ package com.db.imas.service;
 
 import com.db.imas.model.dto.*;
 import com.db.imas.model.vo.MangaAddMangaDetailVO;
+import com.db.imas.model.vo.MangaSearchMangaSubVO;
 import com.db.imas.model.vo.UploadParamsVO;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,4 +31,6 @@ public interface MangaService {
     ResultDTO setUploadParams(HttpServletRequest request, UploadParamsVO dto);
 
     ResultDTO addManga(HttpServletRequest request, MangaAddMangaDetailVO mangaDetail) throws NullPointerException;
+
+    ResultDTO<List<MangaSubSearchDTO>> searchManga(MangaSearchMangaSubVO vo);
 }

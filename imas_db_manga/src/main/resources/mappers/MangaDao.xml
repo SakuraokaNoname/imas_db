@@ -27,6 +27,12 @@
         ORDER BY orderId DESC
     </select>
 
+    <select id="getMangaSubDebutIdol" resultType="MangaDebutIdol">
+        SELECT id,debutIdol
+        FROM manga_detail
+        WHERE debutIdol IS NOT NULL
+    </select>
+
     <select id="getMangaDetail" resultMap="MangaDetailMap">
         SELECT tb1.id,tb1.mid,tb1.subTitle,tb1.orderId,tb2.url FROM manga_detail tb1
         LEFT JOIN manga_picture tb2 ON tb1.id = tb2.sid
@@ -61,4 +67,25 @@
             )
         </foreach>
     </insert>
+
+    <select id="searchMangaSubList" parameterType="java.util.List" resultType="MangaSubSearchDTO">
+        SELECT
+            tb1.id,
+            tb1.mid,
+            tb1.subTitle,
+            localizationGroup,
+            translators,
+            dantalions,
+            updateTime,
+            ( SELECT `url` FROM manga_picture WHERE `sid` = tb1.id LIMIT 1 ) AS `url`,
+            `isShow`
+        FROM
+            manga_detail tb1
+        WHERE
+            tb1.id IN
+        <foreach item="sid" collection="detailId" separator="," open="(" close=")" index="">
+            #{sid}
+        </foreach>
+        ORDER BY orderId DESC
+    </select>
 </mapper>

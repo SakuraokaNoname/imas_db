@@ -41,6 +41,10 @@ public class MangaCommentServiceImpl implements MangaCommentService {
     public ResultDTO addComment(HttpServletRequest request, MangaAddCommentVO vo) {
         mangaUserService.checkUserTokenDTO(request);
         String token = request.getHeader("token");
+        MangaUserDTO user = redisUtil.getObj(token, MangaUserDTO.class);
+        if(user.getPermission() == 0){
+            return ResultDTO.fail(ErrorCode.PERMISSION_FAIL.getCode(),ErrorCode.PERMISSION_FAIL.getMessage());
+        }
         vo.setCreateTime(new Date());
         vo.setUpdateTime(new Date());
         return ResultDTO.success(mangaCommentDao.addComment(vo) > 0);
@@ -73,21 +77,25 @@ public class MangaCommentServiceImpl implements MangaCommentService {
         MangaCommentLike commentLike = new MangaCommentLike();
         BeanUtils.copyProperties(vo,commentLike);
 
+        commentLike.setUid(user.getId());
         // 如果没有点赞记录,则增加记录
         // 如果有点赞记录,点赞过的话,软删除点赞记录,如果已经软删除,则取消软删除
-        Integer result = mangaCommentDao.getLikeComment(commentLike);
-        if(result != null){
+        String result = mangaCommentDao.getLikeComment(commentLike);
+        if(!StringUtils.isEmpty(result)){
             commentLike.setUpdateTime(new Date());
-            if(result == 0){
+            if("0".equals(result)){
                 commentLike.setIsDelete("1");
                 mangaCommentDao.updateLikeComment(commentLike);
             }
-            if(result == 1){
+            if("1".equals(result)){
                 commentLike.setIsDelete("0");
                 mangaCommentDao.updateLikeComment(commentLike);
             }
+            System.out.println(result);
+            System.out.println(commentLike.getIsDelete());
             return ResultDTO.success();
         }
+        commentLike.setIsDelete("0");
         commentLike.setCreateTime(new Date());
         commentLike.setUpdateTime(new Date());
         mangaCommentDao.addLikeComment(commentLike);

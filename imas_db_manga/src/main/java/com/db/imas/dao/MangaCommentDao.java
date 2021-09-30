@@ -23,7 +23,7 @@ public interface MangaCommentDao {
 
     Integer addLikeComment(MangaCommentLike commentLike);
 
-    Integer getLikeComment(MangaCommentLike commentLike);
+    String getLikeComment(MangaCommentLike commentLike);
 
     Integer updateLikeComment(MangaCommentLike commentLike);
 }

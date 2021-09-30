@@ -2,6 +2,7 @@ package com.db.imas.controller;
 
 import com.db.imas.model.dto.*;
 import com.db.imas.model.vo.MangaAddMangaDetailVO;
+import com.db.imas.model.vo.MangaSearchMangaSubVO;
 import com.db.imas.model.vo.UploadParamsVO;
 import com.db.imas.service.MangaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,5 +61,10 @@ public class MangaController {
     @PostMapping("setUploadParams")
     public ResultDTO setUploadParams(HttpServletRequest request ,@RequestBody UploadParamsVO vo){
         return mangaService.setUploadParams(request,vo);
+    }
+
+    @PostMapping("search")
+    public ResultDTO<List<MangaSubSearchDTO>> searchMangaSubList(@RequestBody MangaSearchMangaSubVO vo){
+        return mangaService.searchManga(vo);
     }
 }

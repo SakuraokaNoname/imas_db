@@ -1,5 +1,6 @@
 package com.db.imas.controller;
 
+import com.db.imas.constans.ErrorCode;
 import com.db.imas.model.dto.ImasIdolDTO;
 import com.db.imas.model.dto.MangaIdolListDTO;
 import com.db.imas.model.dto.ResultDTO;
@@ -37,11 +38,8 @@ public class ImasIdolController {
     @RequestMapping("changeBirthdayIdol")
     public ResultDTO changeBirthdayIdol(HttpServletRequest request){
         String token = request.getHeader("token");
-        if(StringUtils.isEmpty(token)){
-            return ResultDTO.fail();
-        }
-        if(!redisUtil.hasKey(token)){
-            return ResultDTO.fail();
+        if(!redisUtil.checkUserTokenIsAdmin(token)){
+            return ResultDTO.fail(ErrorCode.PERMISSION_FAIL.getCode(),ErrorCode.PERMISSION_FAIL.getMessage());
         }
         imasIdolService.changeBirthdayIdol();
         return ResultDTO.success();
