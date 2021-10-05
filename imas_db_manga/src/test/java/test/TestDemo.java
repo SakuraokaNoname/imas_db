@@ -4,6 +4,10 @@ import com.aliyun.oss.OSS;
 import com.aliyun.oss.model.OSSObjectSummary;
 import com.aliyun.oss.model.ObjectListing;
 import com.db.imas.ImasDbCommonApplication;
+import com.db.imas.model.dto.MangaSubSearchDTO;
+import com.db.imas.model.dto.ResultDTO;
+import com.db.imas.model.vo.MangaSearchMangaSubVO;
+import com.db.imas.service.MangaService;
 import com.db.imas.utils.OSSBuilding;
 import com.db.imas.utils.OSSUtil;
 import org.junit.jupiter.api.Test;
@@ -29,6 +33,9 @@ public class TestDemo {
 //    @Autowired
 //    private OSSUtil ossUtil;
 
+    @Autowired
+    private MangaService mangaService;
+
     @Test
     public void test1(){
 
@@ -46,15 +53,23 @@ public class TestDemo {
 //        for (int i = 0;i < 50; i++){
 //            ossUtil.getFileList();
 //        }
-        List<String> arr = new ArrayList<>();
-        arr.add("003.jpg");
-        arr.add("001.jpg");
-        arr.add("002.jpg");
-        Collections.sort(arr);
-        System.out.println(arr.toString());
+//        List<String> arr = new ArrayList<>();
+//        arr.add("003.jpg");
+//        arr.add("001.jpg");
+//        arr.add("002.jpg");
+//        Collections.sort(arr);
+//        System.out.println(arr.toString());
+        MangaSearchMangaSubVO vo = new MangaSearchMangaSubVO();
+        vo.setIdolList(",24,4,15,31,");
+        ResultDTO<List<MangaSubSearchDTO>> dto = mangaService.searchManga(vo);
 
         long endTime = System.currentTimeMillis();    //获取结束时间
         System.out.println("程序运行时间：" + (endTime - startTime) + "ms");    //输出程序运行时间
+
+        for(MangaSubSearchDTO dto1:dto.getData()){
+            System.out.println(dto1.getSubTitle());
+        }
+
     }
 
     @Test

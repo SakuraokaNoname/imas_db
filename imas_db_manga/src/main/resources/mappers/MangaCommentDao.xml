@@ -8,11 +8,13 @@
     </insert>
 
     <select id="getCommentList" resultType="MangaCommentListDTO">
-        SELECT tb1.id,tb1.content,tb1.createTime,tb2.name,tb2.icon
+        SELECT tb1.id,tb1.content,tb1.createTime,tb2.name,tb2.icon,COUNT(tb3.id) AS likeCount,#{uid} = tb3.uid AS isLike
         FROM manga_comment tb1
         LEFT JOIN manga_user tb2 ON tb1.uid = tb2.id
+        LEFT JOIN manga_comment_like tb3 ON tb1.id = tb3.commentId AND tb3.isDelete = 0
         WHERE tb1.mid = #{mid} AND tb1.isDelete = #{isDelete}
-        ORDER BY tb1.createTime DESC
+        GROUP BY tb1.id
+        ORDER BY likeCount DESC,tb1.createTime DESC
     </select>
 
     <update id="deleteComment">
@@ -20,4 +22,19 @@
         WHERE id = #{id}
     </update>
 
+    <insert id="addLikeComment" parameterType="MangaCommentLike">
+        INSERT INTO manga_comment_like (uid,commentId,isDelete,createTime,updateTime)
+        VALUES (#{uid},#{commentId},#{isDelete},#{createTime},#{updateTime})
+    </insert>
+
+    <select id="getLikeComment" parameterType="MangaCommentLike" resultType="String">
+        SELECT isDelete FROM `manga_comment_like`
+        WHERE uid = #{uid} AND commentId = #{commentId}
+    </select>
+
+    <update id="updateLikeComment" parameterType="MangaCommentLike">
+        UPDATE manga_comment_like
+        SET isDelete = #{isDelete},updateTime = #{updateTime}
+        WHERE uid = #{uid} AND commentId = #{commentId}
+    </update>
 </mapper>

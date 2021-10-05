@@ -12,9 +12,18 @@ public class MangaComment {
     private int uid;
     private int mid;
     private String content;
+    private int likeCount;
     private int isDelete;
     private Date createTime;
     private Date updateTime;
+
+    public int getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(int likeCount) {
+        this.likeCount = likeCount;
+    }
 
     public int getId() {
         return id;

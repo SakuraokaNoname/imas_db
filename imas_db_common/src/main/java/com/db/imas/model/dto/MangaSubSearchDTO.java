@@ -1,13 +1,15 @@
-package com.db.imas.model.entity;
+package com.db.imas.model.dto;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
 
 /**
  * @Author noname
- * @Date 2021/6/11 15:02
+ * @Date 2021/9/29 15:57
  * @Version 1.0
  */
-public class MangaDetail {
+public class MangaSubSearchDTO {
 
     private int id;
     private int mid;
@@ -15,25 +17,33 @@ public class MangaDetail {
     private String localizationGroup;
     private String translators;
     private String dantalions;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date updateTime;
-    private int orderId;
-    private String debutIdol;
+    private String url;
     private String isShow;
 
-    public String getIsShow() {
-        return isShow;
+    public int getMid() {
+        return mid;
     }
 
-    public void setIsShow(String isShow) {
-        this.isShow = isShow;
+    public void setMid(int mid) {
+        this.mid = mid;
     }
 
-    public String getDebutIdol() {
-        return debutIdol;
+    public int getId() {
+        return id;
     }
 
-    public void setDebutIdol(String debutIdol) {
-        this.debutIdol = debutIdol;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getSubTitle() {
+        return subTitle;
+    }
+
+    public void setSubTitle(String subTitle) {
+        this.subTitle = subTitle;
     }
 
     public String getLocalizationGroup() {
@@ -68,35 +78,19 @@ public class MangaDetail {
         this.updateTime = updateTime;
     }
 
-    public int getId() {
-        return id;
+    public String getUrl() {
+        return url;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
-    public int getMid() {
-        return mid;
+    public String getIsShow() {
+        return isShow;
     }
 
-    public void setMid(int mid) {
-        this.mid = mid;
-    }
-
-    public String getSubTitle() {
-        return subTitle;
-    }
-
-    public void setSubTitle(String subTitle) {
-        this.subTitle = subTitle;
-    }
-
-    public int getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
+    public void setIsShow(String isShow) {
+        this.isShow = isShow;
     }
 }

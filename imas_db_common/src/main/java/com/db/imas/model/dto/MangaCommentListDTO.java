@@ -16,6 +16,24 @@ public class MangaCommentListDTO {
     private Date createTime;
     private String name;
     private String icon;
+    private int likeCount;
+    private int isLike;
+
+    public int getIsLike() {
+        return isLike;
+    }
+
+    public void setIsLike(int isLike) {
+        this.isLike = isLike;
+    }
+
+    public int getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(int likeCount) {
+        this.likeCount = likeCount;
+    }
 
     public String getName() {
         return name;

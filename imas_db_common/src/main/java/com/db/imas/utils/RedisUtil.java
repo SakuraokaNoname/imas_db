@@ -3,6 +3,7 @@ package com.db.imas.utils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.db.imas.model.dto.MangaUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
@@ -237,4 +238,11 @@ public class RedisUtil {
         return stringRedisTemplate.keys(key).size();
     }
 
+    public boolean checkUserTokenIsAdmin(String token) {
+        if(StringUtils.isEmpty(token)){
+            return false;
+        }
+        MangaUserDTO user = getObj(token, MangaUserDTO.class);
+        return user.getPermission() == 1;
+    }
 }

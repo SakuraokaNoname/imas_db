@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
  * @Author noname
  * @Date 2021/8/17 16:29
  * @Version 1.0
+ *
+ * Netty服务器启动类
  */
 @Component
 public class ImasChatServer {
@@ -20,7 +22,7 @@ public class ImasChatServer {
     private NioEventLoopGroup workerGroup;
     private final ServerBootstrap serverBootstrap;
 
-    private static class  ImasChatWSServer {
+    private static class ImasChatWSServer {
         static final ImasChatServer instance = new ImasChatServer();
     }
 
@@ -29,15 +31,16 @@ public class ImasChatServer {
     }
 
     public ImasChatServer(){
-        boosGroup = new NioEventLoopGroup();
-        workerGroup = new NioEventLoopGroup();
-        serverBootstrap = new ServerBootstrap();
+        boosGroup = new NioEventLoopGroup(); //负责创建新连接
+        workerGroup = new NioEventLoopGroup(); //负责读取数据以及业务逻辑处理
+        serverBootstrap = new ServerBootstrap(); //负责引导进行服务端的启动工作
         serverBootstrap
-                .group(boosGroup, workerGroup)
-                .channel(NioServerSocketChannel.class)
-                .option(ChannelOption.SO_BACKLOG, 512)
-                .childOption(ChannelOption.TCP_NODELAY, true)
-//                .childHandler(new ChannelInitializer<NioSocketChannel>() {
+                .group(boosGroup, workerGroup) //配置线程组
+                .channel(NioServerSocketChannel.class) //设置IO模型
+                .option(ChannelOption.SO_BACKLOG, 512) //设置父连接的额外属性
+                .childOption(ChannelOption.TCP_NODELAY, true) //设置每条子连接的额外属性,是否开启Nagle算法
+                .childHandler(new ImasChatWebSocketInitialzer()); //为每个子连接初始化管道处理器
+//              .childHandler(new ChannelInitializer<NioSocketChannel>() {
 //                    protected void initChannel(NioSocketChannel ch) {
 //                        ch.pipeline().addLast(new Spliter());
 //                        ch.pipeline().addLast(PacketCodecHandler.INSTANCE);
@@ -46,8 +49,6 @@ public class ImasChatServer {
 //                        ch.pipeline().addLast(IMHandler.INSTANCE);
 //                    }
 //                });
-                .childHandler(new ImasChatWebSocketInitialzer());
-        serverBootstrap.bind(PORT);
-        System.out.println("netty服务启动成功");
+        serverBootstrap.bind(PORT); //绑定端口号
     }
 }

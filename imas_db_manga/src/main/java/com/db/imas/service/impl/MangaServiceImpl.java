@@ -5,6 +5,7 @@ import com.db.imas.constans.MangaType;
 import com.db.imas.dao.MangaDao;
 import com.db.imas.model.dto.*;
 import com.db.imas.model.vo.MangaAddMangaDetailVO;
+import com.db.imas.model.vo.MangaSearchMangaSubVO;
 import com.db.imas.model.vo.UploadParamsVO;
 import com.db.imas.service.MangaService;
 import com.db.imas.service.MangaUserService;
@@ -17,12 +18,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+import sun.security.ssl.Debug;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @Author noname
@@ -141,6 +141,39 @@ public class MangaServiceImpl implements MangaService {
         redisUtil.putRaw(Constants.UPLOAD_MANGAID_TOKEN,vo.getMid().toString(),3600);
         redisUtil.putRaw(Constants.UPLOAD_SUBID_TOKEN,vo.getSid().toString(),3600);
         return ResultDTO.success();
+    }
+
+    @Override
+    public ResultDTO<List<MangaSubSearchDTO>> searchManga(MangaSearchMangaSubVO vo) {
+        if(StringUtils.isEmpty(vo.getIdolList()) || ",".equals(vo.getIdolList())){
+            return ResultDTO.fail(ErrorCode.SEARCH_PARAM_NULL.getCode(),ErrorCode.SEARCH_PARAM_NULL.getMessage());
+        }
+        List<String> searchIdol = new ArrayList<>();
+        for(String str : vo.getIdolList().split(",")){
+            if(!StringUtils.isEmpty(str)){
+                searchIdol.add(str);
+            }
+        }
+        List<String> searchMid = new ArrayList<>();
+        List<MangaDebutIdol> mangaDebutIdolList = mangaDao.getMangaSubDebutIdol();
+        for(MangaDebutIdol debutIdol : mangaDebutIdolList){
+            int size = searchIdol.size();
+            int flag = 0;
+            debutIdol.setDebutIdol("," + debutIdol.getDebutIdol());
+            for(String idol : searchIdol){
+                if(debutIdol.getDebutIdol().indexOf("," + idol + ",") > -1){
+                    flag = flag + 1;
+                }
+            }
+            if(flag == size){
+                searchMid.add(debutIdol.getId() + "");
+            }
+        }
+        if(searchMid.size() == 0){
+            return ResultDTO.success(new ArrayList<>());
+        }
+        List<MangaSubSearchDTO> searchResult = mangaDao.searchMangaSubList(searchMid);
+        return ResultDTO.success(searchResult);
     }
 
 }

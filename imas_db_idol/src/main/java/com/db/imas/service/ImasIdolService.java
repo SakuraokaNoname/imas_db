@@ -1,6 +1,7 @@
 package com.db.imas.service;
 
 import com.db.imas.model.dto.ImasIdolDTO;
+import com.db.imas.model.dto.MangaIdolListDTO;
 import com.db.imas.model.dto.ResultDTO;
 import com.db.imas.utils.RedisUtil;
 
@@ -18,4 +19,9 @@ public interface ImasIdolService {
 
     void changeBirthdayIdol();
 
+    ResultDTO<List<MangaIdolListDTO>> getCinderellaIdolList();
+
+    void addMangaIdol(HttpServletRequest request,Integer mid,Integer idolId);
+
+    ResultDTO<List<MangaIdolListDTO>> getMangaDebutIdolList(Integer mid);
 }
