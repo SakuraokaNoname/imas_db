@@ -43,10 +43,15 @@ public class MangaUserServiceImpl implements MangaUserService {
         if(ObjectUtils.isEmpty(dto)){
             return ResultDTO.fail(ErrorCode.LOGIN_ERROR.getCode(),ErrorCode.LOGIN_ERROR.getMessage());
         }
-        //TODO 创建token并返回
+        // TODO 创建token并返回
         String token = TokenUtil.createToken(Constants.USER_TOKEN,dto.getId());
         redisUtil.putRaw(token, JSONObject.toJSONString(dto), Constants.TOKEN_EXPIRE);
         dto.setToken(token);
+        // 更新IP
+        MangaUpdateUserVO loginIP = new MangaUpdateUserVO();
+        loginIP.setId(dto.getId());
+        loginIP.setLoginIP(vo.getLoginIP());
+        mangaUserDao.userUpdate(loginIP);
         return ResultDTO.success(dto);
     }
 

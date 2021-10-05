@@ -16,6 +16,15 @@ public class MangaAddUserVO {
     private Date createTime;
     private int permission;
     private String chatId;
+    private String createIP;
+
+    public String getCreateIP() {
+        return createIP;
+    }
+
+    public void setCreateIP(String createIP) {
+        this.createIP = createIP;
+    }
 
     public String getChatId() {
         return chatId;
