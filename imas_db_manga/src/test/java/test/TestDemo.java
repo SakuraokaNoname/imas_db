@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -30,6 +31,17 @@ public class TestDemo {
 
     @Test
     public void test1(){
+
+        LocalDateTime nowTime = LocalDateTime.now();
+        String zikoku = String.valueOf(nowTime);
+
+        String zikoku_substring = zikoku.substring(10,12);
+
+        System.out.println(zikoku);
+        System.out.println(zikoku_substring);
+
+
+
         long startTime = System.currentTimeMillis();    //获取开始时间
 //        for (int i = 0;i < 50; i++){
 //            ossUtil.getFileList();
