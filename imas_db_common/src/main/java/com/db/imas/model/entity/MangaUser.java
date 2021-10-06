@@ -16,6 +16,24 @@ public class MangaUser {
     private String icon;
     private int permission;
     private Date createTime;
+    private String createIP;
+    private String loginIP;
+
+    public String getCreateIP() {
+        return createIP;
+    }
+
+    public void setCreateIP(String createIP) {
+        this.createIP = createIP;
+    }
+
+    public String getLoginIP() {
+        return loginIP;
+    }
+
+    public void setLoginIP(String loginIP) {
+        this.loginIP = loginIP;
+    }
 
     public int getId() {
         return id;

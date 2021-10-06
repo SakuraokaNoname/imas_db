@@ -7,6 +7,7 @@ import com.db.imas.model.vo.MangaAddUserVO;
 import com.db.imas.model.vo.MangaLoginVO;
 import com.db.imas.model.vo.MangaUpdateUserVO;
 import com.db.imas.service.MangaUserService;
+import com.db.imas.utils.IPUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,13 +26,15 @@ public class MangaUserController {
 
     @PostMapping("login")
     @ResponseBody
-    public ResultDTO<MangaUserDTO> userLogin(@RequestBody MangaLoginVO vo){
+    public ResultDTO<MangaUserDTO> userLogin(HttpServletRequest request, @RequestBody MangaLoginVO vo){
+        vo.setLoginIP(IPUtil.getIp2(request));
         return mangaUserService.userLogin(vo);
     }
 
     @PostMapping("register")
     @ResponseBody
-    public ResultDTO<String> userRegister(@RequestBody MangaAddUserVO vo){
+    public ResultDTO<String> userRegister(HttpServletRequest request, @RequestBody MangaAddUserVO vo){
+        vo.setCreateIP(IPUtil.getIp2(request));
         return mangaUserService.userRegister(vo);
     }
 

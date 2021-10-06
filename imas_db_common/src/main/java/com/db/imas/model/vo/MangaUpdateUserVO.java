@@ -12,6 +12,15 @@ public class MangaUpdateUserVO {
     private String password;
     private String icon;
     private Integer permission;
+    private String loginIP;
+
+    public String getLoginIP() {
+        return loginIP;
+    }
+
+    public void setLoginIP(String loginIP) {
+        this.loginIP = loginIP;
+    }
 
     public int getId() {
         return id;

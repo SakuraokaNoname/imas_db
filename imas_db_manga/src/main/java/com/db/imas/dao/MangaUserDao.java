@@ -26,4 +26,6 @@ public interface MangaUserDao {
     Integer checkUserByOne(String loginId);
 
     List<MangaUserIconDTO> userIconList();
+
+    void UpdateLoginIP(String ip);
 }

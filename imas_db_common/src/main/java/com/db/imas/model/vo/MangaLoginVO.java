@@ -9,6 +9,15 @@ public class MangaLoginVO {
 
     private String loginId;
     private String password;
+    private String loginIP;
+
+    public String getLoginIP() {
+        return loginIP;
+    }
+
+    public void setLoginIP(String loginIP) {
+        this.loginIP = loginIP;
+    }
 
     public String getLoginId() {
         return loginId;

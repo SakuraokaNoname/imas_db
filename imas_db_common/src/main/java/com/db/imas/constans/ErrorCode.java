@@ -7,6 +7,7 @@ package com.db.imas.constans;
  */
 public enum ErrorCode {
     SUCCESS("200", "调用成功"),
+    ACCESS_LIMIT("7650","禁止访问"),
     SEARCH_PARAM_NULL("9990","请选择要搜索的偶像"),
     UPLOAD_NOT_PARAMS("9991","上传参数有误"),
     UPLOAD_ERROR("9992","上传失败"),

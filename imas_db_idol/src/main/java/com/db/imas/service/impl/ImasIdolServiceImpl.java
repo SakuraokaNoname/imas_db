@@ -56,6 +56,7 @@ public class ImasIdolServiceImpl implements ImasIdolService {
         }
         String debutIdols = imasIdolDao.selectDebutIdol(mid);
         String debutIdolStr = idolId + ",";
+        // TODO debutIdols前要加一个逗号,indexOf判断时需要使用 "," + idolId + "," 来判断
         if(!StringUtils.isEmpty(debutIdols)){
             if(debutIdols.indexOf(debutIdolStr) == -1){
                 imasIdolDao.addMangaIdol(mid,debutIdols + debutIdolStr);

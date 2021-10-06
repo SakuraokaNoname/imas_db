@@ -28,6 +28,9 @@
             <if test="permission != null">
                 permission = #{permission},
             </if>
+            <if test="loginIP != null">
+                loginIP = #{loginIP},
+            </if>
         </set>
         WHERE id = #{id}
     </update>
