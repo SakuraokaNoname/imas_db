@@ -20,7 +20,7 @@ public interface ImasIdolDao {
 
     List<MangaIdolListDTO> getMangaIdolList(@Param("production")int production);
 
-    void addMangaIdol(@Param("mid")Integer mid,@Param("debutIdol")String debugIdol);
+    void updateMangaIdol(@Param("mid")Integer mid,@Param("debutIdol")String debugIdol);
 
     String selectDebutIdol(@Param("mid")Integer mid);
 

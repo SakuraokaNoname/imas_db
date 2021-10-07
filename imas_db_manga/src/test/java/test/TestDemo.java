@@ -1,6 +1,7 @@
 package test;
 
 import com.db.imas.ImasDbCommonApplication;
+import com.db.imas.dao.ImasIpDao;
 import com.db.imas.model.entity.ImasIP;
 import com.db.imas.service.MangaAccessService;
 import com.db.imas.utils.IPUtil;
@@ -8,6 +9,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import java.io.InputStream;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.*;
 
@@ -26,32 +31,49 @@ public class TestDemo {
     @Autowired
     private MangaAccessService mangaAccessService;
 
-    @Test
-    public void insertIpDB(){
-        long startTime = System.currentTimeMillis();    //获取开始时间
+    @Autowired
+    private ImasIpDao imasIpDao;
 
-        InputStream is = this.getClass().getClassLoader().getResourceAsStream("ip_db.txt");
-        try(Scanner scanner = new Scanner(is,"GBK")) {
-            while (scanner.hasNextLine()) {
-                String str = scanner.nextLine();
-                List<String> ipInfo = IPUtil.getIpInfo(str);
-                ImasIP ip = new ImasIP();
-                ip.setIp0(ipInfo.get(0));
-                ip.setIp255(ipInfo.get(1));
-                ip.setAddr(ipInfo.get(2));
-                System.out.println(str);
-                System.out.println(ipInfo.toString());
-                int result = mangaAccessService.addIpInfo(ip);
-                System.out.println(result);
-                Thread.sleep(5);
-            }
-        } catch (Exception e) {
-            System.out.println("error");
-        }
-//        System.out.println(IPUtil.ipIsValid("1.14.128.0-1.14.213.255", "1.14.138.255"));
-        long endTime = System.currentTimeMillis();    //获取结束时间
-        System.out.println("程序运行时间：" + (endTime - startTime) + "ms");    //输出程序运行时间
+    @Test
+    public void selectIp(){
+//        List<ImasIP> ipList = imasIpDao.selectJapanAndKoreaIP();
+//        long startTime = System.currentTimeMillis();    //获取开始时间
+//        for(ImasIP ip : ipList){
+//            String str = ip.getIp0() + "-" + ip.getIp255();
+//            if(IPUtil.ipIsValid(str, "211.18.234.0")){
+//                System.out.println("ip异常");
+//            }
+//        }
+//        long endTime = System.currentTimeMillis();    //获取结束时间
+//        System.out.println("程序运行时间：" + (endTime - startTime) + "ms");    //输出程序运行时间
     }
+
+//    @Test
+//    public void insertIpDB(){
+//        long startTime = System.currentTimeMillis();    //获取开始时间
+//
+//        InputStream is = this.getClass().getClassLoader().getResourceAsStream("ip_db.txt");
+//        try(Scanner scanner = new Scanner(is,"GBK")) {
+//            while (scanner.hasNextLine()) {
+//                String str = scanner.nextLine();
+//                List<String> ipInfo = IPUtil.getIpInfo(str);
+//                ImasIP ip = new ImasIP();
+//                ip.setIp0(ipInfo.get(0));
+//                ip.setIp255(ipInfo.get(1));
+//                ip.setAddr(ipInfo.get(2));
+//                System.out.println(str);
+//                System.out.println(ipInfo.toString());
+//                int result = mangaAccessService.addIpInfo(ip);
+//                System.out.println(result);
+//                Thread.sleep(5);
+//            }
+//        } catch (Exception e) {
+//            System.out.println("error");
+//        }
+////        System.out.println(IPUtil.ipIsValid("1.14.128.0-1.14.213.255", "1.14.138.255"));
+//        long endTime = System.currentTimeMillis();    //获取结束时间
+//        System.out.println("程序运行时间：" + (endTime - startTime) + "ms");    //输出程序运行时间
+//    }
 
     @Test
     public void test1(){

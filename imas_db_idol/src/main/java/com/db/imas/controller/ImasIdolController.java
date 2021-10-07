@@ -55,6 +55,11 @@ public class ImasIdolController {
         imasIdolService.addMangaIdol(request,mid,idolId);
     }
 
+    @RequestMapping("removeIdol/{mid}/{idolId}")
+    public void removeMangaIdol(HttpServletRequest request,@PathVariable Integer mid,@PathVariable Integer idolId){
+        imasIdolService.removeMangaIdol(request,mid,idolId);
+    }
+
     @RequestMapping("debutIdolList/{mid}")
     public ResultDTO<List<MangaIdolListDTO>> getMangaDebutIdolList(@PathVariable Integer mid){
         return imasIdolService.getMangaDebutIdolList(mid);

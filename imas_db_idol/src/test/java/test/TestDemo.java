@@ -18,7 +18,7 @@ public class TestDemo {
 
     @Test
     public void test(){
-        imasIdolService.addMangaIdol(null,75,4);
+//        imasIdolService.addMangaIdol(null,119,175);
     }
 
 }

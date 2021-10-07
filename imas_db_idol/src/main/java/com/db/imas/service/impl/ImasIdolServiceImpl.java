@@ -55,15 +55,35 @@ public class ImasIdolServiceImpl implements ImasIdolService {
             return;
         }
         String debutIdols = imasIdolDao.selectDebutIdol(mid);
-        String debutIdolStr = idolId + ",";
-        // TODO debutIdols前要加一个逗号,indexOf判断时需要使用 "," + idolId + "," 来判断
+        String debutIdolStr = "," + idolId + ",";
         if(!StringUtils.isEmpty(debutIdols)){
-            if(debutIdols.indexOf(debutIdolStr) == -1){
-                imasIdolDao.addMangaIdol(mid,debutIdols + debutIdolStr);
+            if(("," + debutIdols).indexOf(debutIdolStr) == -1){
+                imasIdolDao.updateMangaIdol(mid,debutIdols + idolId + ",");
             }
             return;
         }
-        imasIdolDao.addMangaIdol(mid,debutIdolStr);
+        imasIdolDao.updateMangaIdol(mid,debutIdolStr);
+    }
+
+    @Override
+    public void removeMangaIdol(HttpServletRequest request, Integer mid, Integer idolId) {
+        String token = request.getHeader("token");
+        if(!redisUtil.checkUserTokenIsAdmin(token)){
+            return;
+        }
+        String debutIdols = imasIdolDao.selectDebutIdol(mid);
+        int i = 0;
+        for(String idol : debutIdols.split(",")){
+            if(!StringUtils.isEmpty(idol)){
+                i += i + 1;
+            }
+        }
+        if(i == 1){
+            imasIdolDao.updateMangaIdol(mid,"");
+            return;
+        }
+        String removeIodl = "," + idolId + ",";
+        imasIdolDao.updateMangaIdol(mid,("," + debutIdols).replace(removeIodl,","));
     }
 
     @Override

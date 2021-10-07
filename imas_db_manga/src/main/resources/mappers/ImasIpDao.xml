@@ -7,4 +7,10 @@
         VALUES (#{ip0},#{ip255},#{addr})
     </insert>
 
+    <select id="selectJapanAndKoreaIP" resultType="ImasIP">
+        SELECT * FROM `imas_ip` WHERE addr like "韩国%"
+        UNION ALL
+        SELECT * FROM `imas_ip` WHERE addr like "日本%"
+    </select>
+
 </mapper>

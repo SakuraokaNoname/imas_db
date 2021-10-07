@@ -16,4 +16,5 @@ public interface MangaAccessService {
 
     Integer addIpInfo(ImasIP ip);
 
+
 }

@@ -16,5 +16,9 @@ public class Constants {
 
     public final static String USER_TOKEN = "TOKEN:";
 
+    public final static String ACCESS_ERROR_PREFIX = "ACCESS_ERROR:";
+
+    public final static String ACCESS_PREFIX = "ACCESS:";
+
     public final static int TOKEN_EXPIRE = 60*60*24*7;
 }

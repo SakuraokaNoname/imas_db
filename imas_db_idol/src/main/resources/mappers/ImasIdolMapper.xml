@@ -18,7 +18,7 @@
         WHERE i.production = #{production}
     </select>
 
-    <update id="addMangaIdol">
+    <update id="updateMangaIdol">
         UPDATE manga_detail
         SET debutIdol = #{debutIdol}
         WHERE id = #{mid}

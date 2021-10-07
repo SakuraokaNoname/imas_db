@@ -3,6 +3,8 @@ package com.db.imas.utils;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -15,6 +17,16 @@ import java.util.List;
  * @since 2017/04/20
  */
 public class DateUtil {
+
+    /**
+     * 获取当前时间
+     */
+    public static String getNow(){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH/mm/ss");
+        LocalDateTime dt = LocalDateTime.now();
+        return dtf.format(dt);
+    }
+
     /**
      * 获取两个日期之间的日期
      * @param start 开始日期
