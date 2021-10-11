@@ -12,7 +12,7 @@ public class MangaCommentListDTO {
 
     private int id;
     private String content;
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT+8")
     private Date createTime;
     private String name;
     private String icon;

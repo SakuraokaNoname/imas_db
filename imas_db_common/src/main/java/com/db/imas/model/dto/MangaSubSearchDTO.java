@@ -17,7 +17,7 @@ public class MangaSubSearchDTO {
     private String localizationGroup;
     private String translators;
     private String dantalions;
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT+8")
     private Date updateTime;
     private String url;
     private String isShow;

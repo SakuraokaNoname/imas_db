@@ -13,4 +13,25 @@
         SELECT * FROM `imas_ip` WHERE addr like "日本%"
     </select>
 
+    <insert id="insertAccessIP" parameterType="ImasAccessIP">
+        INSERT INTO imas_access_ip (ip,accessTime,accessAddr,isBlock)
+        VALUES
+        (#{ip},#{accessTime},#{accessAddr},#{isBlock})
+    </insert>
+
+    <select id="selectPrefixIP" resultType="ImasIP">
+        SELECT ip0,ip255,addr FROM imas_ip
+        WHERE ip0 LIKE CONCAT(#{ip},'%')
+    </select>
+
+    <select id="selectAccessIP" resultType="ImasAccessIPDTO">
+        SELECT *,COUNT(ip) as accessCount FROM `imas_access_ip`
+        <where>
+            <if test="isBlock != '' and isBlock != null">
+                isBlock = #{isBlock}
+            </if>
+        </where>
+        GROUP BY ip
+        ORDER BY accessTime desc
+    </select>
 </mapper>

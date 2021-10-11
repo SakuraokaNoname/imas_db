@@ -1,18 +1,20 @@
-package test;
+package test.manga;
 
-import com.db.imas.ImasDbCommonApplication;
+import com.db.imas.ImasDbMangaApplication;
 import com.db.imas.dao.ImasIpDao;
+import com.db.imas.model.entity.ImasAccessIP;
 import com.db.imas.model.entity.ImasIP;
 import com.db.imas.service.MangaAccessService;
+import com.db.imas.utils.Constants;
 import com.db.imas.utils.IPUtil;
+import com.db.imas.utils.RedisUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import java.io.InputStream;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
+
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.*;
 
@@ -22,7 +24,7 @@ import java.util.*;
  * @Version 1.0
  */
 //@SpringBootTest
-@SpringBootTest(classes = ImasDbCommonApplication.class)
+@SpringBootTest(classes = ImasDbMangaApplication.class)
 public class TestDemo {
 
 //    @Autowired
@@ -33,6 +35,19 @@ public class TestDemo {
 
     @Autowired
     private ImasIpDao imasIpDao;
+
+    @Autowired
+    private RedisUtil redisUtil;
+
+//    @Test
+//    public void insertAccessIp() throws ParseException, IOException {
+//        List<ImasAccessIP> addAccessIPList = new ArrayList<>();
+//        addAccessIPList = getAccessIP(addAccessIPList, Constants.ACCESS_PREFIX);
+//        addAccessIPList = getAccessIP(addAccessIPList, Constants.ACCESS_ERROR_PREFIX);
+//        for(ImasAccessIP imasAccessIP : addAccessIPList){
+//            mangaAccessService.insertIPData(imasAccessIP);
+//        }
+//    }
 
     @Test
     public void selectIp(){
@@ -99,6 +114,5 @@ public class TestDemo {
 //        }
 
     }
-
 }
 

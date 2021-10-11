@@ -15,7 +15,7 @@ public class MangaDTO {
     private String title;
     private String profile;
     private String url;
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT+8")
     private Date updateTime;
 
     public String getUrl() {
