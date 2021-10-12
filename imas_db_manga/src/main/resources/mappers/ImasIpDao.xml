@@ -24,14 +24,20 @@
         WHERE ip0 LIKE CONCAT(#{ip},'%')
     </select>
 
+    <!--  先排序后分组,LIMIT防止mysql优化此语句导致排序失败  -->
     <select id="selectAccessIP" resultType="ImasAccessIPDTO">
-        SELECT *,COUNT(ip) as accessCount FROM `imas_access_ip`
-        <where>
-            <if test="isBlock != '' and isBlock != null">
-                isBlock = #{isBlock}
-            </if>
-        </where>
+        SELECT *,COUNT(sub.ip) as accessCount FROM
+        (
+            SELECT * FROM `imas_access_ip`
+            <where>
+                <if test="isBlock != '' and isBlock != null">
+                    isBlock = #{isBlock}
+                </if>
+            </where>
+            ORDER BY accessTime DESC
+            LIMIT 99999
+        ) AS sub
         GROUP BY ip
-        ORDER BY accessTime desc
+        ORDER BY accessTime DESC
     </select>
 </mapper>

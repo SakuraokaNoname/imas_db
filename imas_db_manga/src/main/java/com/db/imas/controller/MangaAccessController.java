@@ -29,8 +29,8 @@ public class MangaAccessController {
         return mangaAccessService.checkAccessUser(request);
     }
 
-    @PostMapping("access/list/{isBlock}")
-    public ResultDTO<List<ImasAccessIPDTO>> getCommentList(HttpServletRequest request, @PathVariable String isBlock){
+    @PostMapping({"access/list/{isBlock}","access/list"})
+    public ResultDTO<List<ImasAccessIPDTO>> getCommentList(HttpServletRequest request, @PathVariable(required = false) String isBlock){
         return mangaAccessService.selectAccessIP(request,isBlock);
     }
 

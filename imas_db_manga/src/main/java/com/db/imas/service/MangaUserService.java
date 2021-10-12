@@ -36,4 +36,5 @@ public interface MangaUserService {
 
     ResultDTO<MangaUserIconDTO> userIconList();
 
+    void removeCurrentUserToken(int id);
 }

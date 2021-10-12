@@ -36,6 +36,11 @@ public class MangaAccessServiceImpl implements MangaAccessService {
             return ResultDTO.fail(ErrorCode.ACCESS_LIMIT.getCode(),ErrorCode.ACCESS_LIMIT.getMessage());
         }
 
+        if("0:0:0:0:0:0:0:1".equals(ip)){
+            // TODO 本地访问不记录redis
+            return ResultDTO.success(true);
+        }
+
         String now = DateUtil.getNow();
         if(IPBlockList.isBlockIP(ip)){
             // TODO 记录访问IP

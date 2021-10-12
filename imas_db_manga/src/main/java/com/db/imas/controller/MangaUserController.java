@@ -61,4 +61,9 @@ public class MangaUserController {
     public ResultDTO<MangaUserIconDTO> userIconList(){
         return mangaUserService.userIconList();
     }
+
+    @PostMapping("admin")
+    public ResultDTO checkUserIsAdmin(HttpServletRequest request){
+        return mangaUserService.checkUserTokenIsAdmin(request);
+    }
 }

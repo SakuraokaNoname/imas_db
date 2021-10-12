@@ -14,6 +14,7 @@ import com.db.imas.utils.Constants;
 import com.db.imas.utils.MD5Util;
 import com.db.imas.utils.RedisUtil;
 import com.db.imas.utils.TokenUtil;
+import io.netty.util.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -21,6 +22,7 @@ import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * @Author noname
@@ -43,6 +45,8 @@ public class MangaUserServiceImpl implements MangaUserService {
         if(ObjectUtils.isEmpty(dto)){
             return ResultDTO.fail(ErrorCode.LOGIN_ERROR.getCode(),ErrorCode.LOGIN_ERROR.getMessage());
         }
+        // 唯一登录
+        removeCurrentUserToken(dto.getId());
         // TODO 创建token并返回
         String token = TokenUtil.createToken(Constants.USER_TOKEN,dto.getId());
         redisUtil.putRaw(token, JSONObject.toJSONString(dto), Constants.TOKEN_EXPIRE);
@@ -51,7 +55,9 @@ public class MangaUserServiceImpl implements MangaUserService {
         MangaUpdateUserVO loginIP = new MangaUpdateUserVO();
         loginIP.setId(dto.getId());
         loginIP.setLoginIP(vo.getLoginIP());
-        mangaUserDao.userUpdate(loginIP);
+        if(!"0:0:0:0:0:0:0:1".equals(vo.getLoginIP())){
+            mangaUserDao.userUpdate(loginIP);
+        }
         return ResultDTO.success(dto);
     }
 
@@ -133,6 +139,17 @@ public class MangaUserServiceImpl implements MangaUserService {
     @Override
     public ResultDTO<MangaUserIconDTO> userIconList() {
         return ResultDTO.success(mangaUserDao.userIconList());
+    }
+
+    @Override
+    public void removeCurrentUserToken(int id) {
+        Set<String> tokenList = redisUtil.getPrefixKeySet(Constants.USER_TOKEN);
+        for(String token : tokenList){
+            MangaUserDTO user = redisUtil.getObj(token, MangaUserDTO.class);
+            if(id == user.getId()){
+                redisUtil.del(token);
+            }
+        }
     }
 
 }

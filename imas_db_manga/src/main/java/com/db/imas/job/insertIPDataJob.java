@@ -34,7 +34,7 @@ public class insertIPDataJob {
     private RedisUtil redisUtil;
 
     // 每天凌晨一点将访问记录录入数据库并删除缓存记录
-    @Scheduled(cron = "0 0 1 * * ?")
+    @Scheduled(cron = "0 0 0/1 * * ?")
     public void insertIPData() throws ParseException {
         List<ImasAccessIP> addAccessIPList = new ArrayList<>();
         addAccessIPList = getAccessIP(addAccessIPList, Constants.ACCESS_PREFIX);
@@ -48,8 +48,8 @@ public class insertIPDataJob {
         Set<String> accessSet = redisUtil.getPrefixKeySet(prefix);
         if(!accessSet.isEmpty()){
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH/mm/ss");
-            ImasAccessIP accessIP = new ImasAccessIP();
             for(String pre : accessSet){
+                ImasAccessIP accessIP = new ImasAccessIP();
                 String ip = redisUtil.getRaw(pre);
                 String accessTime = pre.substring(pre.indexOf(":") + 1);
                 accessIP.setIp(ip);
