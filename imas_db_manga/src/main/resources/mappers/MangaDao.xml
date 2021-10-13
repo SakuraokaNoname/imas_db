@@ -88,4 +88,10 @@
         </foreach>
         ORDER BY orderId DESC
     </select>
+
+    <select id="selectMangaPicture" resultType="MangaPictureDownloadDTO">
+        SELECT manga.mid AS mid,pic.sid AS sid,pic.url AS img
+        FROM manga_picture pic
+        LEFT JOIN manga_detail manga ON pic.sid = manga.id
+    </select>
 </mapper>

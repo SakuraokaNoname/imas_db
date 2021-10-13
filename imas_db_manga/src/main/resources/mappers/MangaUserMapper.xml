@@ -45,4 +45,10 @@
         SELECT *
         FROM manga_user_icon
     </select>
+
+    <select id="selectUserList" resultType="MangaQueryUserDTO">
+        SELECT id,name,loginId,permission,createTime,loginIP
+        FROM manga_user
+        ORDER BY permission DESC,createTime DESC
+    </select>
 </mapper>

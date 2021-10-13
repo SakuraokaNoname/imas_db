@@ -24,4 +24,6 @@ public interface MangaAccessService {
     List<ImasIP> selectPrefixIP(String ip);
 
     ResultDTO<List<ImasAccessIPDTO>> selectAccessIP(HttpServletRequest request, String isBlock);
+
+    String getAccessAddr(String ip);
 }

@@ -67,4 +67,9 @@ public class MangaController {
     public ResultDTO<List<MangaSubSearchDTO>> searchMangaSubList(@RequestBody MangaSearchMangaSubVO vo){
         return mangaService.searchManga(vo);
     }
+
+    @PostMapping("syn/oss")
+    public ResultDTO<Integer> synOSSPicture(HttpServletRequest request){
+        return mangaService.synOSSPictureDTO(request);
+    }
 }

@@ -60,33 +60,12 @@ public class insertIPDataJob {
                 }
                 accessIP.setAccessTime(sdf.parse(accessTime));
                 // TODO 根据IP搜索地区
-                accessIP.setAccessAddr(getAccessAddr(ip));
+                accessIP.setAccessAddr(mangaAccessService.getAccessAddr(ip));
                 addAccessIPList.add(accessIP);
                 redisUtil.del(pre);
             }
         }
         return addAccessIPList;
-    }
-
-    private String getAccessAddr(String ip){
-        String[] splitStr = ip.split("[.]");
-        String prefixIP = splitStr[0] + "." + splitStr[1] + ".";
-        List<ImasIP> searchIPList = mangaAccessService.selectPrefixIP(prefixIP);
-        for(ImasIP imasIP : searchIPList){
-            String IPSection = imasIP.getIp0() + "-" + imasIP.getIp255();
-            if(IPUtil.ipIsValid(IPSection,ip)){
-                return imasIP.getAddr();
-            }
-        }
-        String subPrefixIP = splitStr[0] + ".";
-        List<ImasIP> subSearchIPList = mangaAccessService.selectPrefixIP(subPrefixIP);
-        for(ImasIP imasIP : subSearchIPList){
-            String IPSection = imasIP.getIp0() + "-" + imasIP.getIp255();
-            if(IPUtil.ipIsValid(IPSection,ip)){
-                return imasIP.getAddr();
-            }
-        }
-        return "error";
     }
 
 }

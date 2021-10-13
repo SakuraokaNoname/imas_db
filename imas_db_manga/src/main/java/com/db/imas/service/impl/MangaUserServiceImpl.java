@@ -3,17 +3,16 @@ package com.db.imas.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.db.imas.constans.ErrorCode;
 import com.db.imas.dao.MangaUserDao;
+import com.db.imas.model.dto.MangaQueryUserDTO;
 import com.db.imas.model.dto.MangaUserDTO;
 import com.db.imas.model.dto.MangaUserIconDTO;
 import com.db.imas.model.dto.ResultDTO;
 import com.db.imas.model.vo.MangaAddUserVO;
 import com.db.imas.model.vo.MangaLoginVO;
 import com.db.imas.model.vo.MangaUpdateUserVO;
+import com.db.imas.service.MangaAccessService;
 import com.db.imas.service.MangaUserService;
-import com.db.imas.utils.Constants;
-import com.db.imas.utils.MD5Util;
-import com.db.imas.utils.RedisUtil;
-import com.db.imas.utils.TokenUtil;
+import com.db.imas.utils.*;
 import io.netty.util.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +21,7 @@ import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -37,6 +37,9 @@ public class MangaUserServiceImpl implements MangaUserService {
 
     @Autowired
     private MangaUserDao mangaUserDao;
+
+    @Autowired
+    private MangaAccessService mangaAccessService;
 
     @Override
     public ResultDTO<MangaUserDTO> userLogin(MangaLoginVO vo) {
@@ -150,6 +153,21 @@ public class MangaUserServiceImpl implements MangaUserService {
                 redisUtil.del(token);
             }
         }
+    }
+
+    @Override
+    public ResultDTO<List<MangaQueryUserDTO>> selectUserList(HttpServletRequest request) {
+        String token = request.getHeader("token");
+        if(!redisUtil.checkUserTokenIsAdmin(token)){
+            return ResultDTO.fail(ErrorCode.PERMISSION_FAIL.getCode(),ErrorCode.PERMISSION_FAIL.getMessage());
+        }
+        List<MangaQueryUserDTO> userDTOList = mangaUserDao.selectUserList();
+        for(MangaQueryUserDTO dto : userDTOList){
+            if(!StringUtils.isEmpty(dto.getLoginIP())){
+                dto.setLoginIP(mangaAccessService.getAccessAddr(dto.getLoginIP()));
+            }
+        }
+        return ResultDTO.success(userDTOList);
     }
 
 }

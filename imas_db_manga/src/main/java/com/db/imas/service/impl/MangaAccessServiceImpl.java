@@ -76,4 +76,25 @@ public class MangaAccessServiceImpl implements MangaAccessService {
         return ResultDTO.success(imasIpDao.selectAccessIP(isBlock));
     }
 
+    @Override
+    public String getAccessAddr(String ip){
+        String[] splitStr = ip.split("[.]");
+        String prefixIP = splitStr[0] + "." + splitStr[1] + ".";
+        List<ImasIP> searchIPList = selectPrefixIP(prefixIP);
+        for(ImasIP imasIP : searchIPList){
+            String IPSection = imasIP.getIp0() + "-" + imasIP.getIp255();
+            if(IPUtil.ipIsValid(IPSection,ip)){
+                return imasIP.getAddr();
+            }
+        }
+        String subPrefixIP = splitStr[0] + ".";
+        List<ImasIP> subSearchIPList = selectPrefixIP(subPrefixIP);
+        for(ImasIP imasIP : subSearchIPList){
+            String IPSection = imasIP.getIp0() + "-" + imasIP.getIp255();
+            if(IPUtil.ipIsValid(IPSection,ip)){
+                return imasIP.getAddr();
+            }
+        }
+        return "error";
+    }
 }

@@ -1,5 +1,6 @@
 package com.db.imas.controller;
 
+import com.db.imas.model.dto.MangaQueryUserDTO;
 import com.db.imas.model.dto.MangaUserDTO;
 import com.db.imas.model.dto.MangaUserIconDTO;
 import com.db.imas.model.dto.ResultDTO;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @Author noname
@@ -65,5 +67,10 @@ public class MangaUserController {
     @PostMapping("admin")
     public ResultDTO checkUserIsAdmin(HttpServletRequest request){
         return mangaUserService.checkUserTokenIsAdmin(request);
+    }
+
+    @PostMapping("user/list")
+    public ResultDTO<List<MangaQueryUserDTO>> selectUserList(HttpServletRequest request){
+        return mangaUserService.selectUserList(request);
     }
 }

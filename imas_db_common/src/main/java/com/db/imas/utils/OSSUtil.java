@@ -1,9 +1,12 @@
 package com.db.imas.utils;
 
+import com.aliyun.oss.model.GetObjectRequest;
+import com.aliyun.oss.model.OSSObject;
 import com.aliyun.oss.model.OSSObjectSummary;
 import com.aliyun.oss.model.ObjectListing;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ObjectUtils;
 
 import java.io.*;
 
@@ -23,21 +26,11 @@ public class OSSUtil {
     public void upload(String path,InputStream inputStream){
         OSSBuilding.getOSSClient().putObject(bucketName,path,inputStream);
     }
-//
-//    public void download() throws IOException {
-//        OSSObject ossObject = ossClient.getObject(bucketName,"img/timg.jpg");
-//        InputStream content = ossObject.getObjectContent();
-//        if(!ObjectUtils.isEmpty(ossObject)){
-//            BufferedReader reader = new BufferedReader(new InputStreamReader(content));
-//            while(true){
-//                String line = reader.readLine();
-//                if(line == null) break;
-//                System.out.println("\n" + line);
-//            }
-//        }else{
-//            System.out.println("对象为空");
-//        }
-//    }
+
+    // path: "D:\\localpath\\examplefile.txt"
+    public void download(String fileName, String path){
+        OSSBuilding.getOSSClient().getObject(new GetObjectRequest(bucketName, fileName),new File(path));
+    }
 
     public void getFileList(){
         ObjectListing objectListing = OSSBuilding.getOSSClient().listObjects(bucketName);

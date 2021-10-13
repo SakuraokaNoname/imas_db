@@ -33,4 +33,8 @@ public interface MangaService {
     ResultDTO addManga(HttpServletRequest request, MangaAddMangaDetailVO mangaDetail) throws NullPointerException;
 
     ResultDTO<List<MangaSubSearchDTO>> searchManga(MangaSearchMangaSubVO vo);
+
+    int synOSSPicture();
+
+    ResultDTO<Integer> synOSSPictureDTO(HttpServletRequest request);
 }

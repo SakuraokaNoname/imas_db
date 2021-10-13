@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import sun.security.ssl.Debug;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -174,6 +175,37 @@ public class MangaServiceImpl implements MangaService {
         }
         List<MangaSubSearchDTO> searchResult = mangaDao.searchMangaSubList(searchMid);
         return ResultDTO.success(searchResult);
+    }
+
+    @Override
+    public int synOSSPicture() {
+        List<MangaPictureDownloadDTO> picList = mangaDao.selectMangaPicture();
+        int count = 0;
+        for(MangaPictureDownloadDTO pic : picList){
+            String folderUrl = "/data/manga/" + MangaType.getMangaType(pic.getMid()) + "/" + pic.getSid() + "/";
+            String fileName = "manga/" + MangaType.getMangaType(pic.getMid()) + "/" + pic.getSid() + "/" + pic.getImg();
+            String path = folderUrl + pic.getImg();
+            File folder = new File(folderUrl);
+            // 如果路径不存在,则生成路径
+            if(!folder.exists()){
+                folder.mkdirs();
+            }
+            // 如果图片不存在,则同步
+            if(!new File(path).exists()){
+                ossUtil.download(fileName,path);
+                count += 1;
+            }
+        }
+        return count;
+    }
+
+    @Override
+    public ResultDTO<Integer> synOSSPictureDTO(HttpServletRequest request) {
+        String token = request.getHeader("token");
+        if(!redisUtil.checkUserTokenIsAdmin(token)){
+            return ResultDTO.fail(ErrorCode.PERMISSION_FAIL.getCode(),ErrorCode.PERMISSION_FAIL.getMessage());
+        }
+        return ResultDTO.success(synOSSPicture());
     }
 
 }

@@ -33,4 +33,5 @@ public interface MangaDao {
 
     Integer addMangaPicture(MangaAddMangaDetailVO vo);
 
+    List<MangaPictureDownloadDTO> selectMangaPicture();
 }

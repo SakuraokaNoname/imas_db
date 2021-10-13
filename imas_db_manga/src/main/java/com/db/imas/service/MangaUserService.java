@@ -1,5 +1,6 @@
 package com.db.imas.service;
 
+import com.db.imas.model.dto.MangaQueryUserDTO;
 import com.db.imas.model.dto.MangaUserDTO;
 import com.db.imas.model.dto.MangaUserIconDTO;
 import com.db.imas.model.dto.ResultDTO;
@@ -8,6 +9,7 @@ import com.db.imas.model.vo.MangaLoginVO;
 import com.db.imas.model.vo.MangaUpdateUserVO;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @Author noname
@@ -37,4 +39,6 @@ public interface MangaUserService {
     ResultDTO<MangaUserIconDTO> userIconList();
 
     void removeCurrentUserToken(int id);
+
+    ResultDTO<List<MangaQueryUserDTO>> selectUserList(HttpServletRequest request);
 }
