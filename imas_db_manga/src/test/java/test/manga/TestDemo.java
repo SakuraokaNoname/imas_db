@@ -7,6 +7,7 @@ import com.db.imas.model.dto.MangaPictureDownloadDTO;
 import com.db.imas.model.entity.ImasAccessIP;
 import com.db.imas.model.entity.ImasIP;
 import com.db.imas.service.MangaAccessService;
+import com.db.imas.service.MangaService;
 import com.db.imas.utils.Constants;
 import com.db.imas.utils.IPUtil;
 import com.db.imas.utils.OSSUtil;
@@ -49,37 +50,12 @@ public class TestDemo {
     @Autowired
     private OSSUtil ossUtil;
 
-//    @Test
-//    public void synOSS(){
-//        List<MangaPictureDownloadDTO> picList = mangaDao.selectMangaPicture();
-//        for(MangaPictureDownloadDTO pic : picList){
-//            String folderUrl = "D:/data/manga/" + getMangaName(pic.getMid()) + "/" + pic.getSid() + "/";
-//            String fileName = "manga/" + getMangaName(pic.getMid()) + "/" + pic.getSid() + "/" + pic.getImg();
-//            String path = folderUrl + pic.getImg();
-//            File folder = new File(folderUrl);
-//
-//            if(!folder.exists()){
-//                folder.mkdirs();
-//            }
-//            if(!new File(path).exists()){
-//                System.out.println("进入,下载");
-//                ossUtil.download(fileName,path);
-//                return;
-//            }
-//            System.out.println("进入,不下载");
-////            String path = "/data/manga" + pic.getMid() + "/" + pic.getSid() + "/" + pic.getImg();
-//            return;
-//        }
-//    }
+    @Autowired
+    private MangaService mangaService;
 
-    public String getMangaName(int mid){
-        switch (mid){
-            case 1:
-                return "u149";
-            case 2:
-                return "wwg";
-        }
-        return "";
+    @Test
+    public void synOSS(){
+        System.out.println(mangaService.synOSSPicture());
     }
 
 //    @Test
