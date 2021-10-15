@@ -42,8 +42,8 @@ public class MangaCommentServiceImpl implements MangaCommentService {
         mangaUserService.checkUserTokenDTO(request);
         String token = request.getHeader("token");
         MangaUserDTO user = redisUtil.getObj(token, MangaUserDTO.class);
-        if(user.getPermission() == 0){
-            return ResultDTO.fail(ErrorCode.PERMISSION_FAIL.getCode(),ErrorCode.PERMISSION_FAIL.getMessage());
+        if(ObjectUtils.isEmpty(user)){
+            return ResultDTO.fail(ErrorCode.TOKEN_EXPIRE.getCode(),ErrorCode.TOKEN_EXPIRE.getMessage());
         }
         vo.setCreateTime(new Date());
         vo.setUpdateTime(new Date());
