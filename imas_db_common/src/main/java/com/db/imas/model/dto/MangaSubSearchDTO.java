@@ -11,7 +11,7 @@ import java.util.Date;
  */
 public class MangaSubSearchDTO {
 
-    private int id;
+    private int sid;
     private int mid;
     private String subTitle;
     private String localizationGroup;
@@ -30,12 +30,12 @@ public class MangaSubSearchDTO {
         this.mid = mid;
     }
 
-    public int getId() {
-        return id;
+    public int getSid() {
+        return sid;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setSid(int sid) {
+        this.sid = sid;
     }
 
     public String getSubTitle() {

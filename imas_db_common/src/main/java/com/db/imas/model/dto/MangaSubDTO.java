@@ -11,7 +11,8 @@ import java.util.Date;
  */
 public class MangaSubDTO {
 
-    private int id;
+    private int sid;
+    private int mid;
     private String subTitle;
     private String localizationGroup;
     private String translators;
@@ -21,6 +22,14 @@ public class MangaSubDTO {
     private String url;
     private int commentCount;
     private String isShow;
+
+    public int getMid() {
+        return mid;
+    }
+
+    public void setMid(int mid) {
+        this.mid = mid;
+    }
 
     public String getIsShow() {
         return isShow;
@@ -70,12 +79,12 @@ public class MangaSubDTO {
         this.updateTime = updateTime;
     }
 
-    public int getId() {
-        return id;
+    public int getSid() {
+        return sid;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setSid(int sid) {
+        this.sid = sid;
     }
 
     public String getSubTitle() {

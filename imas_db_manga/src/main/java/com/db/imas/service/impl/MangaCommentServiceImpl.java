@@ -45,6 +45,7 @@ public class MangaCommentServiceImpl implements MangaCommentService {
         if(ObjectUtils.isEmpty(user)){
             return ResultDTO.fail(ErrorCode.TOKEN_EXPIRE.getCode(),ErrorCode.TOKEN_EXPIRE.getMessage());
         }
+        // TODO 权限限制
         vo.setCreateTime(new Date());
         vo.setUpdateTime(new Date());
         return ResultDTO.success(mangaCommentDao.addComment(vo) > 0);
