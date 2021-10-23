@@ -7,6 +7,7 @@ import com.db.imas.model.dto.MangaUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.*;
@@ -243,6 +244,9 @@ public class RedisUtil {
             return false;
         }
         MangaUserDTO user = getObj(token, MangaUserDTO.class);
+        if(ObjectUtils.isEmpty(user)){
+            return false;
+        }
         return user.getPermission() == 1;
     }
 }
