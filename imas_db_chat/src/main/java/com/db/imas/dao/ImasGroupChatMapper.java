@@ -5,6 +5,7 @@ import com.db.imas.model.entity.ImasGroupChat;
 import com.db.imas.protocol.packet.JoinGroupMessage;
 import com.db.imas.session.Session;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -23,4 +24,6 @@ public interface ImasGroupChatMapper {
     void insertChatMessage(ImasChatMessage message);
 
     void updateGroupMember(JoinGroupMessage message);
+
+    Session getProducer(@Param("id")String id);
 }

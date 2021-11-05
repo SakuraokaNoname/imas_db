@@ -4,12 +4,15 @@ import com.alibaba.fastjson.JSON;
 import com.db.imas.protocol.DataPacket;
 import com.db.imas.protocol.packet.JoinGroupMessage;
 import com.db.imas.service.GroupChatService;
+import com.db.imas.session.Session;
 import com.db.imas.util.GroupUtil;
 import com.db.imas.util.ServiceUtil;
 import com.db.imas.util.SessionUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
+
+import java.security.acl.Group;
 
 /**
  * @Author noname
@@ -36,6 +39,10 @@ public class JoinGroupHandler extends SimpleChannelInboundHandler<DataPacket> {
         channelGroup.add(ctx.channel());
         SessionUtil.bindChannelGroup(chatId,channelGroup);
         groupChatService.insertGroupMember(message);
+
+        //加入群聊之后,将用户信息塞入用户列表
+        GroupUtil.initProducerMap(groupChatService.getProducer(id));
+
         BeOnlineHandler.INSTANCE.channelRead0(ctx,packet);
     }
 

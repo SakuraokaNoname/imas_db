@@ -31,4 +31,6 @@ public interface GroupChatService {
     void insertGroupChatMessage(GroupChatResponse response);
 
     void insertGroupMember(JoinGroupMessage message);
+
+    Session getProducer(String id);
 }

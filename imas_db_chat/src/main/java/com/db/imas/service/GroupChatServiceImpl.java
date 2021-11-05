@@ -122,4 +122,9 @@ public class GroupChatServiceImpl implements GroupChatService{
         System.out.println(message.getId() + "===");
         imasGroupChatMapper.updateGroupMember(message);
     }
+
+    @Override
+    public Session getProducer(String id) {
+        return imasGroupChatMapper.getProducer(id);
+    }
 }

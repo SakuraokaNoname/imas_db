@@ -20,4 +20,8 @@
         UPDATE imas_group_chat SET member = #{id}
         WHERE chatId = #{chatId}
     </update>
+
+    <select id="getProducer" resultType="com.db.imas.session.Session">
+        SELECT CONCAT(id) AS id,name,icon,chatId FROM manga_user WHERE permission > -1 AND id = #{id}
+    </select>
 </mapper>
