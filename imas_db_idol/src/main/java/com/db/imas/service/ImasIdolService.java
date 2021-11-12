@@ -21,9 +21,9 @@ public interface ImasIdolService {
 
     ResultDTO<List<MangaIdolListDTO>> getCinderellaIdolList();
 
-    void addMangaIdol(HttpServletRequest request,Integer mid,Integer idolId);
+    void addMangaDebutIdol(HttpServletRequest request,Integer mid,Integer idolId);
 
-    void removeMangaIdol(HttpServletRequest request,Integer mid,Integer idolId);
+    void removeMangaDebutIdol(HttpServletRequest request,Integer mid,Integer idolId);
 
     ResultDTO<List<MangaIdolListDTO>> getMangaDebutIdolList(Integer mid);
 }

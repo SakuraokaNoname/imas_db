@@ -25,4 +25,6 @@ public interface ImasIpDao {
     List<ImasIP> selectPrefixIP(@Param("ip") String ip);
 
     List<ImasAccessIPDTO> selectAccessIP(@Param("isBlock") String isBlock);
+
+    Integer selectDayAccessCount(int day);
 }

@@ -23,11 +23,6 @@ public class MD5Util {
                     buf.append("0");
                 buf.append(Integer.toHexString(i));
             }
-            // 32位
-            // return buf.toString();
-            // 16位
-            // return buf.toString().substring(0, 16);
-
             return buf.toString().substring(0, length);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();

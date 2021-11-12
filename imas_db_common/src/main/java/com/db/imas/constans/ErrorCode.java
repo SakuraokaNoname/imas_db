@@ -8,6 +8,7 @@ package com.db.imas.constans;
 public enum ErrorCode {
     SUCCESS("200", "调用成功"),
     ACCESS_LIMIT("7650","禁止访问"),
+    PAGE_TURNING_ERROR("9989","已经不能再翻页了"),
     SEARCH_PARAM_NULL("9990","请选择要搜索的偶像"),
     UPLOAD_NOT_PARAMS("9991","上传参数有误"),
     UPLOAD_ERROR("9992","上传失败"),
@@ -17,6 +18,7 @@ public enum ErrorCode {
     TOKEN_EXPIRE("9996", "请重新登录"),
     REGISTER_ERROR("9997", "注册失败"),
     LOGIN_ERROR("9998", "账号或密码有误"),
+    LOGIN_BLOCK("9998", "账号已被屏蔽"),
     ERROR("9999", "系统异常"),;
 
     private String code;

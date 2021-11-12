@@ -16,7 +16,7 @@ import java.util.List;
 @Mapper
 public interface ImasIdolDao {
 
-    List<ImasIdolDTO> setBirthdayIdol(@Param("birthday")Date birthday);
+    List<ImasIdolDTO> selectBirthdayIdol(@Param("birthday")Date birthday);
 
     List<MangaIdolListDTO> getMangaIdolList(@Param("production")int production);
 

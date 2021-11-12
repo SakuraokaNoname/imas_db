@@ -7,8 +7,10 @@ import com.db.imas.model.dto.ImasIdolDTO;
 import com.db.imas.model.dto.MangaIdolListDTO;
 import com.db.imas.model.dto.ResultDTO;
 import com.db.imas.service.ImasIdolService;
+import com.db.imas.utils.Constants;
 import com.db.imas.utils.RedisUtil;
 import com.db.imas.utils.TokenUtil;
+import io.netty.util.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -34,13 +36,13 @@ public class ImasIdolServiceImpl implements ImasIdolService {
 
     @Override
     public ResultDTO<List<ImasIdolDTO>> selectBirthdayIdol() {
-        return ResultDTO.success(redisUtil.getObjList("BIRTHDAY:",ImasIdolDTO.class));
+        return ResultDTO.success(redisUtil.getObjList(Constants.BIRTHDAY_IDOL_PREFIX,ImasIdolDTO.class));
     }
 
     @Override
     public void changeBirthdayIdol() {
-        List<ImasIdolDTO> birthdayIdol = imasIdolDao.setBirthdayIdol(new Date());
-        redisUtil.putRaw("BIRTHDAY:", JSON.toJSONString(birthdayIdol));
+        List<ImasIdolDTO> birthdayIdol = imasIdolDao.selectBirthdayIdol(new Date());
+        redisUtil.putRaw(Constants.BIRTHDAY_IDOL_PREFIX, JSON.toJSONString(birthdayIdol));
     }
 
     @Override
@@ -49,7 +51,7 @@ public class ImasIdolServiceImpl implements ImasIdolService {
     }
 
     @Override
-    public void addMangaIdol(HttpServletRequest request, Integer mid, Integer idolId) {
+    public void addMangaDebutIdol(HttpServletRequest request, Integer mid, Integer idolId) {
         String token = request.getHeader("token");
         if(!redisUtil.checkUserTokenIsAdmin(token)){
             return;
@@ -66,7 +68,7 @@ public class ImasIdolServiceImpl implements ImasIdolService {
     }
 
     @Override
-    public void removeMangaIdol(HttpServletRequest request, Integer mid, Integer idolId) {
+    public void removeMangaDebutIdol(HttpServletRequest request, Integer mid, Integer idolId) {
         String token = request.getHeader("token");
         if(!redisUtil.checkUserTokenIsAdmin(token)){
             return;
@@ -82,21 +84,21 @@ public class ImasIdolServiceImpl implements ImasIdolService {
             imasIdolDao.updateMangaIdol(mid,"");
             return;
         }
-        String removeIodl = "," + idolId + ",";
-        imasIdolDao.updateMangaIdol(mid,("," + debutIdols).replace(removeIodl,","));
+        String removeIdol = "," + idolId + ",";
+        imasIdolDao.updateMangaIdol(mid,("," + debutIdols).replace(removeIdol,","));
     }
 
     @Override
     public ResultDTO<List<MangaIdolListDTO>> getMangaDebutIdolList(Integer mid) {
         String debutIdols = imasIdolDao.selectDebutIdol(mid);
-        List<MangaIdolListDTO> dtos = new ArrayList<>();
+        List<MangaIdolListDTO> idolListDTOList = new ArrayList<>();
         if(!StringUtils.isEmpty(debutIdols)){
             List<String> idols = new ArrayList<>();
             for(String str:debutIdols.split(",")){
                 idols.add(str);
             }
-            dtos = imasIdolDao.getMangaDebutIdolList(idols);
+            idolListDTOList = imasIdolDao.getMangaDebutIdolList(idols);
         }
-        return ResultDTO.success(dtos);
+        return ResultDTO.success(idolListDTOList);
     }
 }

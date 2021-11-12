@@ -1,11 +1,15 @@
 package test.manga;
 
+import com.alibaba.fastjson.JSON;
 import com.db.imas.ImasDbMangaApplication;
+import com.db.imas.constans.MangaType;
 import com.db.imas.dao.ImasIpDao;
 import com.db.imas.dao.MangaDao;
+import com.db.imas.model.dto.ImasAccessIPDTO;
 import com.db.imas.model.dto.MangaPictureDownloadDTO;
 import com.db.imas.model.entity.ImasAccessIP;
 import com.db.imas.model.entity.ImasIP;
+import com.db.imas.model.entity.MangaDetail;
 import com.db.imas.service.MangaAccessService;
 import com.db.imas.service.MangaService;
 import com.db.imas.utils.Constants;
@@ -55,7 +59,14 @@ public class TestDemo {
 
     @Test
     public void synOSS(){
-        System.out.println(mangaService.synOSSPicture());
+//        System.out.println(mangaService.synOSSPicture());
+    }
+
+    @Test
+    public void pageTurningTest(){
+//        Integer sid = null;
+//        System.out.println((sid > 1) + "-" + (sid < 1));
+//        System.out.println(mangaService.pageTurning(1,1,"prev"));
     }
 
 //    @Test
@@ -70,6 +81,7 @@ public class TestDemo {
 
     @Test
     public void selectIp(){
+//        System.out.println(imasIpDao.selectTodayAccectCount(1));
 //        List<ImasIP> ipList = imasIpDao.selectJapanAndKoreaIP();
 //        long startTime = System.currentTimeMillis();    //获取开始时间
 //        for(ImasIP ip : ipList){

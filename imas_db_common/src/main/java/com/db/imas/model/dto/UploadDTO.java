@@ -1,7 +1,5 @@
 package com.db.imas.model.dto;
 
-import com.db.imas.constans.ErrorCode;
-
 /**
  * @Author noname
  * @Date 2021/6/11 16:03

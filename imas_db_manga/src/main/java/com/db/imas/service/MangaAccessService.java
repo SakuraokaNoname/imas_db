@@ -1,5 +1,6 @@
 package com.db.imas.service;
 
+import com.db.imas.model.dto.ImasAccessCountDTO;
 import com.db.imas.model.dto.ImasAccessIPDTO;
 import com.db.imas.model.dto.ResultDTO;
 import com.db.imas.model.entity.ImasAccessIP;
@@ -26,4 +27,8 @@ public interface MangaAccessService {
     ResultDTO<List<ImasAccessIPDTO>> selectAccessIP(HttpServletRequest request, String isBlock);
 
     String getAccessAddr(String ip);
+
+    ResultDTO<ImasAccessCountDTO> selectAccessCount();
+
+    void synAccessCount();
 }

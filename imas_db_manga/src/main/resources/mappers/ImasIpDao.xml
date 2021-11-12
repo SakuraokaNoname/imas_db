@@ -40,4 +40,10 @@
         GROUP BY ip
         ORDER BY accessTime DESC
     </select>
+
+    <select id="selectDayAccessCount" resultType="Integer">
+        SELECT COUNT(DISTINCT(ip)) FROM imas_access_ip
+        WHERE accessTime > DATE_SUB(curdate(),INTERVAL #{day} DAY)
+        ORDER BY accessTime DESC
+    </select>
 </mapper>

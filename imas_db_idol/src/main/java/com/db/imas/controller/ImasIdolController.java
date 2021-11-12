@@ -52,12 +52,12 @@ public class ImasIdolController {
 
     @RequestMapping("addIdol/{mid}/{idolId}")
     public void addMangaIdol(HttpServletRequest request,@PathVariable Integer mid,@PathVariable Integer idolId){
-        imasIdolService.addMangaIdol(request,mid,idolId);
+        imasIdolService.addMangaDebutIdol(request,mid,idolId);
     }
 
     @RequestMapping("removeIdol/{mid}/{idolId}")
     public void removeMangaIdol(HttpServletRequest request,@PathVariable Integer mid,@PathVariable Integer idolId){
-        imasIdolService.removeMangaIdol(request,mid,idolId);
+        imasIdolService.removeMangaDebutIdol(request,mid,idolId);
     }
 
     @RequestMapping("debutIdolList/{mid}")

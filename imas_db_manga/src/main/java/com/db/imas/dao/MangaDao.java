@@ -1,6 +1,7 @@
 package com.db.imas.dao;
 
 import com.db.imas.model.dto.*;
+import com.db.imas.model.entity.MangaDetail;
 import com.db.imas.model.vo.MangaAddMangaDetailVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -34,4 +35,9 @@ public interface MangaDao {
     Integer addMangaPicture(MangaAddMangaDetailVO vo);
 
     List<MangaPictureDownloadDTO> selectMangaPicture();
+
+    Integer selectToMangaDetail(@Param("mid")Integer mid,@Param("orderId")Integer orderId,@Param("type")Integer type);
+
+    int selectMangaDetailMaxPage(@Param("mid")Integer mid);
+
 }

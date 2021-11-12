@@ -55,27 +55,17 @@ public class OSSBuilding {
             }
         }
         return client;
-
-//        client = getOSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
-//        return client;
     }
 
-
-
     public static OSSClientBuilder getOSSClientBuilder(){
-        System.out.println("获取OSSClientBuilder");
         if(ossClientBuilder == null){
-            System.out.println("OSSClientBuilder为空,创建中");
             synchronized(OSSBuilding.class){
                 if(ossClientBuilder==null){
-                    System.out.println("进入同步实例化OSSClientBuilder");
                     ossClientBuilder = new OSSClientBuilder();
                 }
             }
         }
         return ossClientBuilder;
     }
-
-
 
 }

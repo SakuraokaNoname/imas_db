@@ -22,7 +22,9 @@ public interface MangaService {
 
     ResultDTO<MangaDetailDTO> getMangaDetail(Integer id);
 
-    ResultDTO changeChapter(Integer mid,Integer chapter);
+    ResultDTO changeChapter(Integer mid, Integer orderId, String type);
+
+    Integer pageTurning(Integer mid, Integer orderId, int type);
 
     UploadDTO upload(String fileName, MultipartFile[] pics);
 
@@ -37,4 +39,5 @@ public interface MangaService {
     int synOSSPicture();
 
     ResultDTO<Integer> synOSSPictureDTO(HttpServletRequest request);
+
 }

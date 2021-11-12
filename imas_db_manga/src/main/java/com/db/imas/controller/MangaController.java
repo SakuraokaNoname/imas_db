@@ -38,9 +38,9 @@ public class MangaController {
         return mangaService.getMangaDetail(id);
     }
 
-    @GetMapping("chapter/{mid}/{chapter}")
-    public ResultDTO changeChapter(@PathVariable Integer mid,@PathVariable Integer chapter){
-        return mangaService.changeChapter(mid,chapter);
+    @GetMapping("chapter/{mid}/{orderId}/{type}")
+    public ResultDTO changeChapter(@PathVariable Integer mid,@PathVariable Integer orderId,@PathVariable String type){
+        return mangaService.changeChapter(mid,orderId,type);
     }
 
     @PostMapping("addManga")

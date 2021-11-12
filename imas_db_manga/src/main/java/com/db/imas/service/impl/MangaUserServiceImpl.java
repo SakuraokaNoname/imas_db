@@ -48,6 +48,9 @@ public class MangaUserServiceImpl implements MangaUserService {
         if(ObjectUtils.isEmpty(dto)){
             return ResultDTO.fail(ErrorCode.LOGIN_ERROR.getCode(),ErrorCode.LOGIN_ERROR.getMessage());
         }
+        if(dto.getPermission() == -1){
+            return ResultDTO.fail(ErrorCode.LOGIN_BLOCK.getCode(),ErrorCode.LOGIN_BLOCK.getMessage());
+        }
         // 唯一登录
         removeCurrentUserToken(dto.getId());
         // TODO 创建token并返回
@@ -119,11 +122,6 @@ public class MangaUserServiceImpl implements MangaUserService {
             ResultDTO.fail(ErrorCode.PERMISSION_FAIL.getCode(), ErrorCode.PERMISSION_FAIL.getMessage());
         }
         return ResultDTO.success(true);
-    }
-
-    @Override
-    public MangaUserDTO getUserByToken(HttpServletRequest request) {
-        return redisUtil.getObj(request.getHeader("token"),MangaUserDTO.class);
     }
 
     @Override

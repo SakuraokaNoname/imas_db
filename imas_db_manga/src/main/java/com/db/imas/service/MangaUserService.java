@@ -30,8 +30,6 @@ public interface MangaUserService {
 
     ResultDTO checkUserTokenIsAdmin(HttpServletRequest request);
 
-    MangaUserDTO getUserByToken(HttpServletRequest request);
-
     boolean checkUserByOne(String username);
 
     ResultDTO userLogout(HttpServletRequest request);

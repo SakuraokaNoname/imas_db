@@ -40,7 +40,4 @@ public class OSSUtil {
         }
     }
 
-    public boolean isExist(){
-        return false;
-    }
 }

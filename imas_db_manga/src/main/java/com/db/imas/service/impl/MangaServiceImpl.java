@@ -4,6 +4,7 @@ import com.db.imas.constans.ErrorCode;
 import com.db.imas.constans.MangaType;
 import com.db.imas.dao.MangaDao;
 import com.db.imas.model.dto.*;
+import com.db.imas.model.entity.Manga;
 import com.db.imas.model.vo.MangaAddMangaDetailVO;
 import com.db.imas.model.vo.MangaSearchMangaSubVO;
 import com.db.imas.model.vo.UploadParamsVO;
@@ -22,6 +23,7 @@ import sun.security.ssl.Debug;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.text.BreakIterator;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -61,8 +63,21 @@ public class MangaServiceImpl implements MangaService {
     }
 
     @Override
-    public ResultDTO changeChapter(Integer mid, Integer chapter) {
-        return ResultDTO.success(mangaDao.changeChapter(mid,chapter));
+    public ResultDTO changeChapter(Integer mid, Integer orderId, String type) {
+        if(orderId == null || (orderId <= 1 && "prev".equals(type))){
+            return ResultDTO.fail(ErrorCode.PAGE_TURNING_ERROR.getCode(),ErrorCode.PAGE_TURNING_ERROR.getMessage());
+        }
+
+        if(mangaDao.selectMangaDetailMaxPage(mid) == orderId && "next".equals(type)){
+            return ResultDTO.fail(ErrorCode.PAGE_TURNING_ERROR.getCode(),ErrorCode.PAGE_TURNING_ERROR.getMessage());
+        }
+        Integer sid = null;
+        if("next".equals(type)){
+            sid = pageTurning(mid, orderId, 1);
+        }else if("prev".equals(type)){
+            sid = pageTurning(mid, orderId, 0);
+        }
+        return ResultDTO.success(sid);
     }
 
     @Override
@@ -206,6 +221,19 @@ public class MangaServiceImpl implements MangaService {
             return ResultDTO.fail(ErrorCode.PERMISSION_FAIL.getCode(),ErrorCode.PERMISSION_FAIL.getMessage());
         }
         return ResultDTO.success(synOSSPicture());
+    }
+
+    @Override
+    // type [0:上一页] [1:下一页]
+    public Integer pageTurning(Integer mid, Integer orderId, int type) {
+        if(type == 1){
+            Integer sid = mangaDao.selectToMangaDetail(mid, orderId, 1);
+            return sid == null ? pageTurning(mid,orderId + 1, 1) : sid;
+        }else if(type == 0){
+            Integer sid = mangaDao.selectToMangaDetail(mid, orderId, 0);
+            return sid == null ? pageTurning(mid,orderId - 1, 0) : sid;
+        }
+        return null;
     }
 
 }

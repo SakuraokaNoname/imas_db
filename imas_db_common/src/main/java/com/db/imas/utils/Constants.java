@@ -20,5 +20,9 @@ public class Constants {
 
     public final static String ACCESS_PREFIX = "ACCESS:";
 
+    public final static String ACCESS_COUNT_PREFIX = "ACCESS_COUNT:";
+
+    public final static String BIRTHDAY_IDOL_PREFIX = "BIRTHDAY:";
+
     public final static int TOKEN_EXPIRE = 60*60*24*7;
 }

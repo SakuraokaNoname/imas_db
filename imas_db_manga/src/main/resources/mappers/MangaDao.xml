@@ -15,6 +15,7 @@
 
     <select id="getMangaList" resultType="MangaDTO">
         SELECT id,title,profile,url,updateTime FROM manga
+        WHERE pid > 0
     </select>
 
     <select id="getMangaSubList" resultType="MangaSubDTO">
@@ -94,4 +95,25 @@
         FROM manga_picture pic
         LEFT JOIN manga_detail manga ON pic.sid = manga.id
     </select>
+    
+    <select id="selectToMangaDetail" resultType="Integer">
+        SELECT id FROM manga_detail
+        <where>
+            <if test="type == 1">
+                AND orderId = #{orderId} + 1
+            </if>
+            <if test="type == 0">
+                AND orderId = #{orderId} - 1
+            </if>
+            AND mid = #{mid}
+        </where>
+    </select>
+
+    <select id="selectMangaDetailMaxPage" resultType="Integer">
+        SELECT orderId FROM `manga_detail`
+        WHERE mid = #{mid}
+        ORDER BY orderId DESC
+        LIMIT 1
+    </select>
+
 </mapper>
