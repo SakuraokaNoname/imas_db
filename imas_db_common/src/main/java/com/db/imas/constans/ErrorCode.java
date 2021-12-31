@@ -6,7 +6,7 @@ package com.db.imas.constans;
  * @Version 1.0
  */
 public enum ErrorCode {
-    SUCCESS("200", "调用成功"),
+    SUCCESS("200", "success"),
     ACCESS_LIMIT("7650","禁止访问"),
     PAGE_TURNING_ERROR("9989","已经不能再翻页了"),
     SEARCH_PARAM_NULL("9990","请选择要搜索的偶像"),
