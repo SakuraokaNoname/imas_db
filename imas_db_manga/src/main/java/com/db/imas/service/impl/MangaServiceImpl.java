@@ -1,10 +1,10 @@
 package com.db.imas.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.db.imas.constans.ErrorCode;
 import com.db.imas.constans.MangaType;
 import com.db.imas.dao.MangaDao;
 import com.db.imas.model.dto.*;
-import com.db.imas.model.entity.Manga;
 import com.db.imas.model.vo.MangaAddMangaDetailVO;
 import com.db.imas.model.vo.MangaSearchMangaSubVO;
 import com.db.imas.model.vo.UploadParamsVO;
@@ -19,13 +19,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
-import sun.security.ssl.Debug;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
-import java.text.BreakIterator;
 import java.util.*;
-import java.util.stream.Collectors;
+
+import static com.db.imas.utils.Constants.*;
 
 /**
  * @Author noname
@@ -54,7 +53,13 @@ public class MangaServiceImpl implements MangaService {
 
     @Override
     public ResultDTO<List<MangaSubDTO>> getMangaSubList(Integer id) {
-        return ResultDTO.success(mangaDao.getMangaSubList(id));
+        String key = MANGA_SUB_LIST_TOKEN + id;
+        List<MangaSubDTO> mangaSubList = redisUtil.getObjList(key,MangaSubDTO.class);
+        if(mangaSubList == null || mangaSubList.size() == 0){
+            mangaSubList = mangaDao.getMangaSubList(id);
+            redisUtil.putRaw(key, JSON.toJSONString(mangaSubList), TOKEN_EXPIRE_HALF_DAY);
+        }
+        return ResultDTO.success(mangaSubList);
     }
 
     @Override
@@ -101,6 +106,7 @@ public class MangaServiceImpl implements MangaService {
         }
         redisUtil.del(Constants.UPLOAD_MANGAID_TOKEN);
         redisUtil.del(Constants.UPLOAD_SUBID_TOKEN);
+        redisUtil.del(MANGA_SUB_LIST_TOKEN + mangaDetail.getSid());
         return ResultDTO.success();
     }
 

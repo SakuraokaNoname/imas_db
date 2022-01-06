@@ -28,6 +28,31 @@ public enum MangaType {
         return null;
     }
 
+    public static int getMangaType(String type){
+        for(MangaType mangaType:MangaType.values()){
+            if(type.equals(mangaType.type)){
+                return mangaType.id;
+            }
+        }
+        return 0;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public static void main(String[] args) {
         System.out.println(getMangaType(2));
     }

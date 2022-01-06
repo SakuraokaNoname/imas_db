@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static com.db.imas.utils.Constants.CINDERELLA_IDOL_LIST;
+
 /**
  * @Author noname
  * @Date 2021/8/12 15:55
@@ -47,7 +49,12 @@ public class ImasIdolServiceImpl implements ImasIdolService {
 
     @Override
     public ResultDTO<List<MangaIdolListDTO>> getCinderellaIdolList() {
-        return ResultDTO.success(imasIdolDao.getMangaIdolList(Production.IMAS_346.getId()));
+        List<MangaIdolListDTO> idolList = redisUtil.getObjList(CINDERELLA_IDOL_LIST, MangaIdolListDTO.class);
+        if(idolList == null || idolList.size() == 0){
+            idolList = imasIdolDao.getMangaIdolList(Production.IMAS_346.getId());
+            redisUtil.putRaw(CINDERELLA_IDOL_LIST,JSON.toJSONString(idolList));
+        }
+        return ResultDTO.success(idolList);
     }
 
     @Override
