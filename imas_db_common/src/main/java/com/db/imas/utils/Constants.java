@@ -6,8 +6,6 @@ package com.db.imas.utils;
  */
 public class Constants {
 
-    public final static String SERVER_URL = "http://121.127.241.46/pic/emoji/";
-
     public final static String OSS_MANGA_URL = "http://sakuraoka.oss-cn-shenzhen.aliyuncs.com/manga/";
 
     public final static String UPLOAD_BASIC_URL = "manga/";

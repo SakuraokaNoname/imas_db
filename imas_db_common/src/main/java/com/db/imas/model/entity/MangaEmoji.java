@@ -11,8 +11,17 @@ public class MangaEmoji {
 
     private int id;
     private String type;
+    private String isTab;
     private String url;
     private Date createTime;
+
+    public String getIsTab() {
+        return isTab;
+    }
+
+    public void setIsTab(String isTab) {
+        this.isTab = isTab;
+    }
 
     public int getId() {
         return id;

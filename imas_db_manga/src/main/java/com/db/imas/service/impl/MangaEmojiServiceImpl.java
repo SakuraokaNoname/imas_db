@@ -14,8 +14,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.db.imas.utils.Constants.SERVER_URL;
-
 /**
  * @Author noname
  * @Date 2022/01/05 16:54
@@ -44,10 +42,12 @@ public class MangaEmojiServiceImpl implements MangaEmojiService {
         MangaEmojiListDTO emojiListDTO = new MangaEmojiListDTO();
         emojiListDTO.setWidth(vo.getWidth());
         emojiListDTO.setHeight(vo.getHeight());
-        emojiListDTO.setIcon(SERVER_URL + mangaEmojiList.get(0).getUrl());
         List<String> emojiList = new ArrayList<>();
         for(MangaEmoji emoji : mangaEmojiList){
-            emojiList.add(SERVER_URL + emoji.getUrl());
+            if("1".equals(emoji.getIsTab())){
+                emojiListDTO.setIcon(emoji.getUrl());
+            }
+            emojiList.add(emoji.getUrl());
         }
         emojiListDTO.setList(emojiList);
         return emojiListDTO;
