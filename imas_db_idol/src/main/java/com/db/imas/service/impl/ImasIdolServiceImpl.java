@@ -7,10 +7,8 @@ import com.db.imas.model.dto.ImasIdolDTO;
 import com.db.imas.model.dto.MangaIdolListDTO;
 import com.db.imas.model.dto.ResultDTO;
 import com.db.imas.service.ImasIdolService;
-import com.db.imas.utils.Constants;
-import com.db.imas.utils.RedisUtil;
-import com.db.imas.utils.TokenUtil;
-import io.netty.util.Constant;
+import com.db.imas.util.Constants;
+import com.db.imas.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -20,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static com.db.imas.utils.Constants.CINDERELLA_IDOL_LIST;
+import static com.db.imas.util.Constants.CINDERELLA_IDOL_LIST;
 
 /**
  * @Author noname

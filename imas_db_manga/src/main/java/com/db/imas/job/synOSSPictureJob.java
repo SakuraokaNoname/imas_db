@@ -19,11 +19,11 @@ public class synOSSPictureJob {
     private MangaService mangaService;
 
     // 每天凌晨一点将访问记录录入数据库并删除缓存记录
-    @Scheduled(cron = "0 0 0/3 * * ?")
-    public void synOSSPictureJob() {
-        System.out.println("开始同步OSS图片");
-        int count = mangaService.synOSSPicture();
-        System.out.println("OSS图片同步完毕,共同步" + count + "张");
-    }
+//    @Scheduled(cron = "0 0 0/3 * * ?")
+//    public void synOSSPictureJob() {
+//        System.out.println("开始同步OSS图片");
+//        int count = mangaService.synOSSPicture();
+//        System.out.println("OSS图片同步完毕,共同步" + count + "张");
+//    }
 
 }

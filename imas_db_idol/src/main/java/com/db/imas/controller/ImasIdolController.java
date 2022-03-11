@@ -5,15 +5,13 @@ import com.db.imas.model.dto.ImasIdolDTO;
 import com.db.imas.model.dto.MangaIdolListDTO;
 import com.db.imas.model.dto.ResultDTO;
 import com.db.imas.service.ImasIdolService;
-import com.db.imas.utils.RedisUtil;
+import com.db.imas.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,6 +20,7 @@ import java.util.List;
  * @Version 1.0
  */
 @RestController
+@RequestMapping("api/idol")
 public class ImasIdolController {
 
     @Autowired

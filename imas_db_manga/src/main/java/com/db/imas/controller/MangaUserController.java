@@ -8,7 +8,7 @@ import com.db.imas.model.vo.MangaAddUserVO;
 import com.db.imas.model.vo.MangaLoginVO;
 import com.db.imas.model.vo.MangaUpdateUserVO;
 import com.db.imas.service.MangaUserService;
-import com.db.imas.utils.IPUtil;
+import com.db.imas.util.IPUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,27 +21,25 @@ import java.util.List;
  * @Version 1.0
  */
 @RestController
+@RequestMapping("api/user")
 public class MangaUserController {
 
     @Autowired
     private MangaUserService mangaUserService;
 
     @PostMapping("login")
-    @ResponseBody
     public ResultDTO<MangaUserDTO> userLogin(HttpServletRequest request, @RequestBody MangaLoginVO vo){
         vo.setLoginIP(IPUtil.getIp2(request));
         return mangaUserService.userLogin(vo);
     }
 
     @PostMapping("register")
-    @ResponseBody
     public ResultDTO<String> userRegister(HttpServletRequest request, @RequestBody MangaAddUserVO vo){
         vo.setCreateIP(IPUtil.getIp2(request));
         return mangaUserService.userRegister(vo);
     }
 
     @PostMapping("update")
-    @ResponseBody
     public ResultDTO<MangaUserDTO> userUpdate(HttpServletRequest request,@RequestBody MangaUpdateUserVO vo){
         return mangaUserService.userUpdate(request,vo);
     }
@@ -53,13 +51,11 @@ public class MangaUserController {
     }
 
     @PostMapping("logout")
-    @ResponseBody
     public ResultDTO userLogout(HttpServletRequest request){
         return mangaUserService.userLogout(request);
     }
 
     @GetMapping("icon")
-    @ResponseBody
     public ResultDTO<MangaUserIconDTO> userIconList(){
         return mangaUserService.userIconList();
     }
@@ -69,7 +65,7 @@ public class MangaUserController {
         return mangaUserService.checkUserTokenIsAdmin(request);
     }
 
-    @PostMapping("user/list")
+    @PostMapping("list")
     public ResultDTO<List<MangaQueryUserDTO>> selectUserList(HttpServletRequest request){
         return mangaUserService.selectUserList(request);
     }

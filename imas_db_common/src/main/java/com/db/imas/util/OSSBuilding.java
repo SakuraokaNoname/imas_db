@@ -1,4 +1,4 @@
-package com.db.imas.utils;
+package com.db.imas.util;
 
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;

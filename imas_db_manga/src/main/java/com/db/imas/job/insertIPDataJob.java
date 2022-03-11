@@ -1,12 +1,9 @@
 package com.db.imas.job;
 
 import com.db.imas.model.entity.ImasAccessIP;
-import com.db.imas.model.entity.ImasIP;
 import com.db.imas.service.MangaAccessService;
-import com.db.imas.utils.Constants;
-import com.db.imas.utils.IPUtil;
-import com.db.imas.utils.RedisUtil;
-import io.netty.util.Constant;
+import com.db.imas.util.Constants;
+import com.db.imas.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;

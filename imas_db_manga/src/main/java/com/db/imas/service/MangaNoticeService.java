@@ -1,5 +1,6 @@
 package com.db.imas.service;
 
+import com.db.imas.constans.NoticeEnum;
 import com.db.imas.model.dto.MangaNoticeDTO;
 import com.db.imas.model.dto.ResultDTO;
 import com.db.imas.model.vo.MangaNoticeVO;
@@ -17,4 +18,5 @@ public interface MangaNoticeService {
     List<MangaNoticeDTO> getMangaNoticeList();
 
     ResultDTO addNotice(HttpServletRequest request,MangaNoticeVO vo);
+
 }

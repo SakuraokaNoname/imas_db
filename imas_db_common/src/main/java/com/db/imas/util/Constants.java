@@ -1,4 +1,4 @@
-package com.db.imas.utils;
+package com.db.imas.util;
 
 /**
  * @author noname
@@ -11,6 +11,8 @@ public class Constants {
     public final static String UPLOAD_BASIC_URL = "manga/";
 
     public final static String MANGA_SUB_LIST_TOKEN = "MANGA:SUB:";
+
+    public final static String DELETE_MANGA_SUB_LIST_TOKEN = "DEL:MANGA:";
 
     public final static String UPLOAD_MANGAID_TOKEN = "MID:";
 

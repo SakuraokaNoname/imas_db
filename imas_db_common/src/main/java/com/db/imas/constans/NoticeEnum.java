@@ -7,7 +7,7 @@ package com.db.imas.constans;
  */
 public enum NoticeEnum {
 
-    NEW_MANGA("newManga","漫画更新","[{manga}]{mangaTitle} 更新了!<br>嵌字:{dantalions} 翻译:{translators}","http://imas-noname.xyz/"),
+    NEW_MANGA("newManga","漫画更新","[{manga}]{mangaTitle} 更新了!<br>嵌字:{dantalions} 翻译:{translators}",""),
     ;
 
     private String type;

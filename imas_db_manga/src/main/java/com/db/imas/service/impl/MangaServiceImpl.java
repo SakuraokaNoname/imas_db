@@ -3,16 +3,20 @@ package com.db.imas.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.db.imas.constans.ErrorCode;
 import com.db.imas.constans.MangaType;
+import com.db.imas.constans.NoticeEnum;
 import com.db.imas.dao.MangaDao;
 import com.db.imas.model.dto.*;
 import com.db.imas.model.vo.MangaAddMangaDetailVO;
+import com.db.imas.model.vo.MangaNoticeVO;
 import com.db.imas.model.vo.MangaSearchMangaSubVO;
 import com.db.imas.model.vo.UploadParamsVO;
+import com.db.imas.service.MangaNoticeService;
 import com.db.imas.service.MangaService;
 import com.db.imas.service.MangaUserService;
-import com.db.imas.utils.Constants;
-import com.db.imas.utils.OSSUtil;
-import com.db.imas.utils.RedisUtil;
+import com.db.imas.util.Constants;
+import com.db.imas.util.OSSUtil;
+import com.db.imas.util.RedisUtil;
+import com.db.imas.util.TemplateReplaceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.util.*;
 
-import static com.db.imas.utils.Constants.*;
+import static com.db.imas.util.Constants.*;
 
 /**
  * @Author noname
@@ -46,6 +50,9 @@ public class MangaServiceImpl implements MangaService {
     @Autowired
     private MangaUserService mangaUserService;
 
+    @Autowired
+    private MangaNoticeService mangaNoticeService;
+
     @Override
     public ResultDTO<List<MangaDTO>> getMangaList() {
         return ResultDTO.success(mangaDao.getMangaList());
@@ -57,7 +64,7 @@ public class MangaServiceImpl implements MangaService {
         List<MangaSubDTO> mangaSubList = redisUtil.getObjList(key,MangaSubDTO.class);
         if(mangaSubList == null || mangaSubList.size() == 0){
             mangaSubList = mangaDao.getMangaSubList(id);
-            redisUtil.putRaw(key, JSON.toJSONString(mangaSubList), TOKEN_EXPIRE_HALF_DAY);
+            redisUtil.putRaw(key, JSON.toJSONString(mangaSubList), TOKEN_EXPIRE);
         }
         return ResultDTO.success(mangaSubList);
     }
@@ -97,6 +104,7 @@ public class MangaServiceImpl implements MangaService {
         if(ObjectUtils.isEmpty(mangaDetail)){
             return ResultDTO.fail(ErrorCode.UPLOAD_NOT_PARAMS.getCode(),ErrorCode.UPLOAD_NOT_PARAMS.getMessage());
         }
+        redisUtil.del(MANGA_SUB_LIST_TOKEN + mangaDetail.getSid());
         mangaDetail.setUpdateTime(new Date());
         Integer result1 = mangaDao.addMangaDetail(mangaDetail);
         Collections.sort(mangaDetail.getPics());
@@ -104,9 +112,16 @@ public class MangaServiceImpl implements MangaService {
         if(result1 < 1 || result2 < 1){
             throw new NullPointerException();
         }
+
+        MangaNoticeVO noticeVO = new MangaNoticeVO();
+        noticeVO.setTitle(NoticeEnum.NEW_MANGA.getTitle());
+        noticeVO.setType(NoticeEnum.NEW_MANGA.getType());
+        noticeVO.setContent(this.replaceAddMangaNotice(mangaDetail));
+        mangaNoticeService.addNotice(request,noticeVO);
+
         redisUtil.del(Constants.UPLOAD_MANGAID_TOKEN);
         redisUtil.del(Constants.UPLOAD_SUBID_TOKEN);
-        redisUtil.del(MANGA_SUB_LIST_TOKEN + mangaDetail.getSid());
+        redisUtil.putRaw(DELETE_MANGA_SUB_LIST_TOKEN,"",5);
         return ResultDTO.success();
     }
 
@@ -240,6 +255,15 @@ public class MangaServiceImpl implements MangaService {
             return sid == null ? pageTurning(mid,orderId - 1, 0) : sid;
         }
         return null;
+    }
+
+    private String replaceAddMangaNotice(MangaAddMangaDetailVO mangaDetail){
+        Map<String,String> replaceMap = new HashMap<>();
+        replaceMap.put("manga",MangaType.getMangaType(mangaDetail.getMid()));
+        replaceMap.put("mangaTitle",mangaDetail.getSubTitle());
+        replaceMap.put("dantalions",mangaDetail.getDantalions());
+        replaceMap.put("translators",mangaDetail.getTranslators());
+        return TemplateReplaceUtil.replace(NoticeEnum.NEW_MANGA.getContent(),replaceMap);
     }
 
 }

@@ -1,7 +1,7 @@
 package com.db.imas.runner;
 
 import com.db.imas.dao.ImasIpDao;
-import com.db.imas.utils.IPBlockList;
+import com.db.imas.util.IPBlockList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;

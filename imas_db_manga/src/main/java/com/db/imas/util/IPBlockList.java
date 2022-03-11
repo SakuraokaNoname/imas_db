@@ -1,4 +1,4 @@
-package com.db.imas.utils;
+package com.db.imas.util;
 
 import com.db.imas.model.entity.ImasIP;
 
@@ -15,13 +15,13 @@ public class IPBlockList {
     private static final List<ImasIP> blockList = new ArrayList<>();
 
     public static void initBlockList(List<ImasIP> ipList){
-        for(ImasIP imasIP : ipList){
-            addBlockList(imasIP);
+        for(ImasIP ip : ipList){
+            addBlockIP(ip);
         }
     }
 
-    public static void addBlockList(ImasIP imasIP){
-        blockList.add(imasIP);
+    public static void addBlockIP(ImasIP ip){
+        blockList.add(ip);
     }
 
     public static boolean isBlockIP(String ip){

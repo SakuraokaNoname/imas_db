@@ -1,31 +1,15 @@
 package test.manga;
 
-import com.alibaba.fastjson.JSON;
 import com.db.imas.ImasDbMangaApplication;
-import com.db.imas.constans.MangaType;
 import com.db.imas.dao.ImasIpDao;
 import com.db.imas.dao.MangaDao;
-import com.db.imas.model.dto.ImasAccessIPDTO;
-import com.db.imas.model.dto.MangaPictureDownloadDTO;
-import com.db.imas.model.entity.ImasAccessIP;
-import com.db.imas.model.entity.ImasIP;
-import com.db.imas.model.entity.MangaDetail;
 import com.db.imas.service.MangaAccessService;
 import com.db.imas.service.MangaService;
-import com.db.imas.utils.Constants;
-import com.db.imas.utils.IPUtil;
-import com.db.imas.utils.OSSUtil;
-import com.db.imas.utils.RedisUtil;
+import com.db.imas.util.OSSUtil;
+import com.db.imas.util.RedisUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.io.File;
-import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.List;
-import java.util.*;
 
 /**
  * @Author noname

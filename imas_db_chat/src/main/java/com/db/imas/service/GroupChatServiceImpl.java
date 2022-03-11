@@ -10,7 +10,7 @@ import com.db.imas.protocol.packet.OffGroupChatMessage;
 import com.db.imas.session.Session;
 import com.db.imas.util.CollectionsUtil;
 import com.db.imas.util.GroupUtil;
-import com.db.imas.utils.RedisUtil;
+import com.db.imas.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;

@@ -1,6 +1,7 @@
 package com.db.imas.service.impl;
 
 import com.db.imas.constans.ErrorCode;
+import com.db.imas.constans.NoticeEnum;
 import com.db.imas.dao.MangaNoticeDao;
 import com.db.imas.model.dto.MangaNoticeDTO;
 import com.db.imas.model.dto.MangaUserDTO;
@@ -8,13 +9,15 @@ import com.db.imas.model.dto.ResultDTO;
 import com.db.imas.model.vo.MangaNoticeVO;
 import com.db.imas.service.MangaNoticeService;
 import com.db.imas.service.MangaUserService;
-import com.db.imas.utils.RedisUtil;
+import com.db.imas.util.RedisUtil;
+import com.db.imas.util.TemplateReplaceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author noname

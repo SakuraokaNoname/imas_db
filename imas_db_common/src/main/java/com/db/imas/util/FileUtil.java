@@ -1,4 +1,4 @@
-package com.db.imas.utils;
+package com.db.imas.util;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

@@ -18,6 +18,7 @@ import java.util.List;
  * @Version 1.0
  */
 @RestController
+@RequestMapping("api/manga")
 public class MangaController {
 
     @Autowired

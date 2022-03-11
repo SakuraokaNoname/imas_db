@@ -10,7 +10,7 @@ import com.db.imas.model.vo.MangaAddCommentVO;
 import com.db.imas.model.vo.MangaLikeCommentVO;
 import com.db.imas.service.MangaCommentService;
 import com.db.imas.service.MangaUserService;
-import com.db.imas.utils.RedisUtil;
+import com.db.imas.util.RedisUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

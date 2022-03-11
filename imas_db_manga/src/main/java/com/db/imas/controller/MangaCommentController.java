@@ -16,7 +16,7 @@ import java.util.List;
  * @create 2021/7/26
  */
 @RestController
-@RequestMapping("comment")
+@RequestMapping("api/comment")
 public class MangaCommentController {
 
     @Autowired

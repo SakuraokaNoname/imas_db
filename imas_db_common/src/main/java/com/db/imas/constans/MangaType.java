@@ -7,9 +7,11 @@ package com.db.imas.constans;
  */
 public enum MangaType {
 
-    MANGA_U149(1,"u149"),
-    MANGA_WWG(2,"wwg"),
-    MANGA_A20(3,"a20");
+    U149(1,"U149"),
+    WWG(2,"WWG"),
+    ENSEMBLE(3,"Ensemble"),
+    A20(4,"A20");
+
 
     private int id;
     private String type;

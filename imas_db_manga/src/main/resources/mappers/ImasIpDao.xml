@@ -39,6 +39,7 @@
         ) AS sub
         GROUP BY ip
         ORDER BY accessTime DESC
+        LIMIT 200
     </select>
 
     <select id="selectDayAccessCount" resultType="Integer">
