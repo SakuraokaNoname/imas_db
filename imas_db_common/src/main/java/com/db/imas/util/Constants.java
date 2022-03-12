@@ -14,6 +14,8 @@ public class Constants {
 
     public final static String DELETE_MANGA_SUB_LIST_TOKEN = "DEL:MANGA:";
 
+    public final static String SYN_MANGA_PICTURE_TOKEN = "SYN:MANGA:";
+
     public final static String UPLOAD_MANGAID_TOKEN = "MID:";
 
     public final static String UPLOAD_SUBID_TOKEN = "SID:";

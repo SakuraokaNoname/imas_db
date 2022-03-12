@@ -10,7 +10,8 @@ public enum MangaType {
     U149(1,"U149"),
     WWG(2,"WWG"),
     ENSEMBLE(3,"Ensemble"),
-    A20(4,"A20");
+    A20(4,"A20"),
+    NEW_GENERATION(5,"NewGeneration");
 
 
     private int id;
@@ -30,7 +31,7 @@ public enum MangaType {
         return null;
     }
 
-    public static int getMangaType(String type){
+    public static int getMangaId(String type){
         for(MangaType mangaType:MangaType.values()){
             if(type.equals(mangaType.type)){
                 return mangaType.id;

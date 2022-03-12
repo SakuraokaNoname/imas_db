@@ -1,5 +1,6 @@
 package test;
 
+import com.db.imas.constans.MangaType;
 import com.db.imas.constans.NoticeEnum;
 import com.db.imas.util.TemplateReplaceUtil;
 
@@ -16,12 +17,13 @@ import java.util.Map;
 public class TestApplication {
 
     public static void main(String[] args) {
-        Map<String,String> replaceMap = new HashMap<>();
-        replaceMap.put("manga","U149");
-        replaceMap.put("mangaTitle","title");
-        replaceMap.put("dantalions","noname");
-        replaceMap.put("translators","yasuhara");
-        System.out.println(TemplateReplaceUtil.replace(NoticeEnum.NEW_MANGA.getContent(),replaceMap));
+//        Map<String,String> replaceMap = new HashMap<>();
+//        replaceMap.put("manga","U149");
+//        replaceMap.put("mangaTitle","title");
+//        replaceMap.put("dantalions","noname");
+//        replaceMap.put("translators","yasuhara");
+//        System.out.println(TemplateReplaceUtil.replace(NoticeEnum.NEW_MANGA.getContent(),replaceMap));
+        System.out.println(MangaType.getMangaType(1).toLowerCase());
     }
 
 }

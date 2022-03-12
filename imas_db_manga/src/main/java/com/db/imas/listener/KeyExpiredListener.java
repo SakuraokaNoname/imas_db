@@ -1,5 +1,6 @@
 package com.db.imas.listener;
 
+import com.db.imas.service.MangaService;
 import com.db.imas.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.Message;
@@ -10,8 +11,7 @@ import org.springframework.util.StringUtils;
 
 import java.nio.charset.StandardCharsets;
 
-import static com.db.imas.util.Constants.DELETE_MANGA_SUB_LIST_TOKEN;
-import static com.db.imas.util.Constants.MANGA_SUB_LIST_TOKEN;
+import static com.db.imas.util.Constants.*;
 
 /**
  * @Author noname
@@ -25,6 +25,9 @@ public class KeyExpiredListener extends KeyExpirationEventMessageListener {
     @Autowired
     private RedisUtil redisUtil;
 
+    @Autowired
+    private MangaService mangaService;
+
     public KeyExpiredListener(RedisMessageListenerContainer listenerContainer) {
         super(listenerContainer);
     }
@@ -37,6 +40,9 @@ public class KeyExpiredListener extends KeyExpirationEventMessageListener {
         if (key.startsWith(DELETE_MANGA_SUB_LIST_TOKEN)) {
             String id = key.substring(key.lastIndexOf(":") + 1);
             redisUtil.del(MANGA_SUB_LIST_TOKEN + id);
+        }
+        else if(key.startsWith(SYN_MANGA_PICTURE_TOKEN)){
+            mangaService.synOSSPicture();
         }
     }
 

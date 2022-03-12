@@ -1,6 +1,7 @@
 package test.manga;
 
 import com.db.imas.ImasDbMangaApplication;
+import com.db.imas.constans.MangaType;
 import com.db.imas.dao.ImasIpDao;
 import com.db.imas.dao.MangaDao;
 import com.db.imas.service.MangaAccessService;

@@ -64,7 +64,7 @@ public class MangaServiceImpl implements MangaService {
         List<MangaSubDTO> mangaSubList = redisUtil.getObjList(key,MangaSubDTO.class);
         if(mangaSubList == null || mangaSubList.size() == 0){
             mangaSubList = mangaDao.getMangaSubList(id);
-            redisUtil.putRaw(key, JSON.toJSONString(mangaSubList), TOKEN_EXPIRE);
+            redisUtil.putRaw(key, JSON.toJSONString(mangaSubList), TOKEN_EXPIRE_HALF_DAY);
         }
         return ResultDTO.success(mangaSubList);
     }
@@ -121,7 +121,10 @@ public class MangaServiceImpl implements MangaService {
 
         redisUtil.del(Constants.UPLOAD_MANGAID_TOKEN);
         redisUtil.del(Constants.UPLOAD_SUBID_TOKEN);
-        redisUtil.putRaw(DELETE_MANGA_SUB_LIST_TOKEN,"",5);
+        // 延时删除漫画列表缓存
+        redisUtil.putRaw(DELETE_MANGA_SUB_LIST_TOKEN + mangaDetail.getMid(),"",5);
+        // 延时同步图片到本地
+        redisUtil.putRaw(SYN_MANGA_PICTURE_TOKEN, "", 7);
         return ResultDTO.success();
     }
 
@@ -133,7 +136,7 @@ public class MangaServiceImpl implements MangaService {
         if(StringUtils.isEmpty(mid) || StringUtils.isEmpty(sid)){
             return UploadDTO.error();
         }
-        String uploadPath = Constants.UPLOAD_BASIC_URL + MangaType.getMangaType(Integer.parseInt(mid)) + "/" + sid + "/" + fileName;
+        String uploadPath = Constants.UPLOAD_BASIC_URL + MangaType.getMangaType(Integer.parseInt(mid)).toLowerCase() + "/" + sid + "/" + fileName;
         if(ObjectUtils.isEmpty(pics) || pics.length < 1){
             return UploadDTO.error();
         }
@@ -218,8 +221,8 @@ public class MangaServiceImpl implements MangaService {
         List<MangaPictureDownloadDTO> picList = mangaDao.selectMangaPicture();
         int count = 0;
         for(MangaPictureDownloadDTO pic : picList){
-            String folderUrl = "/data/manga/" + MangaType.getMangaType(pic.getMid()) + "/" + pic.getSid() + "/";
-            String fileName = "manga/" + MangaType.getMangaType(pic.getMid()) + "/" + pic.getSid() + "/" + pic.getImg();
+            String folderUrl = "/data/manga/" + MangaType.getMangaType(pic.getMid()).toLowerCase() + "/" + pic.getSid() + "/";
+            String fileName = "manga/" + MangaType.getMangaType(pic.getMid()).toLowerCase() + "/" + pic.getSid() + "/" + pic.getImg();
             String path = folderUrl + pic.getImg();
             File folder = new File(folderUrl);
             // 如果路径不存在,则生成路径

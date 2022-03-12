@@ -14,8 +14,14 @@
     </resultMap>
 
     <select id="getMangaList" resultType="MangaDTO">
-        SELECT id,title,profile,url,updateTime FROM manga
-        WHERE pid > 0
+        SELECT tb1.id,tb1.title,tb1.profile,tb1.url,tb2.updateTime FROM `manga` tb1
+        LEFT JOIN
+            (SELECT * FROM (SELECT * FROM manga_detail tb1 ORDER BY updateTime DESC LIMIT 999) AS t1
+                GROUP BY t1.mid) AS tb2
+        ON tb1.id = tb2.mid
+        WHERE tb1.pid > 0
+        GROUP BY tb1.id
+        ORDER BY tb2.updateTime DESC
     </select>
 
     <select id="getMangaSubList" resultType="MangaSubDTO">

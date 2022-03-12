@@ -21,6 +21,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 
+import static com.db.imas.util.Constants.DELETE_MANGA_SUB_LIST_TOKEN;
+
 /**
  * @author noname
  * @create 2021/7/26
@@ -45,9 +47,10 @@ public class MangaCommentServiceImpl implements MangaCommentService {
         if(ObjectUtils.isEmpty(user)){
             return ResultDTO.fail(ErrorCode.TOKEN_EXPIRE.getCode(),ErrorCode.TOKEN_EXPIRE.getMessage());
         }
-        // TODO 权限限制
         vo.setCreateTime(new Date());
         vo.setUpdateTime(new Date());
+        // 延时删除漫画列表缓存
+        redisUtil.putRaw(DELETE_MANGA_SUB_LIST_TOKEN + vo.getMid(),"",60);
         return ResultDTO.success(mangaCommentDao.addComment(vo) > 0);
     }
 
