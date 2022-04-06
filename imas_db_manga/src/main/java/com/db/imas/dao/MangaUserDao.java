@@ -7,6 +7,7 @@ import com.db.imas.model.vo.MangaAddUserVO;
 import com.db.imas.model.vo.MangaLoginVO;
 import com.db.imas.model.vo.MangaUpdateUserVO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -25,6 +26,8 @@ public interface MangaUserDao {
     Integer userUpdate(MangaUpdateUserVO vo);
 
     Integer checkUserByOne(String loginId);
+
+    Integer checkUserNameByOne(@Param("userName") String userName);
 
     List<MangaUserIconDTO> userIconList();
 

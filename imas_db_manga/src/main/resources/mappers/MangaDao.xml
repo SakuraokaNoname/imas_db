@@ -122,4 +122,8 @@
         LIMIT 1
     </select>
 
+    <select id="getMangaDetailById" resultType="java.lang.Integer">
+        SELECT mid FROM `manga_detail` WHERE id = #{detailId}
+    </select>
+
 </mapper>

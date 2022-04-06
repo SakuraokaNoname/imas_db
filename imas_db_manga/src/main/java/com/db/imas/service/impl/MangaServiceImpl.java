@@ -248,6 +248,11 @@ public class MangaServiceImpl implements MangaService {
     }
 
     @Override
+    public int getMangaDetailById(int detailId) {
+        return mangaDao.getMangaDetailById(detailId);
+    }
+
+    @Override
     // type [0:上一页] [1:下一页]
     public Integer pageTurning(Integer mid, Integer orderId, int type) {
         if(type == 1){

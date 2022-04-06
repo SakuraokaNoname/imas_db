@@ -5,6 +5,7 @@ import com.db.imas.model.dto.ResultDTO;
 import com.db.imas.model.vo.MangaAddCommentVO;
 import com.db.imas.model.vo.MangaLikeCommentVO;
 import com.db.imas.service.MangaCommentService;
+import com.db.imas.service.MangaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

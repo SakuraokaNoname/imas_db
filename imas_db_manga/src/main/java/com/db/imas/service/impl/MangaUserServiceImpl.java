@@ -71,6 +71,9 @@ public class MangaUserServiceImpl implements MangaUserService {
         if(checkUserByOne(vo.getLoginId())){
             return ResultDTO.fail(ErrorCode.USER_NO_ONE.getCode(),ErrorCode.USER_NO_ONE.getMessage());
         }
+        if(PatternUtil.isContainChinese(vo.getLoginId())){
+            return ResultDTO.fail(ErrorCode.LOGINID_IS_CHINESE.getCode(),ErrorCode.LOGINID_IS_CHINESE.getMessage());
+        }
         vo.setCreateTime(new Date());
         vo.setIcon("user_default.gif");
         vo.setName("制作人" + MD5Util.getRandomCode());
@@ -87,6 +90,9 @@ public class MangaUserServiceImpl implements MangaUserService {
     public ResultDTO<MangaUserDTO> userUpdate(HttpServletRequest request,MangaUpdateUserVO vo) {
         checkUserTokenDTO(request);
         String token = request.getHeader("token");
+        if(mangaUserDao.checkUserNameByOne(vo.getName()) > 0){
+            return ResultDTO.fail(ErrorCode.USERNAME_IS_REPEAT.getCode(),ErrorCode.USERNAME_IS_REPEAT.getMessage());
+        }
         if(!(mangaUserDao.userUpdate(vo) > 0)){
             return ResultDTO.fail(ErrorCode.USER_UPDATE_FAIL.getCode(),ErrorCode.USER_UPDATE_FAIL.getMessage());
         }

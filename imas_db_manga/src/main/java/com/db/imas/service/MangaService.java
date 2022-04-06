@@ -40,4 +40,6 @@ public interface MangaService {
 
     ResultDTO<Integer> synOSSPictureDTO(HttpServletRequest request);
 
+    int getMangaDetailById(int detailId);
+
 }

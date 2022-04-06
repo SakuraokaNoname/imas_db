@@ -9,6 +9,7 @@ import com.db.imas.model.entity.MangaCommentLike;
 import com.db.imas.model.vo.MangaAddCommentVO;
 import com.db.imas.model.vo.MangaLikeCommentVO;
 import com.db.imas.service.MangaCommentService;
+import com.db.imas.service.MangaService;
 import com.db.imas.service.MangaUserService;
 import com.db.imas.util.RedisUtil;
 import org.springframework.beans.BeanUtils;
@@ -39,6 +40,9 @@ public class MangaCommentServiceImpl implements MangaCommentService {
     @Autowired
     private MangaUserService mangaUserService;
 
+    @Autowired
+    private MangaService mangaService;
+
     @Override
     public ResultDTO addComment(HttpServletRequest request, MangaAddCommentVO vo) {
         mangaUserService.checkUserTokenDTO(request);
@@ -50,7 +54,8 @@ public class MangaCommentServiceImpl implements MangaCommentService {
         vo.setCreateTime(new Date());
         vo.setUpdateTime(new Date());
         // 延时删除漫画列表缓存
-        redisUtil.putRaw(DELETE_MANGA_SUB_LIST_TOKEN + vo.getMid(),"",60);
+        int mid = mangaService.getMangaDetailById(vo.getMid());
+        redisUtil.putRaw(DELETE_MANGA_SUB_LIST_TOKEN + mid,"",60);
         return ResultDTO.success(mangaCommentDao.addComment(vo) > 0);
     }
 

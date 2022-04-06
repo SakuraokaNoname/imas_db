@@ -40,4 +40,5 @@ public interface MangaDao {
 
     int selectMangaDetailMaxPage(@Param("mid")Integer mid);
 
+    int getMangaDetailById(@Param("detailId")int detailId);
 }

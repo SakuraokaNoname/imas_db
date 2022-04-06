@@ -35,6 +35,10 @@
         WHERE id = #{id}
     </update>
 
+    <select id="checkUserNameByOne" resultType="Integer">
+        SELECT count(1) FROM manga_user WHERE `name` LIKE CONCAT(#{userName})
+    </select>
+
     <select id="checkUserByOne" parameterType="String" resultType="Integer">
         SELECT count(1)
         FROM manga_user
