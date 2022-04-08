@@ -59,4 +59,10 @@
     <select id="getUser" resultType="MangaUser">
         SELECT * FROM manga_user WHERE loginId = #{loginId}
     </select>
+
+    <update id="updateUserPwd" parameterType="MangaUser">
+        UPDATE manga_user
+        SET password = #{mangaUser.password}, salt = #{mangaUser.salt}
+        WHERE id = #{mangaUser.id}
+    </update>
 </mapper>

@@ -54,10 +54,16 @@ public class MangaUserServiceImpl implements MangaUserService {
                 return ResultDTO.fail(ErrorCode.LOGIN_ERROR.getCode(),ErrorCode.LOGIN_ERROR.getMessage());
             }
         }else{
-            vo.setPassword(MD5Util.getMd5(vo.getPassword(),16));
-            if(!vo.getPassword().equals(user.getPassword())){
+            String md5Pwd = MD5Util.getMd5(vo.getPassword(),16);
+            if(!md5Pwd.equals(user.getPassword())){
                 return ResultDTO.fail(ErrorCode.LOGIN_ERROR.getCode(),ErrorCode.LOGIN_ERROR.getMessage());
             }
+            MangaUser updatePwd = new MangaUser();
+            updatePwd.setId(user.getId());
+            String salt = BCrypt.gensalt();
+            updatePwd.setSalt(salt);
+            updatePwd.setPassword(BCrypt.hashpw(vo.getPassword(),salt));
+            mangaUserDao.updateUserPwd(updatePwd);
         }
         MangaUserDTO dto = new MangaUserDTO();
         BeanUtils.copyProperties(user,dto);

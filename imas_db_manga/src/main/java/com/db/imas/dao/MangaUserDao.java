@@ -37,4 +37,6 @@ public interface MangaUserDao {
     List<MangaQueryUserDTO> selectUserList();
 
     MangaUser getUser(String loginId);
+
+    int updateUserPwd(@Param("mangaUser") MangaUser mangaUser);
 }
