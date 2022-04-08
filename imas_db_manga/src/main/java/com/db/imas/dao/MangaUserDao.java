@@ -3,6 +3,7 @@ package com.db.imas.dao;
 import com.db.imas.model.dto.MangaQueryUserDTO;
 import com.db.imas.model.dto.MangaUserDTO;
 import com.db.imas.model.dto.MangaUserIconDTO;
+import com.db.imas.model.entity.MangaUser;
 import com.db.imas.model.vo.MangaAddUserVO;
 import com.db.imas.model.vo.MangaLoginVO;
 import com.db.imas.model.vo.MangaUpdateUserVO;
@@ -34,4 +35,6 @@ public interface MangaUserDao {
     void UpdateLoginIP(String ip);
 
     List<MangaQueryUserDTO> selectUserList();
+
+    MangaUser getUser(String loginId);
 }
