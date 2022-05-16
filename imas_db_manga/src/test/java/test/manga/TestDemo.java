@@ -1,5 +1,6 @@
 package test.manga;
 
+import com.alibaba.fastjson.JSON;
 import com.db.imas.ImasDbMangaApplication;
 import com.db.imas.constans.MangaType;
 import com.db.imas.dao.ImasIpDao;
@@ -34,16 +35,17 @@ public class TestDemo {
     private MangaDao mangaDao;
 
     @Autowired
+    private MangaService mangaService;
+
+    @Autowired
     private RedisUtil redisUtil;
 
     @Autowired
     private OSSUtil ossUtil;
 
-    @Autowired
-    private MangaService mangaService;
-
     @Test
     public void synOSS(){
+//        System.out.println(JSON.toJSONString(mangaService.getMangaSubList(1)));
 //        System.out.println(mangaService.synOSSPicture());
     }
 

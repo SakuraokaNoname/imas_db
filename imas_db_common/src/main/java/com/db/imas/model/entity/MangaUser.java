@@ -19,6 +19,15 @@ public class MangaUser {
     private Date createTime;
     private String createIP;
     private String loginIP;
+    private String chatId;
+
+    public String getChatId() {
+        return chatId;
+    }
+
+    public void setChatId(String chatId) {
+        this.chatId = chatId;
+    }
 
     public String getSalt() {
         return salt;

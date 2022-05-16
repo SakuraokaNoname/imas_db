@@ -22,6 +22,15 @@ public class MangaSubDTO {
     private String url;
     private int commentCount;
     private String isShow;
+    private String debutIdol;
+
+    public String getDebutIdol() {
+        return debutIdol;
+    }
+
+    public void setDebutIdol(String debutIdol) {
+        this.debutIdol = debutIdol;
+    }
 
     public int getMid() {
         return mid;
