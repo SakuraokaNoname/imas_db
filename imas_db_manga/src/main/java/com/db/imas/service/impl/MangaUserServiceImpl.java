@@ -7,13 +7,16 @@ import com.db.imas.model.dto.MangaQueryUserDTO;
 import com.db.imas.model.dto.MangaUserDTO;
 import com.db.imas.model.dto.MangaUserIconDTO;
 import com.db.imas.model.dto.ResultDTO;
+import com.db.imas.model.entity.MangaUser;
 import com.db.imas.model.vo.MangaAddUserVO;
 import com.db.imas.model.vo.MangaLoginVO;
 import com.db.imas.model.vo.MangaUpdateUserVO;
 import com.db.imas.service.MangaAccessService;
 import com.db.imas.service.MangaUserService;
 import com.db.imas.util.*;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
@@ -42,17 +45,33 @@ public class MangaUserServiceImpl implements MangaUserService {
 
     @Override
     public ResultDTO<MangaUserDTO> userLogin(MangaLoginVO vo) {
-        vo.setPassword(MD5Util.getMd5(vo.getPassword(),16));
-        MangaUserDTO dto = mangaUserDao.userLogin(vo);
-        if(ObjectUtils.isEmpty(dto)){
-            return ResultDTO.fail(ErrorCode.LOGIN_ERROR.getCode(),ErrorCode.LOGIN_ERROR.getMessage());
+        MangaUser user = mangaUserDao.getUser(vo.getLoginId());
+        if(user == null){
+            return ResultDTO.fail(ErrorCode.NO_USER.getCode(),ErrorCode.NO_USER.getMessage());
         }
-        if(dto.getPermission() == -1){
+        if(user.getSalt() != null){
+            if(!BCrypt.checkpw(vo.getPassword(),user.getPassword())){
+                return ResultDTO.fail(ErrorCode.LOGIN_ERROR.getCode(),ErrorCode.LOGIN_ERROR.getMessage());
+            }
+        }else{
+            String md5Pwd = MD5Util.getMd5(vo.getPassword(),16);
+            if(!md5Pwd.equals(user.getPassword())){
+                return ResultDTO.fail(ErrorCode.LOGIN_ERROR.getCode(),ErrorCode.LOGIN_ERROR.getMessage());
+            }
+            MangaUser updatePwd = new MangaUser();
+            updatePwd.setId(user.getId());
+            String salt = BCrypt.gensalt();
+            updatePwd.setSalt(salt);
+            updatePwd.setPassword(BCrypt.hashpw(vo.getPassword(),salt));
+            mangaUserDao.updateUserPwd(updatePwd);
+        }
+        MangaUserDTO dto = new MangaUserDTO();
+        BeanUtils.copyProperties(user,dto);
+        if(user.getPermission() == -1){
             return ResultDTO.fail(ErrorCode.LOGIN_BLOCK.getCode(),ErrorCode.LOGIN_BLOCK.getMessage());
         }
         // 唯一登录
-        removeCurrentUserToken(dto.getId());
-        // TODO 创建token并返回
+        removeCurrentUserToken(user.getId());
         String token = TokenUtil.createToken(Constants.USER_TOKEN,dto.getId());
         redisUtil.putRaw(token, JSONObject.toJSONString(dto), Constants.TOKEN_EXPIRE);
         dto.setToken(token);
@@ -77,7 +96,9 @@ public class MangaUserServiceImpl implements MangaUserService {
         vo.setCreateTime(new Date());
         vo.setIcon("user_default.gif");
         vo.setName("制作人" + MD5Util.getRandomCode());
-        vo.setPassword(MD5Util.getMd5(vo.getPassword(),16));
+        String salt = BCrypt.gensalt();
+        vo.setSalt(salt);
+        vo.setPassword(BCrypt.hashpw(vo.getPassword(),salt));
         vo.setPermission(0);
         vo.setChatId("chat:" + MD5Util.getRandomCode() + MD5Util.getRandomCode());
         if(!(mangaUserDao.userRegister(vo) > 0)){

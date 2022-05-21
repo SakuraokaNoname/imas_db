@@ -9,9 +9,7 @@ public class MangaUpdateUserVO {
 
     private int id;
     private String name;
-    private String password;
     private String icon;
-    private Integer permission;
     private String loginIP;
 
     public String getLoginIP() {
@@ -38,14 +36,6 @@ public class MangaUpdateUserVO {
         this.name = name;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getIcon() {
         return icon;
     }
@@ -54,11 +44,4 @@ public class MangaUpdateUserVO {
         this.icon = icon;
     }
 
-    public Integer getPermission() {
-        return permission;
-    }
-
-    public void setPermission(Integer permission) {
-        this.permission = permission;
-    }
 }

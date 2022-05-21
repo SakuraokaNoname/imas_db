@@ -19,6 +19,7 @@ public enum ErrorCode {
     USER_NO_ONE("9995", "账号已被注册"),
     TOKEN_EXPIRE("9996", "请重新登录"),
     REGISTER_ERROR("9997", "注册失败"),
+    NO_USER("9998","没有用户信息"),
     LOGIN_ERROR("9998", "账号或密码有误"),
     LOGIN_BLOCK("9998", "账号已被屏蔽"),
     ERROR("9999", "系统异常"),;

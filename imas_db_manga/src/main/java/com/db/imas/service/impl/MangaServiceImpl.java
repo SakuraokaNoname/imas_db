@@ -64,6 +64,17 @@ public class MangaServiceImpl implements MangaService {
         List<MangaSubDTO> mangaSubList = redisUtil.getObjList(key,MangaSubDTO.class);
         if(mangaSubList == null || mangaSubList.size() == 0){
             mangaSubList = mangaDao.getMangaSubList(id);
+            for(MangaSubDTO dto : mangaSubList){
+                Integer count = 0;
+                if(!StringUtils.isEmpty(dto.getDebutIdol())){
+                    for(String idol : dto.getDebutIdol().split(",")){
+                        if(!StringUtils.isEmpty(idol)){
+                            count++;
+                        }
+                    }
+                }
+                dto.setDebutIdol(count.toString());
+            }
             redisUtil.putRaw(key, JSON.toJSONString(mangaSubList), TOKEN_EXPIRE_HALF_DAY);
         }
         return ResultDTO.success(mangaSubList);

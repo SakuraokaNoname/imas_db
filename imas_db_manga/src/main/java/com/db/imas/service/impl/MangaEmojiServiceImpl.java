@@ -31,8 +31,10 @@ public class MangaEmojiServiceImpl implements MangaEmojiService {
         List<MangaEmojiListDTO> dtoList = new ArrayList<>();
         MangaEmojiListDTO u149 = getEmojiByManga(MangaType.U149, vo);
         MangaEmojiListDTO wwg = getEmojiByManga(MangaType.WWG, vo);
+        MangaEmojiListDTO newGeneration = getEmojiByManga(MangaType.NEW_GENERATION, vo);
         dtoList.add(u149);
         dtoList.add(wwg);
+        dtoList.add(newGeneration);
         dto.setImgList(dtoList);
         return ResultDTO.success(dto);
     }

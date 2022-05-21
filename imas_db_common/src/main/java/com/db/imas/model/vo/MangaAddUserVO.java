@@ -12,11 +12,20 @@ public class MangaAddUserVO {
     private String name;
     private String loginId;
     private String password;
+    private String salt;
     private String icon;
     private Date createTime;
     private int permission;
     private String chatId;
     private String createIP;
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
 
     public String getCreateIP() {
         return createIP;

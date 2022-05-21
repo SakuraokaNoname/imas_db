@@ -3,14 +3,14 @@
 <mapper namespace="com.db.imas.dao.MangaUserDao">
 
     <select id="userLogin" parameterType="MangaLoginVO" resultType="MangaUserDTO">
-        SELECT id,name,icon,chatId,permission
+        SELECT id,name,icon,chatId,permission,chatId
         FROM manga_user
         WHERE loginId = #{loginId} AND password = #{password}
     </select>
 
     <insert id="userRegister" parameterType="MangaAddUserVO">
-        INSERT INTO manga_user (name,loginId,password,icon,permission,createTime,chatId)
-        VALUES (#{name},#{loginId},#{password},#{icon},#{permission},#{createTime},#{chatId})
+        INSERT INTO manga_user (name,loginId,password,salt,icon,permission,createTime,chatId)
+        VALUES (#{name},#{loginId},#{password},#{salt},#{icon},#{permission},#{createTime},#{chatId})
     </insert>
 
     <update id="userUpdate" parameterType="MangaUpdateUserVO">
@@ -19,14 +19,8 @@
             <if test="name != null and name != ''">
                 name = #{name},
             </if>
-            <if test="password != null and password != ''">
-                password = #{password},
-            </if>
             <if test="icon != null and icon != ''">
                 icon = #{icon},
-            </if>
-            <if test="permission != null">
-                permission = #{permission},
             </if>
             <if test="loginIP != null">
                 loginIP = #{loginIP},
@@ -55,4 +49,14 @@
         FROM manga_user
         ORDER BY permission DESC,createTime DESC
     </select>
+
+    <select id="getUser" resultType="MangaUser">
+        SELECT * FROM manga_user WHERE loginId = #{loginId}
+    </select>
+
+    <update id="updateUserPwd" parameterType="MangaUser">
+        UPDATE manga_user
+        SET password = #{mangaUser.password}, salt = #{mangaUser.salt}
+        WHERE id = #{mangaUser.id}
+    </update>
 </mapper>

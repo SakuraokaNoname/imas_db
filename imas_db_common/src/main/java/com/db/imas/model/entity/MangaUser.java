@@ -13,11 +13,29 @@ public class MangaUser {
     private String name;
     private String loginId;
     private String password;
+    private String salt;
     private String icon;
     private int permission;
     private Date createTime;
     private String createIP;
     private String loginIP;
+    private String chatId;
+
+    public String getChatId() {
+        return chatId;
+    }
+
+    public void setChatId(String chatId) {
+        this.chatId = chatId;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
 
     public String getCreateIP() {
         return createIP;
