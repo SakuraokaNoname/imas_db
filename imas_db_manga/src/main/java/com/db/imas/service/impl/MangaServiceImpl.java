@@ -66,9 +66,11 @@ public class MangaServiceImpl implements MangaService {
             mangaSubList = mangaDao.getMangaSubList(id);
             for(MangaSubDTO dto : mangaSubList){
                 Integer count = 0;
-                for(String idol : dto.getDebutIdol().split(",")){
-                    if(!StringUtils.isEmpty(idol)){
-                        count++;
+                if(!StringUtils.isEmpty(dto.getDebutIdol())){
+                    for(String idol : dto.getDebutIdol().split(",")){
+                        if(!StringUtils.isEmpty(idol)){
+                            count++;
+                        }
                     }
                 }
                 dto.setDebutIdol(count.toString());
