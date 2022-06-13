@@ -7,7 +7,7 @@ import java.util.List;
  * @Author: chenlingtong
  * @CreateDate: 2022/1/5 17:01
  * @Version: 1.0.0
- * @Company: 名雕装饰股份有限公司
+ * @Company:
  */
 public class MangaEmojiListDTO {
 

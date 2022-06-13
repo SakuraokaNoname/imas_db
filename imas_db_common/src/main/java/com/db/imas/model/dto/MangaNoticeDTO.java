@@ -9,7 +9,7 @@ import java.util.Date;
  * @Author: chenlingtong
  * @CreateDate: 2021/12/31 16:02
  * @Version: 1.0.0
- * @Company: 名雕装饰股份有限公司
+ * @Company:
  */
 public class MangaNoticeDTO {
 

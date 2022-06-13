@@ -1,5 +1,6 @@
 package test.manga;
 
+import org.jasypt.intf.cli.JasyptPBEStringEncryptionCLI;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 /**
@@ -10,14 +11,17 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 public class TestDemo1 {
 
     public static void main(String[] args) {
+        String[] createStr = new String[]{"input=123456", "password=imas", "algorithm=PBEWithMD5AndDES"};
+        JasyptPBEStringEncryptionCLI.main(createStr);
         // 1.BCrypt.gensalt() 生成盐值并保存
         // 2.BCrypt.hashpw(pwd,salt) 生成加密后的密码并保存
         // 3.BCrypt.checkpw(pwd,salt) 判断密码是否正确
-        String salt = BCrypt.gensalt();
-        System.out.println("salt:" + salt);
-        System.out.println("password:" + BCrypt.hashpw("woshi54clt",salt));
+//        String salt = BCrypt.gensalt();
+//        System.out.println("salt:" + salt);
+//        System.out.println("password:" + BCrypt.hashpw("111",salt));
+
 //        "$2a$10$ivwVN6OX0NVhed.8Ntvr8epHsosbBk9TfpsIWiUL3o14kINW2CgiO"
-//        System.out.println(BCrypt.checkpw("woshi54clt1","$2a$10$ivwVN6OX0NVhed.8Ntvr8epHsosbBk9TfpsIWiUL3o14kINW2CgiO"));
+//        System.out.println(BCrypt.checkpw("111","$2a$10$ivwVN6OX0NVhed.8Ntvr8epHsosbBk9TfpsIWiUL3o14kINW2CgiO"));
     }
 
 }
